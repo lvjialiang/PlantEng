@@ -1,0 +1,143 @@
+﻿@{
+    /*个人用户空间模板,引用_EmptyLayout.cshtml模板*/
+    Layout = "_EmptyLayout.cshtml";
+
+    var currentInfo = PlantEng.Core.PlantEngContext.Current;
+    var spaceInfo = ViewBag.SpaceInfo;
+
+    //这里有几个地方需要处理一下：    
+
+    //1,如果用户不存在，则301跳转到首页
+    if (spaceInfo.Id == 0)
+    {
+        Response.RedirectPermanent("/");
+    }
+    //2,如果是企业用户，则301跳转到企业空间中
+    if (spaceInfo.Type == PlantEng.Models.MemberType.Enterprise)
+    {
+        var companyInfo = PlantEng.Services.MemberService.GetCompanyInfoByUserId(spaceInfo.Id);
+        Response.RedirectPermanent(string.Format("/company/{0}.html", companyInfo.CompanyId));
+    }
+
+    //添加访客信息
+    PlantEng.Services.Visitor.VisitorService.Insert(new PlantEng.Models.Visitor.VisitorInfo()
+    {
+        FromUserId = currentInfo.UserId,
+        FromUserName = currentInfo.UserName,
+        ToUserId = spaceInfo.Id,
+        ToUserName = spaceInfo.UserName
+    });
+
+    var visitorList = PlantEng.Services.Visitor.VisitorService.ListWithoutPage(spaceInfo.Id, 10);
+}
+@section header{
+    <link href="/styles/space.css" rel="stylesheet" type="text/css" />
+}
+<div class="gb_toolbar">
+    <div class="wrap clearfix">
+        <ul class="reglogin_info">
+            <li><a href="/">
+                <img src="/images/space_logo.jpg" border="0" /></a> </li>
+        </ul>
+        <p class="moz_shoucang">
+            @if (currentInfo.IsLogin)
+            {
+                <text>您好,@(PlantEng.Core.PlantEngContext.Current.UserName)
+                ,<a href="/accounts/">进入管理中心</a>,<a href="/logout">退出登录</a></text>
+            }
+            else
+            {
+                <text><a href="/login" class="rede4">登录</a>&nbsp;|&nbsp;<a href="/register">注册</a></text>
+            }
+        </p>
+    </div>
+</div>
+<div class="lay_position">
+    <!--导航star-->
+    <div class="lay_headContainer" style="background: none no-repeat scroll 0% 0% transparent;
+        height: 110px; display: block;">
+        <div class="fn_info">
+            <h1 class="title">
+                <span class="text ui_mr10">@(spaceInfo.NickName == spaceInfo.UserName ? string.Format("{0}的空间", spaceInfo.NickName) : spaceInfo.NickName)</span></h1>
+            <div class="description">
+                <a href="@(PlantEng.Core.PlantEngSites.Current.WWW)/space/@(spaceInfo.Id)" class="url">@(PlantEng.Core.PlantEngSites.Current.WWW)/space/@(spaceInfo.Id)</a>
+            </div>
+            <div class="shop_item">
+                <ul>
+                    <li><a href="/space/@(spaceInfo.Id)"><b>主页</b></a></li>
+                    <li><a href="/space/@(spaceInfo.Id)/blog"><b>博客</b></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--导航end-->
+<!--pageContent star-->
+<div class="pageContent">
+    <!--pageContent左边 star-->
+    <div class="col_menu">
+        <div class="col_shang"></div>
+        <div class="col_center">
+            <h1 class="collet_box">
+                个人档案</h1>
+            <div class="collet_profile">
+                <div class="collet_pic">
+                    <!--头像-->
+                    <img src="@(PlantEng.Core.PlantEngSites.Current.Image)/avatar/@(spaceInfo.Avatar)" alt="@(spaceInfo.UserName)" />
+                    <ul class="l_content">
+                        <li>用户名：@(spaceInfo.UserName)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="l_search">
+            </div>
+            @*<div>
+                <h1 class="collet_box">
+                    最近访客</h1>
+                <ul>
+                    @foreach (var visitorItem in visitorList)
+                    {
+                        <li><a href="/space/@(visitorItem.FromUserId)" title="@(visitorItem.FromUserName)" target="_blank">
+                            <img class="visitor-pic" src="/avatar?userid=@(visitorItem.FromUserId)" alt="@(visitorItem.FromUserName)"/></a><div
+                                class="desc">
+                                <h3>
+                                    <a href="/space/@(visitorItem.FromUserId)" title="@(visitorItem.FromUserName)" target="_blank">@(visitorItem.FromUserName)</a></h3>
+                                <p>@(visitorItem.VisitDateTimeToString)</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="l_statistics">
+                <h1 class="collet_box">
+                    数据统计</h1>
+                <ul class="l_content">
+                    <li>日 志 数：2篇</li>
+                    <li>更新时间：2011-02-25</li>
+                </ul>
+            </div>*@
+        </div>
+        <div class="col_xia"></div>
+    </div>
+    <!--pageContent左边 end-->
+    <!--pageContent右边 star-->
+    <div class="col_main">
+        <div class="col_top"></div>
+        <!--col_main_center star-->
+        <div class="col_main_center">
+            @RenderBody()
+        </div>
+        <div class="col_bottom" style="float: right;">
+            <img src="/images/space/page_bottom.jpg" height="14" /></div>
+        <!--col_main底部 star-->
+    </div>
+    <!--pageContent右边 end-->
+</div>
+<!--pageContent end-->
+<!--底部版权开始-->
+<div class="foot" style="text-align: center;">
+    <a href="http://www.cechina.cn/about/about.aspx">关于我们</a> | <a href="http://www.cechina.cn/about/sitemap.htm">
+        网站地图</a> | <a href="http://www.cechina.cn/about/contact.aspx">联系我们</a> | <a href="http://www.cechina.cn/about/Friendship.aspx">
+            友情链接</a><br />
+    &copy; 2003-2012&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn/" target="_blank">经营许可编号：京ICP证090436号</a>
+</div>

@@ -1,0 +1,14 @@
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Data.dll
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Data.pdb
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Cache.dll
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Common.dll
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Config.dll
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Entity.dll
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Newtonsoft.Json.dll
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Entity.pdb
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Common.pdb
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Config.pdb
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\bin\Debug\Discuz.Cache.pdb
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\obj\Debug\ResolveAssemblyReference.cache
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\obj\Debug\Discuz.Data.dll
+E:\Project\PlantEng\PlantEng.Web.Forum\Discuz.Data\obj\Debug\Discuz.Data.pdb

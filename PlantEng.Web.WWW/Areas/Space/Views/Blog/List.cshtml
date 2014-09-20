@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_SpaceLayout.cshtml";
+    var spaceInfo = ViewBag.SpaceInfo;
+    ViewBag.Title = string.Format("博客列表 - {0}", spaceInfo.NickName == spaceInfo.UserName ? spaceInfo.NickName + "的空间" : spaceInfo.NickName);
+}
+<!--目前所在位置-->
+@Html.Partial("_NavPosition", new ViewDataDictionary { { "SpaceInfo", spaceInfo }, { "FirstText", "博客" }, { "FirstLink", "/blog" } })
+<!--/目前所在位置-->
+<div class="xld">
+    @foreach (var item in ViewBag.PostList)
+    {
+        <text><dl class="bbda">
+            <dt class="xs2"><a href="@(item.Url)">@(item.Title)</a> </dt>
+            <dd>
+                <span class="xg1">@(item.CreateDateTime.ToString("yyyy-MM-dd"))</span>
+            </dd>
+            <dd class="cl">@Html.Raw(Controleng.Common.Utils.CutString(Controleng.Common.Utils.RemoveHtml(item.Content),0,100))</dd>
+            <dd class="xg1">
+                系统分类: <a href="/space/@(item.UserId)/blog?scatId=@(item.SystemCategoryId)">@(item.SystemCategoryName)</a><span class="pipe">|</span><a href="@(item.Url)" target="_blank">@(item.ViewCount) 次阅读</a>
+            </dd>
+        </dl></text>
+    }
+</div>
+@Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.PostList.PageIndex, ViewBag.PostList.PageSize, ViewBag.PostList.TotalItemCount, new { @class = "pagerbar" }))

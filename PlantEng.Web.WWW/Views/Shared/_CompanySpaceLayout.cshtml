@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "_EmptyLayout.cshtml";
+    var companyInfo = ViewBag.CompanyInfo;
+
+    //产品自定义分类
+    var productCatList = PlantEng.Services.Company.CompanyProductCategoryService.GetCategoryList(companyInfo.CompanyId);
+}
+    <meta name="keywords" content="工厂工程,工厂维护,工厂管理,数字化工厂,先进工厂,,能源管理,工厂安全,工厂效率,设备管理,工厂信息化,工厂设计,电气工程,安全安防,工厂自动化,自动化与控制,压缩空气,电机与驱动,环境与健康,流体处理,暖通空调,照明,养护产品,维修工具与设备,物料搬运,物仓储物流,电力,软件,安全产品" />
+
+@section header{
+    <link href="/styles/companyspace.css" rel="stylesheet" type="text/css" />
+    @RenderSection("header", false)
+}
+@section footer{
+    @RenderSection("footer", false)
+}
+<!--============头部导航====================-->
+<div class="top">
+    <div class="topNavWrapper">
+        <ul class="reglogin_info">
+            <li class="servicesMenuItem">
+                <img src="/images/companyspace/logo.gif" /></li>
+            <li class="servicesMenuItem"><a href="http://www.planteng.cn/">首页</a></li>
+            <li class="servicesMenuItem"><a href="http://www.planteng.cn/company">企业库</a></li>
+            <li class="servicesMenuItem"><a href="http://www.planteng.cn/tech/">技术频道</a></li>
+            <li class="servicesMenuItem"><a href="http://www.planteng.cn/news/">新闻中心</a></li>
+            <li class="servicesMenuItem"><a href="http://webcast.planteng.cn/">在线研讨会</a></li>
+            <li class="servicesMenuItem"><a href="http://www.planteng.cn/blog">博客</a></li>
+            <li class="servicesMenuItem"><a href="http://www.planteng.cn/video">视频</a></li>
+			<li class="servicesMenuItem"><a href="http://bbs.planteng.cn/">论坛</a></li>
+            @if (PlantEng.Core.PlantEngContext.Current.IsLogin)
+            {
+                <li class="li_left"><a href="/accounts/">@PlantEng.Core.PlantEngContext.Current.UserName</a>,<a
+                    href="javascript:PE.logout();">退出</a></li>
+            }
+            else
+            { 
+                <li class="li_left servicesMenuItem"><a href="javascript:PE.login()">登陆</a></li>
+                <li class="servicesMenuItem"><a href="javascript:PE.register();">注册</a></li>
+            }
+        </ul>
+    </div>
+</div>
+<!--============大框架start====================-->
+<div class="PageWidth">
+    <div class="banner">
+        <h2>@(companyInfo.CompanyName)</h2>
+    </div>
+    <div class="nav">
+        <a href="/company/@(companyInfo.CompanyId).html" class="on">首 页</a> 
+        <a href="/company/@(companyInfo.CompanyId)/introduction.html">公司介绍</a> 
+        <a href="/company/@(companyInfo.CompanyId)/newslist.html">公司新闻</a>
+        <a href="/company/@(companyInfo.CompanyId)/productlist.html">公司产品</a> 
+        <a href="/company/@(companyInfo.CompanyId)/applicationlist.html">技术与案例</a> 
+       <a href="/company/@(companyInfo.CompanyId)/feedback.html">在线反馈</a>
+         @*<a href="/company/@(companyInfo.CompanyId)/contact.html">联系我们</a>*@
+    </div>
+    <!--============container start====================-->
+    <div class="container">
+        <!--============column-left start====================-->
+        <div class="column-left">
+            <div class="mod-body">
+                <div class="logo-photo">
+                    <div class="logo_business"><p><img src="@(companyInfo.CompanyLogo)" alt="@(companyInfo.CompanyName)" width="150" /></p></div>
+                </div>
+                <p>
+                    <h3>@(companyInfo.CompanyName)</h3>
+                </p>
+            </div>
+            <div class="mod-body">
+                <div class="hd">
+                    <h2>
+                        产品分类</h2>
+                </div>
+                <div class="bd">
+                    <ul class="product_category">
+                       @foreach (var item in productCatList) { 
+                            <li><a href="/company/@(companyInfo.CompanyId)/productlist-@(item.Id).html">@(item.Name)</a>(@(item.ProductCount))</li>
+                       }
+                    </ul>
+                </div>
+            </div>
+            <div class="mod-body">
+                <div class="hd">
+                    <h2>
+                        公司介绍</h2>
+                </div>
+                <div class="bd">
+                    <p>@(Goodspeed.Common.CharHelper.Truncate(companyInfo.CompanyIntroduction, 400))</p>
+                </div>
+            </div>
+            <div class="mod-body">
+                <div class="hd">
+                    <h2>
+                        联系方式</h2>
+                </div>
+                <div class="bd">
+                    <p style="text-align: left;">
+                        地址：@(companyInfo.Address)<br />
+                        电话：@(companyInfo.Phone)<br />
+                        @if(!string.IsNullOrEmpty(companyInfo.Mobile)){
+                            <text>手机：@(companyInfo.Mobile)<br /></text>
+                        }
+                        传真：@(companyInfo.Fax)<br />
+                        公司网址：<br />
+                        @(companyInfo.CompanySite)</p>
+                </div>
+            </div>
+            <!--============column-left end====================-->
+        </div>
+        <!--============column-right start====================-->
+        <div class="column-right">
+            <div class="focus_pic">
+                <img src="@(string.IsNullOrEmpty(companyInfo.CompanyBanner) ? "/images/banner.jpg" : companyInfo.CompanyBanner)" /></div>
+            @RenderBody()
+            <!--============column-right end====================-->
+        </div>
+        <!--============container end====================-->
+    </div>
+    <!--============大框架end====================-->
+</div>
+<!--============底部====================-->
+@Html.Partial("~/Views/Shared/_FooterModule.cshtml")

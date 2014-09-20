@@ -1,0 +1,58 @@
+﻿@model PlantEng.Models.CompanyInfo
+@{
+    ViewBag.Title = "公司详细信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+<fieldset>
+    <legend>详细信息</legend>
+    <table>
+        <tr>
+            <th align="right">公司名称：</th>
+            <td>@(Model.CompanyName) - 注册时间：@(Model.CreateDateTime)</td>
+        </tr>
+        <tr>
+            <th align="right">Email：</th>
+            <td>@(Model.Email)</td>
+        </tr>
+        <tr>
+            <th align="right">登录信息：</th>
+            <td>用户名：@(Model.UserName)，密码：@(Model.Password)</td>
+        </tr>
+        <tr>
+            <th valign="top" align="right">公司简介：</th>
+            <td><textarea rows="6" cols="60">@(Model.CompanyIntroduction)</textarea></td>
+        </tr>
+        <tr>
+            <th align="right">公司网址：</th>
+            <td>@(Model.CompanySite)</td>
+        </tr>
+        <tr>
+            <th align="right">联系人姓名：</th>
+            <td>@(Model.RealName)</td>
+        </tr>
+        <tr>
+            <th align="right">联系方式：</th>
+            <td>手机：@(Model.Mobile),电话：@(Model.Phone),传真：@(Model.Fax)</td>
+        </tr>
+        <tr>
+            <th align="right">行业：</th>
+            <td>@(Model.Industry)</td>
+        </tr>
+        <tr>
+            <th align="right">职务：</th>
+            <td>@(Model.Position)</td>
+        </tr>
+        <tr>
+            <th align="right">省市及地址：</th>
+            <td>@(Model.Province)@(Model.City),@(Model.Address)</td>
+        </tr>
+        <tr>
+            <th align="right">公司LOGO：</th>
+            <td><img src="@(Model.CompanyLogo)" alt="@(Model.CompanyName)" /></td>
+        </tr>
+        
+    </table>
+</fieldset>
+</div>
+

@@ -1,0 +1,82 @@
+﻿@model PlantEng.Models.Video.VideoInfo
+@{
+    ViewBag.Title = "视频信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+
+        <!-- Ajax 上传图片 -->
+        <script src="/Scripts/jquery.ajaxfileupload.js?d==kk" type="text/javascript"></script>
+        <!-- /Ajax 上传图片 -->
+}
+<div class="page-content">
+    <fieldset>
+        <legend>视频信息</legend>
+        <form method="post">
+        @Html.ValidationSummary()
+        @if(ViewBag.Msg != null){
+            <div class="success">@Html.Raw(ViewBag.Msg)</div>
+        }
+        <table width="100%">
+            <tr>
+                <th align="right" width="8%"><span class="red">*</span>分类：</th>
+                <td>
+                    <select id="select_column" name="select_column">
+                        <option value="0">==请选择==</option>
+                        @foreach (var item in ViewBag.CatList)
+                        {                          
+                           <option value="@(item.Id)"@(Html.Raw(Model.CategoryId == item.Id ? "selected=\"selected\"":""))>@item.Name</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th align="right"><span class="red">*</span>标题：</th>
+                <td>@Html.TextBoxFor(m => m.Title, new { @class = "w400" })</td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">介绍：</th>
+                <td>@Html.TextAreaFor(m => m.Remark, new { cols="80",rows="5" })</td>
+            </tr>
+            <tr>
+                <th align="right">视频链接：</th>
+                <td>@Html.TextBoxFor(m => m.VideoUrl, new { @class = "w400" })</td>
+            </tr>
+            <tr>
+                <th align="right">视频图片：</th>
+                <td>@Html.TextBoxFor(m => m.ImageUrl, new { @class = "w400" })<span class="ml10"><a href="javascript:void(0);" onclick="uploadImageForInput('ImageUrl');">上传图片</a></span></td>
+            </tr>
+            <tr>
+                <th align="right">发布时间：</th>
+                <td>@Html.TextBoxFor(m => m.PublishDateTime)</td>
+            </tr>
+            <tr>
+                <th align="right">关键词：</th>
+                <td>@Html.TextBoxFor(m => m.Tags, new { @class = "w400" })（空格隔开）</td>
+            </tr>
+            <tr>
+                <th align="right">是否置顶:</th>
+                <td>@(Html.RadioButtonFor(m => m.IsTop, false))否@(Html.RadioButtonFor(m => m.IsTop, true))是</td>
+            </tr>
+            <tr>
+                <th align="right">是否删除：</th>
+                <td>@(Html.RadioButtonFor(m => m.IsDeleted, false))否@(Html.RadioButtonFor(m=>m.IsDeleted,true))是</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="保存" /><a href="list" class="cancle ml10">取消</a></td>
+            </tr>
+        </table>
+        </form>
+    </fieldset>
+    
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //设置时间选择器
+            $("#PublishDateTime").datepicker({ dateFormat: 'yy-mm-dd', monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'], dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'] });
+        });
+    </script>
+}
+

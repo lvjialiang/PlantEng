@@ -1,0 +1,74 @@
+﻿@{
+    
+    var slotId = Controleng.Common.CECRequest.GetQueryInt("slotId", 0);
+    var slotName = Controleng.Common.CECRequest.GetQueryString("slotName");
+    if (!string.IsNullOrEmpty(slotName))
+    {
+        ViewBag.Title = string.Format("{0}上的广告", slotName);
+    }
+    else
+    {
+        ViewBag.Title = "广告";
+    }
+    var createLink = "/adm/delivery/create";
+    if (slotId > 0 && !string.IsNullOrEmpty(slotName))
+    {
+        createLink = string.Format("/adm/delivery/create?slotId={0}&slotName={1}", slotId, slotName);
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+    <div class="adm-nav">
+        <ul>
+            <li><a href="/adm/slot/list">广告位</a></li>
+            <li><a href="/adm/delivery/list">广告</a></li>
+            <li><a href="/adm/material/list">广告物料库</a></li>
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <fieldset>
+        <legend>
+            @if (slotId > 0)
+            {<text>广告位“@(slotName)”上的广告</text>}
+            else
+            {<text>广告位</text>}</legend>
+        <a href="@(createLink)" class="btn-add">添加广告</a>
+        <table class="tblist">
+            <tr>
+                <th>
+                    广告名称
+                </th>
+                <th width="10%">
+                    广告位
+                </th>
+                <th width="10%">
+                    起始时间
+                </th>
+                <th width="10%">
+                    结束时间
+                </th>
+                <th width="10%">
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in ViewBag.List)
+            {
+                <tr>
+                    <td style="text-align: left">@(item.Name)
+                    </td>
+                    <td>
+                    </td>
+                    <td align="center">@(item.BeginTime)
+                    </td>
+                    <td align="center">@(item.EndTime)
+                    </td>
+                    <td align="center">
+                        <a href="modify?id=@(item.Id)">修改</a>&nbsp;&nbsp;<a href="/adm/material/list?deliveryId=@(item.Id)&deliveryName=@(item.Name)">广告物料</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.List.PageIndex, ViewBag.List.PageSize, ViewBag.List.TotalItemCount, new { @class = "pagerbar" }))
+    </fieldset>
+</div>

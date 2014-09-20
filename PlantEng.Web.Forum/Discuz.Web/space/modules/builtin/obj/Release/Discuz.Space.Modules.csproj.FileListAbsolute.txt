@@ -1,0 +1,5 @@
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\bin\Discuz.Space.Modules.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\bin\Discuz.Space.Modules.pdb
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\space\modules\builtin\obj\Release\ResolveAssemblyReference.cache
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\space\modules\builtin\obj\Release\Discuz.Space.Modules.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\space\modules\builtin\obj\Release\Discuz.Space.Modules.pdb

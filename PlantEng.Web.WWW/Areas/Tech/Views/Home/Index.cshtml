@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "技术频道";
+    Layout = "~/Views/Shared/_TechLayout.cshtml";
+}
+
+<div class="middle_content">
+    <div class="normal_header">
+        <span>当前位置：</span><span><a href="/">首页</a></span>&nbsp;>&nbsp;<span>技术频道</span></div>
+    <div class="news-list-item">
+        @foreach (var item in ViewBag.TechList)
+        {
+            <div class="bt"><a href="/tech/@(item.Alias.ToLower())">@item.Name</a></div>
+            @Html.Action("_ArticleListForIndex","Home",new { techId = item.Id})
+            <div class="csc-default"></div>
+        }        
+    </div>
+</div>

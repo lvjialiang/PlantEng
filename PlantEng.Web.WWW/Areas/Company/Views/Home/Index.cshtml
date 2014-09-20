@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "企业库";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+@section header{
+    <style type="text/css">
+	* {margin:0;padding:0}
+        .product_list
+        {
+            width: 640px;
+        }
+        .product_list_item
+        {
+            border-bottom: 1px dashed #999999;
+            padding: 12px 0;
+        }
+        .product_list_item h2
+        {
+            font-size: 14px;
+        }
+        .product_list_item h2 a
+        {
+            text-decoration: none;
+            color: #003A80;
+        }
+		 .product_list_item h2 a:hover
+        {
+            text-decoration:underline;
+            color: #003A80;
+        }
+        img, h2, p, ul, li, h3, h4
+        {
+            border: 0 none;
+            line-height: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        .product_list_item p
+        {
+            color: #444444;
+            font-size: 12px;
+        }
+		
+        .product_list_item img
+        {   
+            padding: 3px;
+        }
+.product_list_pic{ border: 1px solid #CCCCCC;width:150px;height:100px;float:left;margin: 0 5px;line-height:100px !important;overflow:hidden;position:relative;text-align:center;}
+  
+.product_list_pic p {
+ * position:static;
+  *+position:absolute;
+  *top:50%
+}
+ .product_list_pic img {
+  *position:static;
+  *+position:relative;
+  *top:-50%;*left:-50%;
+  *vertical-align:middle
+}
+
+    </style>
+}
+<div class="middle_content">
+    <div class="normal_header">
+        企业库</div>
+    @*<div class="dept_top_content">
+        <span class="dept_tu"><img src="/images/fuhao.jpg" align="absmiddle" /></span>
+        <div class="dept_top"><a href="/product" title="全部">全部</a></div>
+        @foreach (var item in ViewBag.CatList)
+        {
+            <span class="dept_tu"><img src="/images/fuhao.jpg" align="absmiddle" /></span>
+            <div class="dept_top"><a href="?catId=@(item.Id)" title="@(item.Name)">@(item.Name)</a></div>
+        }
+    </div>*@
+    <div class="product_list">
+        @foreach (var item in ViewBag.List)
+        {
+            <div class="product_list_item">
+			<div class="product_list_pic"><p><img src="@(item.CompanyLogo)" alt="@(item.CompanyName)" width="140"/></p>
+</div>
+                
+                <h2>
+                    <a href="/company/@(item.CompanyId).html" title="@(item.CompanyName)">@(item.CompanyName)</a></h2>
+                <p>@(Goodspeed.Common.CharHelper.Truncate(item.CompanyIntroduction, 150))</p>
+                <div class="clear">
+                </div>
+            </div>     
+        }
+    </div>
+    @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.List.PageIndex, ViewBag.List.PageSize, ViewBag.List.TotalItemCount, new { @class = "pagerbar" }))
+</div>

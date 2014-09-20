@@ -1,0 +1,125 @@
+﻿@{
+    //用户登录或注册模板
+    Layout = "_EmptyLayout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+        table{empty-cells:show;}
+        ins{text-decoration:none;}
+        del{text-decoration:line-through;}
+        h1{font-family:Arial,Lucida,Verdana,microsoft yahei,宋体,Helvetica,sans-serif;font-size:20px;}
+        .f1{font-size:12px;height:60px;}
+        .ftx01,.flk01 a:link,.flk01 a:visited,a.flk01:link,a.flk01:visited{color:#FCD410;}
+        .ftx02,.flk02 a:link,.flk02 a:visited,a.flk02:link,a.flk02:visited{color:#F90;}
+        .ftx03,.flk03 a:link,.flk03 a:visited,a.flk03:link,a.flk03:visited{color:#A0410A;}
+        .ftx04,.flk04 a:link,.flk04 a:visited,a.flk04:link,a.flk04:visited{color:red;}
+        .ftx05,.flk05 a:link,.flk05 a:visited,a.flk05:link,a.flk05:visited{color:#A40F00;}
+        .ftx11,.flk11 a:link,.flk11 a:visited,a.flk11:link,a.flk11:visited{color:#B8D1EA;}
+        .ftx12,.flk12 a:link,.flk12 a:visited,a.flk12:link,a.flk12:visited{color:#4589BF;}
+        .ftx13,.flk13 a:link,.flk13 a:visited,a.flk13:link,a.flk13:visited{color:#005AA0;}
+        .ftx14,.flk14 a:link,.flk14 a:visited,a.flk14:link,a.flk14:visited{color:#12A000;}
+        .ftx21,.flk21 a:link,.flk21 a:visited,a.flk21:link,a.flk21:visited{color:#FFF;}
+        .ftx22,.flk22 a:link,.flk22 a:visited,a.flk22:link,a.flk22:visited{color:#CCC;}
+        .ftx23,.flk23 a:link,.flk23 a:visited,a.flk23:link,a.flk23:visited{color:#999;}
+        .ftx24,.flk24 a:link,.flk24 a:visited,a.flk24:link,a.flk24:visited{color:#666;}
+        .ftx25,.flk25 a:link,.flk25 a:visited,a.flk25:link,a.flk25:visited{color:#333;}
+        .ftx26,.flk26 a:link,.flk26 a:visited,a.flk26:link,a.flk26:visited{color:#000;}
+        h2,h3{font-size:14px;}
+        h4,h5,h6{font-size:12px;}
+        .form label, .form input, .form select, .form textarea, .form button, .form .label{float: left;font-size: 12px;}
+        .form .item{font-size: 14px;color: #333333;overflow: hidden;}
+        /*header*/
+        #shortcut{background:url(/images/bg_shortcut.gif) repeat-x scroll 0 -134px #EFEFEF;height:30px;width:100%;}
+        #shortcut .collect{float:left;line-height:30px;padding-left:15px;position:relative;}
+        #shortcut .collect b{height:10px;left:2px;overflow:hidden;position:absolute;top:9px;width:10px;}
+		#shortcut .w a:hover{color:#d70016;}
+        #shortcut ul{margin:0;padding:0;background:url(/images/bg_shortcut.gif) repeat-x scroll 0 -134px transparent;float:right;height:30px;position:relative;z-index:11;}
+        #shortcut li{list-style:none;background:url(/images/bg_shortcut.gif) no-repeat scroll -260px -100px transparent;color:#ACACAC;float:left;font-family:宋体;height:26px;line-height:26px;padding:2px 8px;}
+        #shortcut .fore1{background:none repeat scroll 0 0 transparent;}
+        #shortcut .link-regist{color:#F60;}
+        #shortcut .fore2{background:url(/images/bg_shortcut.gif) no-repeat scroll -130px -165px transparent;padding-left:50px;}
+        #shortcut .sub{width:72px;padding:0;}
+        #shortcut li dl{overflow:hidden;padding:0 1px;}
+        #shortcut li dt{height:26px;overflow:hidden;position:relative;padding:2px 11px 2px 8px;}
+        #shortcut li dt b{background:url(/images/bg_shortcut.gif) no-repeat scroll -210px -25px transparent;height:3px;position:absolute;right:3px;top:13px;width:5px;}
+        #shortcut li dd{display:none;line-height:20px;padding-left:8px;}
+        #shortcut li:hover dl,#shortcut .hover dl{-moz-border-bottom-colors:none;-moz-border-image:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;background:none repeat scroll 0 0 #FFF;border-color:#CCC;border-style:solid;border-width:0 1px 1px;padding:0;}
+        #shortcut li:hover dd,#shortcut .hover dd{display:block;}
+        #shortcut li:hover b,#shortcut .hover b{background-position:-220px -25px;}
+        /*box*/
+        #box .mt{background:url(/images/diying.jpg) repeat-x; height:33px;border:solid #D1D1D1;border-width:1px;}
+        #box .mt h2{float:left;height:33px;padding-left:15px;line-height:33px;margin:0;}
+        #box .mt span{float:right;height:33px;line-height:33px;text-align:right;}
+        #box .mt b{float:right;width:10px;height:33px;}
+        #box .mc{padding:15px 20px 20px;border:solid #D1D1D1;border-width:0 1px 1px;}
+        #box input.error{border:1px solid red;line-height:22px;*line-height:20px;}
+        /*register form*/
+        .w {margin:0 auto;padding:0;width:980px;}
+        #regist .tab{height:29px;overflow:visible;padding-left:300px;margin-bottom:25px;border-bottom:1px solid #b1c3d1;}
+        #regist .tab li{width:102px;padding-top:3px;height:27px;font-size:14px;list-style:none;text-align:center;line-height:27px;color:#F79100; float:left;}
+        #regist .tab .curr{background:url(/images/bg_regist.jpg) no-repeat scroll 0 -83px transparent;position:relative;font-weight:bold;z-index:10;color:#333333;}
+        #regist .tab .line{}
+        #regist .tab a:link,#regist .tab a:visited{display:block;overflow:hidden;width:74px;height:23px;margin:0 auto;line-height:23px;}
+        #regist .tab a:hover,#regist .tab a:active{color:#032c7b;text-decoration:none;}
+        *html #regist .tab{overflow:hidden;}
+        #regist h3{border-bottom:1px solid #E7E7E7;padding:10px 0 5px 220px;margin:0;margin-bottom:10px;}        
+        #regist .item{padding-top:5px;height:30px;line-height:18px;}
+        #regist .item a:link,#regist .item a:visited{text-decoration:underline;}
+        #regist .label{width:300px;text-align:right;font-size:14px;}
+        #regist .text{width:240px;height:16px;padding:4px 3px;border:1px solid #bbb;font-size:14px;font-family:arial,"宋体";}
+        #regist .text-1{width:100px;}
+        #regist .blank{width:16px;height:16px;margin:2px 5px 0;}
+        #regist .img img{height:26px;margin:0 5px;}
+        #regist .succeed{background:url(i/pwdstrength.gif) no-repeat -105px 0;}
+        #regist .btn-regist{width:166px;height:32px;font-size:14px;font-weight:bold;color:#fff;}
+        #regist .highlight1{border:1px solid #EFA100;outline:2px solid #FFDC97;*border:2px solid #ffcc66;*padding:3px 2px;}
+        #regist .highlight2{border:1px solid #f00;outline:1px solid #FFC1C1;color:#f00;}
+        #regist .pwdbg{background:#FFF8EB;}
+        #regist .focus{color:#999;line-height:22px;*line-height:20px;}
+        
+        #regist .checkbox{margin-top:6px;*margin-top:2px;}
+        #regist #referrer{color:#999;font-size:12px;}
+        input.error { border: 1px solid red; }
+
+        /*Login*/
+        #login .form {float:left;width:500px;}
+        #login .label {font-size:14px;text-align:right;width:100px;}        
+        #login #guide {border-left:1px solid #E7E7E7;float:left;height:290px;padding:0 0 20px 40px;width:300px;}  
+        #login .item {height:50px;line-height:26px;padding-top:5px;}
+        #login .text {border:1px solid #BBBBBB;float:left;font-family:arial,"宋体";font-size:14px;height:16px;padding:4px 3px;width:240px;}
+        #login .f1{float:left;}
+        #login h5 {font-size:12px;}
+		#guide .btn-personal{border:0;display:block;background:url(/images/bg_regist.jpg) no-repeat scroll 0 -186px transparent;font-size:14px;font-weight:bold;height:35px;line-height:35px;margin:35px auto 20px;width:137px;}
+		#guide a{text-align:center;}
+		#guide a:hover{color:#dc0927;text-decoration:none;}
+        #login #guide .content {color:#666666;padding:5px 0 0;font-size:12px;line-height:20px;}
+        #login #guide .btns {border-top:1px dotted #CCCCCC;margin-bottom:50px;padding-top:15px;text-align:center;}	
+        #login #guide .btns a{font-size:14px;text-decoration:none;margin:0 15px;color:#005AA0;}
+		#login #guide .btns a:hover{color:#dc0927;text-decoration:underline;}
+        #login .btn-entry {border:0;background:url(/images/bg_regist.jpg) no-repeat scroll -155px -150px transparent;color:#FFFFFF;font-size:14px;font-weight:bold;height:35px;width:87px;}
+        /*注册成功*/
+       #registersuccess .tip{margin:0;padding:0;font-size:14px;color:#FF0000;text-indent:2em;line-height:25px;}
+       .gray{color:#999999;}
+    </style>
+    <script src="/scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/scripts/jquery.province.js" type="text/javascript"></script>
+    @RenderSection("header", false)
+}
+<div id="shortcut">
+    <div class="w">
+	<div class="collect"><a href="javascript:bookmarksite();">收藏本站</a></div><ul><li class="fore1"id="loginfo"></li>
+            <li class="fore2"><a href="/" target="_blank">网站首页</a></li><li><a href="http://webcast.planteng.cn/"
+                target="_blank">在线研讨会</a></li><li><a href="/tech/" target="_blank">技术</a></li><li><a
+                    href="/news/" target="_blank">新闻</a></li></ul>
+    </div>
+</div>
+<div class="w" id="logo">
+    <div>
+        <a href="/">
+            <img src="/images/logo.jpg" border="0" /></a></div>
+</div>
+@RenderBody()
+<!--============下面底部====================-->
+@Html.Partial("~/Views/Shared/_FooterModule.cshtml")
+@section footer{@RenderSection("footer", false)}

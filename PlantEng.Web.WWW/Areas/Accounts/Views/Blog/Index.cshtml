@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "博客信息";
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+}
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", "博客信息" } })
+    <div class="mode_menu_tag2">
+        <ul>
+            <li class="nowtag"><a href="/accounts/blog/" title="博客信息">博客信息</a></li>
+            <li><a href="/accounts/blog/edit" title="写博客">写博客</a></li>
+        </ul>
+    </div>
+    <div class="admin_dongt">
+        <table width="100%" border="0">
+            <tr>
+                <th align="left">
+                    标题
+                </th>
+                <th width="10%">
+                    浏览数
+                </th>
+                <th width="10%">
+                    添加时间
+                </th>
+                <th width="10%">
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in ViewBag.BlogPostList)
+            {
+                <tr>
+                    <td>
+                        <b><a href="@(item.Url)" target="_blank">@item.Title</a></b>
+                    </td>
+                    <td align="center">@item.ViewCount
+                    </td>
+                    <td align="center">@(item.CreateDateTime.ToString("yyyy-MM-dd"))
+                    </td>
+                    <td align="center">
+                        <a href="/accounts/blog/edit?id=@(item.Id)">编辑</a>&nbsp;|&nbsp;<a href="javascript:void(0);" onclick="del(@(item.Id));">删除</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        @if (ViewBag.BlogPostList.Count == 0) { 
+           <div><a href="/accounts/blog/edit">您还没有发表博客，现在马上发表一篇吧！</a></div>
+        }
+        @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.BlogPostList.PageIndex, ViewBag.BlogPostList.PageSize, ViewBag.BlogPostList.TotalItemCount, new { @class = "pagerbar" }))
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        function del(id) {
+            if (window.confirm('确定？\r\n\r\n一旦删除，不能还原。')) {
+                window.location.href = '/accounts/blog/delete?id=' + id;
+            }
+        }
+    </script>
+}

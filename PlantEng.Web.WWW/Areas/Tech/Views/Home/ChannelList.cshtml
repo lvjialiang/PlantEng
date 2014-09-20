@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_TechLayout.cshtml";
+    var techInfo = ViewBag.TechInfo;
+    var columnInfo = ViewBag.ColumnInfo;
+    ViewBag.Title = string.Format("{0} - {1}",columnInfo.Name,techInfo.Name);
+}
+
+<div class="middle_content">
+    <div class="normal_header"><span>当前位置：</span><span><a href="/">首页</a></span>&nbsp;>&nbsp;<span><a href="/tech">技术频道</a></span>&nbsp;>&nbsp;<span><a href="/tech/@(techInfo.Alias)" title="@(techInfo.Name)">@(techInfo.Name)</a></span>&nbsp;>&nbsp;<span>@(columnInfo.Name)</span></div>
+    <div class="news-list-item">
+        @foreach (var item in ViewBag.ArticleList)
+        {
+		<br />
+            <div class="bt_list">
+                <a href="@(item.Url)" title="@(item.Title)" target="_blank">·@(item.Title)</a>
+            </div>
+            <div class="news-list-item">
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {<img src="@(item.ImageUrl)" width="80" height="53" border="0" align="right" alt="@(item.Title)" title="@(item.Title)" />}
+                <span class="list_title">@(item.Remark)</span>
+            </div>
+        }        
+    </div>
+    @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.ArticleList.PageIndex, ViewBag.ArticleList.PageSize, ViewBag.ArticleList.TotalItemCount, new { @class = "pagerbar" }))
+</div>

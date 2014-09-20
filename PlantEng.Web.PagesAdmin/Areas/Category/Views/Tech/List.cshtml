@@ -1,0 +1,70 @@
+﻿@model PlantEng.Models.Category.TechInfo
+@{
+    ViewBag.Title = "技术分类";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+    <fieldset>
+    <legend>技术分类</legend>
+    @Html.ValidationSummary()
+    @if(ViewBag.Msg != null){
+        <div class="success">@ViewBag.Msg</div>
+    }
+    <form method="post">
+        <table>
+        <tr>
+            <th align="right">名称：</th>
+            <td>@Html.TextBoxFor(m=>m.Name)</td>
+        </tr>
+        <tr>
+            <th align="right">别名：</th>
+            <td>@Html.TextBoxFor(m=>m.Alias)</td>
+        </tr>
+        <tr>
+            <th align="right">排序：</th>
+            <td>@Html.TextBoxFor(m => m.Sort)</td>
+        </tr>
+        <tr>
+            <th align="right">是否删除：</th>
+            <td>@(Html.RadioButtonFor(m=>m.IsDeleted,true))是@(Html.RadioButtonFor(m => m.IsDeleted, false))否</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="保存" />&nbsp;&nbsp;<a href="list">新增</a></td>
+        </tr>
+        </table>
+    </form>
+    <table class="tblist">
+        <tr>
+            <th>Id</th>
+            <th>名称</th>
+            <th>别名</th>
+            <th>排序</th>
+            <th>是否删除</th>
+            <th>操作</th>
+        </tr>
+        @foreach(var item in ViewBag.List){
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Alias</td>
+                <td>@item.Sort</td>
+                <td>@Html.Raw(item.IsDeleted ? "<font color=\"red\">已删除</font>":"否")</td>
+                <td><a href="?id=@item.Id">编辑</a></td>
+            </tr>
+        }
+    </table>
+</fieldset>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var sortObj = $('#Sort');
+            if (sortObj.val() == '') {
+                sortObj.val('999999');
+            }
+        });
+    </script>
+}
+
+

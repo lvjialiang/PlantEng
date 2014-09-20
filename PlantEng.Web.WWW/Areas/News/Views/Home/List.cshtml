@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+    ViewBag.Title = ViewBag.CategoryInfo.Name;
+}    
+<html xmlns:wb="http://open.weibo.com/wb">
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<div class="middle_content" >
+    <div class="normal_header">
+       <span>当前位置：</span><span><a href="/">首页</a>&nbsp;>&nbsp;<span><a href="/news">新闻中心</a></span>&nbsp;>&nbsp;<span>@(ViewBag.CategoryInfo.Name)</span> </div>
+    <div class="news-list-item"  >
+        @foreach (var item in ViewBag.ArticleList)
+        { 
+            <a href="@(item.Url)" title="@(item.Title)">
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@(item.ImageUrl)" alt="@(item.Title)" align="right"/>
+                } <span class="list_news_title">@(item.Title)</span></a><p style="line-height: 20px;">@(item.Remark)</p>
+            <div class="clear"></div>
+        }
+        
+        @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.ArticleList.PageIndex, ViewBag.ArticleList.PageSize, ViewBag.ArticleList.TotalItemCount, new { @class = "pagerbar" }))
+    </div>
+</div>

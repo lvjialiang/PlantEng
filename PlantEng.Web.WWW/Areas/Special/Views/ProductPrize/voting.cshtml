@@ -1,0 +1,470 @@
+﻿@{
+    Layout = "/Views/Shared/_EmptyLayout.cshtml";
+    ViewBag.Title = "投票";
+
+    //2012年产品奖
+    var pItems = PlantEng.Web.WWW.Areas.Special.Data.ProductPrizeData.List(59,26,2012);
+
+}
+@section header{
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+	img{margin:0;padding:0;}
+        #topzt
+        {
+            width: 980px;
+            height: 38px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: black;
+            color: #fff;
+        }
+        
+        #topzt .topztleft
+        {
+            width: 150px;
+            float: left;
+            margin-top: 10px;
+        }
+        
+        #topzt .topztrig
+        {
+            width: 550px;
+            float: left;
+            height: 38px;
+            margin-left: 270px;
+        }
+        
+        #topzt .align1
+        {
+            text-align: center;
+        }
+        
+        #topzt .fline
+        {
+            color: #fff;
+        }
+        
+        #topzt a
+        {
+            color: #fff;
+        }
+        #topzt a:visited
+        {
+            color: #fff;
+        }
+        
+        #topzt a:hover
+        {
+            color: #fff;
+        }
+        
+        #topzt .top35
+        {
+            float: left;
+            width: 32px;
+            font-size: 12px;
+        }
+        
+        #topzt .top25
+        {
+            float: left;
+            width: 22px;
+            font-size: 12px;
+        }
+        
+        #topzt .top45
+        {
+            float: left;
+            width: 45px;
+            font-size: 12px;
+        }
+        
+        #topzt .top1
+        {
+            float: left;
+            width: 6px;
+            height: 18px;
+            font-size: 12px;
+        }
+        
+        #topzt .top50
+        {
+            float: left;
+            width: 50px;
+            font-size: 12px;
+        }
+        
+        #topzt .top60
+        {
+            float: left;
+            width: 65px;
+            font-size: 12px;
+        }
+        
+        
+        .topztrig div
+        {
+            padding-top: 14px;
+        }
+        
+        .btnVote
+        {
+            cursor: pointer;
+        }
+		.cat_61,.cat_63,.cat_74{ height: 780px;overflow: hidden;}
+		.cat_60,.cat_68,.cat_71{ height: 430px;overflow: hidden;}
+		.cat_64,.cat_66,.cat_67{ height: 230px;overflow: hidden;}
+		.cat_62,.cat_65,.cat_70{ height: 370px;overflow: hidden;}
+		.cat_72,.cat_73{ height: 350px;overflow: hidden;}
+
+    </style>
+    <script type="text/javascript">
+        PE.UserInfo = {
+            userName: '@(PlantEng.Core.PlantEngContext.Current.UserName)'
+        };
+    </script>
+}
+<div style="width: 100%; background: #000">
+    <div id="topzt">
+        <div style="margin: 0 auto; width: 980px">
+            <div class="topztleft">
+                <a href="/" target="_blank">
+                    <img src="images/logo.gif" align="absbottom" border="0"></a></div>
+            <div class="topztrig">
+                <div class="top35">
+                    <a href="/" target="_blank">首页</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top60">
+                    <a href="/tech/">技术频道</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top60">
+                    <a href="/news/">新闻中心</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top60">
+                    <a href="/resouce/download">资料下载</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top45">
+                    <a href="/product">产品库</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top45">
+                    <a href="/company">企业库</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top60">
+                    <a href="http://webcast.planteng.cn/">在线研讨会</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top35">
+                    <a href="http://bbs.planteng.cn/">论坛</a></div>
+                <div class="top1">
+                    |</div>
+                <div class="top35">
+                    <a href="/blog">博客</a>
+                </div>
+                <div class="top1">
+                    |</div>
+                <div class="top35">
+                    <a href="/video">视频</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main">
+    <div class="header">
+        <div id="main2">
+            <div class="header">
+                 <a href="http://webcast.planteng.cn/534/Content.aspx" target="_blank"><img src="images/banner.jpg"></a>
+            </div>
+            <div class="daohang">
+                <a href="/" target="_blank">网站<span>首页</span></a> <a href="Index" target="_blank">
+                    <span>产品奖</span>首页</a> <a href="/article/show/201207131329466160.html" target="_blank">产品奖<span>报名</span></a> <a href="voting" target="_blank">有奖<span>投票</span></a> <a href="http://webcast.planteng.cn/534/Content.aspx" target="_blank">颁奖<span>典礼</span></a>
+            </div>
+            <div class="c5">
+                <span>有奖投票</span></div>
+            <div class="mid1">
+                <div class="spacey21">
+                </div>
+                <div class="bodyer">
+                    <div class="wb_center">
+                        <div class="wb_title">
+                           
+                                为了鼓励更多的人参与投票，本次最佳产品奖投票设置一下幸运投票奖品，奖品及产生方法如下：<br />
+                                <strong>1、幸运投票终极大奖：数码相机一部</strong><br />
+                                产生方法：12月6日在颁奖典礼上从所有投票读者中随机抽取。<br />
+                                <strong>2、每周幸运投票奖：共8名，由领邦仪器公司提供的移动电源一个，</strong><br />
+                                产生方法：从每周投票的读者中随机抽取（10.19、10.26、11.2、11.9、11.16、11.23、11.30、12.3日公布各周获奖名单）<br />
+                                <strong>3、幸运投票奖：共5名，由领邦仪器公司提供的2G-U盘(皮带+钢壳)</strong><br />
+                                产生方法：12月6日在颁奖典礼上从所有投票读者中随机抽取。
+                            
+                        </div>
+                        <div class="jiangpin_right">
+                            <img src="images/jiangpin.jpg" /></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom_di">
+            </div>
+            <div class="spacex18">
+            </div>
+            <div class="ctop">
+            </div>
+            <div class="c5">
+                <span>投票规则：</span></div>
+            <div class="mid1">
+                <div class="spacey21">
+                </div>
+                <div class="bodyer">
+                    <div class="wb_center">
+                        <div class="wb_title">
+                            
+                                此次评选总共设立14个类别，依据类别的不同，从候选产品中选出3个产品投票。投票截止日期为2012年12月3日。<br />
+                                1、本次投票为注册用户实名投票，请<a href="/login?returnurl=/special/productprize/voting" target="_blank" style="color: red;">登录</a>后投票，没有注册的读者请先<a
+                                    href="/register?returnurl=/special/productprize/voting" target="_blank" style="color: red;">免费注册</a>。<br />
+                                2、同已注册用户对每个类别可至多给3个产品投票。PEC有权对恶意投票取消其投票资格。<br />
+                                3、最佳产品奖产生：网络投票数每个类别前3名获得最佳产品奖
+                            
+                            <span class="bodyer_title">
+                                <strong>用户登录：</strong><br />
+                                您还没有登录，请<a href="/login?returnurl=/special/productprize/voting" target="_blank" style="color: red;">登陆</a>后选择您要投票的产品！
+                            </span>
+                        </div>
+                        <div class="jiangpin_right">
+                            <div class="kuang">
+                                <div class="top">
+                                </div>
+                                <div class="body" style="height: 120px;">
+                                    <div class="box_wenben">
+                                        <img src="images/ping_top.jpg" />
+                                        
+                                            评选标准：
+                                    </div>
+                                    <div class="box2">
+                                        <div class="spacex12">
+                                        </div>
+                                        <div class="spacey18">
+                                        </div>
+                                        
+                                            产品的技术创新性<BR>
+                                        
+                                        <div class="spacey18">
+                                        </div>
+                                        
+                                            产品的市场影响力<bR>
+                                        <div class="spacey18">
+                                        </div>
+                                       
+                                            产品的服务
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom_di">
+            </div>
+            <div class="spacex18">
+            </div>
+            <div class="ctop">
+            </div>
+            <div class="c5">
+                <span>产品分类</span></div>
+            <div class="mid1">
+                <div class="spacey21">
+                </div>
+                <div class="bodyer">
+                    @foreach (var catItem in pItems)
+                    {
+                        <text>
+                        <div class="pItem cat_@(catItem.Id)">
+                            <h2>
+                                &nbsp;&nbsp;&nbsp;@(catItem.Name)</h2>
+                            <div id="cat_2070" class="pItem_Content">
+                                <ul>
+                                    <table border="0" cellspacing="0" cellpadding="0" width="100%" style="font-size: 12px;
+                                        color: #FF6600; margin-top: 2px;">
+                                        <tr>
+                                            <td width="65%" align="center">
+                                                产品名称
+                                            </td>
+                                            <td>
+                                                得票数
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    @foreach(var articleItem in catItem.Items){
+                                        <text>
+                                        <li>
+                                        <div class="tvp">
+                                            <a href="@(articleItem.Url)" target="_blank" class="pItem_Link btnlist" title="@(articleItem.Title)">@(articleItem.Title)</a> <span class="pItem_VoteCount">(<span id="vc_@(articleItem.Id)">@(articleItem.VoteCount)</span>)</span></div>
+                                        <img src="images/yellow.jpg" alt="投票" class="btnVote" id="btnVote_@(articleItem.Id)" catId="@(catItem.Id)" productId=@(articleItem.Id) /></li>
+                                        
+                                        </text>
+                                    }
+                                    
+                                    
+                                </ul>
+                            </div>
+                        </div></text>
+                    }
+                </div>
+            </div>
+            <div class="bottom_di">
+            </div>
+            <div class="footer_last">
+                <div class="spacey18">
+                </div>
+                <div class="ctop">
+                </div>
+                <div class="c5">
+                    <span>支持媒体</span></div>
+                <div class="mid1">
+                    <div class="spacey21">
+                    </div>
+                    <div class="bodyer">
+                        <div class="spacex18">
+                        </div>
+                        <div class="spacey15">
+                        </div>
+                        <div class="chap5">
+                            <div class="imgbox3">
+                                <a href="http://www.solarf.net/" target="_blank">
+                                    <img src="images/logo1.jpg" width="144" height="72" /></a></div>
+                        </div>
+                        <div class="spacey10">
+                        </div>
+                        <a href="http://www.inmachine.com/">
+                            <div class="chap5">
+                                <div class="imgbox3">
+                                    <img src="images/logo2.jpg" /></div>
+                            </div>
+                        </a>
+                        <div class="spacey10">
+                        </div>
+                        <a href="http://www.cechina.cn/">
+                            <div class="chap5">
+                                <div class="imgbox3">
+                                    <img src="images/logo3.jpg" width="144" height="72" /></div>
+                            </div>
+                        </a>
+                        <div class="spacey10">
+                        </div>
+                        <a href="http://ch.gongchang.com/">
+                            <div class="chap5">
+                                <div class="imgbox3">
+                                    <img src="images/logo4.jpg" width="144" height="72" /></div>
+                            </div>
+                        </a>
+                        <div class="spacey10">
+                        </div>
+                        <a href="http://www.eleweb.cn/">
+                            <div class="chap5">
+                                <div class="imgbox3">
+                                    <img src="images/logo5.jpg" width="144" height="72" /></div>
+                            </div>
+                        </a>
+                        <div class="spacey10">
+                        </div>
+                        <a href="http://www.cpe86.com.cn/">
+                            <div class="chap5">
+                                <div class="imgbox3">
+                                    <img src="images/logo6.jpg" width="144" height="72" /></div>
+                            </div>
+                        </a>
+                        <div class="spacex18">
+                        </div>
+                    </div>
+                    <div class="bottom_di">
+                    </div>
+                </div>
+                <div class="spacex11">
+                </div>
+                <div class="clear">
+                </div>
+                <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="enetbotm">
+                    <tr>
+                        <td height="90" align="center">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr bgcolor="">
+                                    <td height="21" align="center">
+                                        <span class="copy"><a href="/about/">关于我们</a> | <a href="/about/sitemap">
+                                            网站地图</a> | <a href="/about/contact">联系我们</a> | <a href="/about/friendlink">
+                                                友情链接</a></span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table border="0" align="center" cellpadding="3" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" height="30">
+                                            <p style="line-height: 18px;">
+                                                All content copyright&#169; 2012 Beijing Control Engineering Information Technology
+                                                Co., Ltd.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(function () {
+            $('.btnVote').click(function () {
+            alert('投票已结束！谢谢您的支持。');
+            @*
+                //判断用户是否登录
+                if (!PE.UserInfo.userName) {
+                    alert('请先登录！');
+					window.location.href = '/login?returnurl=/special/productprize/voting';
+                    return;
+                }
+
+                var pId = $(this).attr('productId');
+                var cId = $(this).attr('catId');
+                //异步请求
+                $.ajax({
+                    url: 'ajax',
+                    data: { action: 'vote', catId: cId, productId: pId },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result) {
+                            if (result.Status === 0) {
+                                alert('请先登录！');
+								window.location.href = '/login?returnurl=/special/productprize/voting';
+                            }
+                            if (result.Status === 1) {
+                                $('#vc_' + pId).html(result.Count);
+                                alert('投票成功！感谢您的支持。');
+                            }
+                            if (result.Status === -1) {
+                                //已投过票了
+                                alert('您已经投过，请不要重复投！');
+                            }
+                            if (result.Status === -2) {
+                                alert('一个分类下最多投三次，请选择其他分类！');
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert('投票失败，请重试！');
+                    }
+                });
+                *@
+
+            });
+        });
+    </script>
+}

@@ -1,0 +1,142 @@
+﻿@model PlantEng.Models.Company.CompanyProductInfo
+@{
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+    ViewBag.Title = string.Format("{0}企业产品", Model.Id > 0 ? "编辑" : "发布");
+    var systemCategory = PlantEng.Services.Company.CompanyProductCategoryService.GetSystemCategoryList();
+    var categoryList = ViewBag.CategoryList;
+}
+@section header{
+    <!-- Load TinyMCE -->
+    <script type="text/javascript" src="/editor/tinymce/tiny_mce.js"></script>
+    <!-- /TinyMCE -->
+}
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", ViewBag.Title } })
+    <div class="mode_menu_tag2">
+        <ul>
+            <li><a href="/accounts/company/productlist" title="企业新闻">企业产品</a></li>
+            <li class="nowtag"><a title="@(ViewBag.Title)">@(ViewBag.Title)</a></li>
+            <li><a href="/accounts/company/productcategorylist" title="自定义分类">自定义分类</a></li>
+        </ul>
+    </div>
+    <div class="admin_dongt">
+        <form method="post">
+        @Html.HiddenFor(m=>m.CategoryId)
+        @if (categoryList.Count == 0) { <text>您还没有创建产品分类，<a href="/accounts/company/productcategorylist">马上创建分类</a>。</text>}
+        @Html.ValidationSummary()
+        @if (ViewBag.Msg != null)
+        {
+            <div class="success">@Html.Raw(ViewBag.Msg)<a href="?" class="ml10">继续添加</a><span class="ml10">或</span><a href="/accounts/company/productlist" class="goback">返回</a></div>
+        }
+        <table width="100%">
+            <tr>
+                <th width="15%" align="right">
+                    产品名称：
+                </th>
+                <td>@Html.TextBoxFor(m => m.Title, new { @class = "text" })
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">@Html.TextAreaFor(m => m.Content, new { @rows = "30", @cols = "100" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                    产品简介：
+                </th>
+                <td>@Html.TextAreaFor(m => m.Remark, new { @rows = "5", @cols = "80" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                    系统分类：
+                </th>
+                <td>
+                    <select id="syscat" name="syscat">
+                        <option value="0">==请选择==</option>
+                        @foreach(var item in systemCategory){
+                            <option value="@(item.Id)" @Html.Raw(item.Id == Model.SystemCategoryId ? "selected=\"selected\"" :"")>@(item.Name)</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                    自定义分类：
+                </th>
+                <td>
+                    <select id="cat" name="cat">
+                        <option value="0">==请选择==</option>
+                        @foreach(var item in categoryList){
+                            <option value="@(item.Id)" @Html.Raw(item.Id == Model.CategoryId ? "selected=\"selected\"" :"")>@(item.Name)</option>
+                        }
+                    </select><a href="/accounts/company/productcategorylist" class="ml10">添加自定义分类</a>
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    产品图片：
+                </th>
+                <td>@Html.TextBoxFor(m => m.ImageUrl, new { @class = "text" })<a href="javascript:void(0);" class="ml10" onclick="uploadImageForInput('ImageUrl');">上传图片</a>
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                    关键词：
+                </th>
+                <td>@Html.TextBoxFor(m => m.Tags, new { @class = "text" })（多个关键词以空格分开）
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    发布时间：
+                </th>
+                <td>@Html.TextBox("PublishDateTime", Model.PublishDateTime.ToString("yyyy-MM-dd"), new { @class = "text" })
+                </td>
+            </tr>
+            @if (categoryList.Count != 0)
+            {
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" value="保存" /><a href="/accounts/company/productlist" class="cancle">取消</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        </form>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(function () {
+            //设置时间选择器
+            $("#PublishDateTime").datepicker({ dateFormat: 'yy-mm-dd', monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'], dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'] });
+            tinyMCE.init({
+                // General options
+                mode: "exact",
+                elements: 'Content',
+                theme: "advanced",
+                language: "zh-cn",
+                width: "100%",
+                plugins: "autolink,pagebreak,table,advhr,advimage,advlink,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,xhtmlxtras,advlist,uploadimg",
+
+                // Theme options
+                theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|cite,abbr,acronym,del,ins|,pagebreak,restoredraft,|,formatselect,fontselect,fontsizeselect",
+                theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,uploadimg,cleanup,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+                theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,iespell,media,advhr,|,print,|,ltr,rtl,|,help,fullscreen,code,",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_font_sizes: "11px=11px,12px=12px,13px=13px,14px=14px",
+                theme_advanced_resizing: true,
+                theme_advanced_fonts: '楷体_GB2312=楷体_GB2312;黑体=黑体;隶书=隶书;Times New Roman=Times New Roman;Arial=Arial;',
+                relative_urls: false,
+                remove_script_host: false,
+                content_css: "/styles/editor.css",
+                upload_image_url: '/_Ajax/UploadImageForEditor' //上传图片地址
+            });
+        });
+    </script>
+}

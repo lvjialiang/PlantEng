@@ -1,0 +1,23 @@
+﻿@model PlantEng.Models.Company.CompanyProductInfo
+@{
+    var companyInfo = ViewBag.CompanyInfo;
+    ViewBag.Title = companyInfo.CompanyName;
+    Layout = "~/Views/Shared/_CompanySpaceLayout.cshtml";
+}
+<div class="new_Information">
+    <div class="Dateilarticle_Rtitle">
+        <a href="/company/@(companyInfo.CompanyId).html">企业空间</a>&nbsp;&gt;&nbsp;<a href="/company/@(companyInfo.CompanyId)/productlist.html">产品信息</a>&nbsp;&gt;&nbsp;正文
+    </div>
+    <div class="Dateilarticle_Rcontent">
+        <ul>
+            <li class="title">
+                <h2>@(Model.Title)</h2>
+            </li>
+            <li class="date">发布时间：@(Model.PublishDateTime.ToString("yyyy-MM-dd")) &nbsp; 修改时间：@(Model.ModifyDateTime.ToString("yyyy-MM-dd"))</li>
+        </ul>
+        <div>
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+</div>
+

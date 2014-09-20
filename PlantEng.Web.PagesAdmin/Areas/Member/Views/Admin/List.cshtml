@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "管理员管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+    <fieldset>
+        <legend>添加管理员</legend>
+        <table>
+            <tr>
+                <th>请输入用户名：</th>
+                <td>@Html.TextBox("txtUserName")</td>
+                <td><input type="button" value="搜索" onclick="search();" /></td>
+            </tr>
+        </table>
+        <table>
+            @if (ViewBag.SearchList != null)
+            {
+                foreach (var item in ViewBag.SearchList)
+                {
+                    <tr>
+                    <td>@item</td>
+                    <td><a href="javascript:void(0);" onclick="add('@item');">添加</a></td>
+                    </tr>
+                }
+            }
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>管理员列表</legend>
+        <table>
+            <tr>
+                <th>用户名</th>
+                <th>操作</th>
+            </tr>
+            @foreach(var item in ViewBag.AdminList){
+                if (item != "xbf321")
+                {
+                <tr>
+                    <td>@item</td>
+                    <td><a href="javascript:void(0);" onclick="del('@item');">删除</a></td>
+                </tr>
+                }
+            }
+        </table>
+    </fieldset>
+</div>
+<form name="hidef" id="hidef" method="post">
+    @Html.Hidden("hfAction")
+    @Html.Hidden("hfUserName")
+</form>
+@section footer{
+    <script type="text/javascript">
+        function del(u) {
+            if (window.confirm('确认要删除吗？')) {
+                document.getElementById('hfUserName').value = u;
+                document.getElementById('hfAction').value = 'delete';
+                document.getElementById('hidef').submit();
+            }
+        }
+        function search() {
+            document.getElementById('hfUserName').value = $('#txtUserName').val();
+            document.getElementById('hfAction').value = 'search';
+            document.getElementById('hidef').submit();
+        }
+        function add(u) {
+            if (window.confirm('确认要添加吗？')) {
+                document.getElementById('hfUserName').value = u;
+                document.getElementById('hfAction').value = 'add';
+                document.getElementById('hidef').submit();
+            }
+        }
+    </script>
+}

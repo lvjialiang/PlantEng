@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "企业新闻";
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+}
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", "企业新闻" } })
+    <div class="mode_menu_tag2">
+        <ul>
+            <li class="nowtag"><a title="企业新闻">企业新闻</a></li>
+            <li><a href="/accounts/company/newsedit" title="发布企业新闻">发布企业新闻</a></li>
+        </ul>
+    </div>
+    <div class="admin_dongt">
+        @Html.Partial("_CompanyNewsList", new ViewDataDictionary { {"NewsList",ViewBag.NewsList},{"Type","news"}})
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Eletter下载";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+    <fieldset>
+        <legend>Eletter下载</legend>
+        <table>
+            <tr>
+                <th>
+                    请选择月份：
+                </th>
+                <td>
+                <select id="dlmonth" name="dlmonth">
+                    <option value="0">==请选择==</option>
+                    @foreach(var item in ViewBag.Months){
+                        <text><option value="@item.Key">@(item.Key)(@(item.Value))</option></text>
+                    }
+                </select>
+                </td>
+                <td>
+                    <a target="_blank" id="lbtnMonth" href="###">按月下载</a>
+                </td>
+                <td>
+                    <a href="export" target="_blank">全部下载</a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(function () {
+            $('#lbtnMonth').click(function () {
+                var v = $('#dlmonth').val();
+                if (v === "0") {
+                    alert('请选择月份');
+                    return false;
+                }
+                $(this).attr("href","export?month="+v);
+            });
+        })
+    </script>
+}

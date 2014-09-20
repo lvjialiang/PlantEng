@@ -1,0 +1,121 @@
+﻿@{
+    /*带有头尾的模板*/
+    Layout = "_EmptyLayout.cshtml";	
+}
+@section header{@RenderSection("header", false)}
+<div class="PageWidth ">
+    <!--============开始====================-->
+    <div class="top_box">
+        <div class="site-nav">
+            <div class="nav_left">
+                &nbsp;<a href="#">设为首页</a>&nbsp;&nbsp;<a href="javascript:bookmarksite('工厂工程网－关注工厂全生命周期的效率、能源和安全', 'http://www.planteng.cn/');">加入收藏</a>&nbsp;<img
+                    src="/images/wb_logo16_a.png" align="absbottom" /><a href="http://weibo.com/planteng"
+                        target="_blank">本站微博</a>&nbsp;</div>
+            <div class="icon1">
+                <img src="/images/icon_usa.jpg" align="absbottom" width="25" height="18" />&nbsp;<a
+                    href="http://www.plantengineering.com/" target="_blank">PE USA</a>&nbsp;<img src="/images/icon_china.png"
+                        align="absbottom" width="25" height="18" />&nbsp;<a href="http://www.cechina.cn/"
+                            target="_blank">CE China</a>&nbsp;<img src="/images/icon_usa.jpg" align="absbottom"
+                                width="25" height="18" />&nbsp;<a href="http://www.controleng.com/" target="_blank">CE
+                                    USA</a>&nbsp;<img src="http://www.cechina.cn/images/icon_europe.png" align="absbottom"
+                                        width="25" height="18" />&nbsp;<a href="http://www.controlengeurope.com/" target="_blank">CE
+                                            Europe</a>&nbsp;</div>
+            <div class="quick-menu">
+                <ul>
+                    @if (PlantEng.Core.PlantEngContext.Current.IsLogin)
+                    {
+                        <li>您好,@(PlantEng.Core.PlantEngContext.Current.UserName)
+                            ,<a href="/accounts/">进入管理中心</a>,<a href="/accounts/myspace">我的空间</a>,<a href="/logout">退出登录</a></li>
+                    }
+                    else
+                    {	
+                        <li style="margin-right: 8px;">
+                            <input type="text" size="15" id="txtKey" value="@(Request.QueryString["key"])" /><input type="button" onclick="PE.search('txtKey');" value="搜索" /></li>			    
+                        <li><a href="/login">登录</a>&nbsp;|</li>
+                        <li><a href="http://www.planteng.cn/register">个人注册</a>&nbsp;|</li>
+                        <li><a href="http://www.planteng.cn/registercompany">企业注册</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="logo_box">
+            <a href="/">
+                <img src="/images/logo.jpg" alt="工厂工程" border="0" /></a></div>
+        <div class="guanggao">
+            <a href="http://www.planteng.cn/article/show/201207131329466160.html" target="_blank">
+                <img src="/images/top_banner.jpg" /></a>
+        </div>
+    </div>
+    <!--============导航开始====================-->
+    <div class="menu_box">
+        <table width="944" height="39" border="0" align="center" cellpadding="0" cellspacing="0"
+            style="margin-left: 5px; line-height: 20px;">
+            <tr>
+                <td width="55" rowspan="2" align="center" valign="center" style="font-size: 14px;">
+                    <a href="/tech/"><strong>技术</strong><br />
+                        <strong>频道</strong></a>
+                </td>
+                <td width="14" rowspan="2" align="left">
+                    <img src="/images/xian.png" />
+                </td>
+                <td width="246" valign="center">
+                    <a href="/tech/maintenance">工厂维护</a> <a href="/tech/energy">能源管理</a> <a href="/tech/safety">
+                        安全安防</a> <a href="/tech/information">工厂信息化</a>
+                </td>
+                <td width="55" rowspan="2" align="center" valign="center" style="font-size: 14px;">
+                    <strong><a href="/news/">新闻<br />
+                        中心</a></strong>
+                </td>
+                <td width="14" rowspan="2" align="left">
+                    <img src="/images/xian.png" />
+                </td>
+                <td width="138" valign="center">
+                    <a href="/news/list?catid=15">特别报道</a> <a href="/news/list?catid=5">产业趋势</a>
+                </td>
+                <td width="55" rowspan="2" align="center" valign="center" style="font-size: 14px;">
+                    <strong><a>资源<br />
+                        中心</a></strong>
+                </td>
+                <td width="13" rowspan="2" align="left">
+                    <img src="/images/xian.png" />
+                </td>
+                <td width="206" valign="center">
+                    <a href="/video">视频</a> <a href="/resouce/download">资料下载</a> <a href="/product">产品库</a>
+                    <a href="/company">企业库</a>
+                </td>
+                <td width="50" rowspan="2" align="center" valign="center" style="font-size: 14px;">
+                    <strong><a>互动<br />
+                        社区</a></strong>
+                </td>
+                <td width="16" rowspan="2" align="left">
+                    <img src="/images/xian.png" />
+                </td>
+                <td width="82" valign="bottom">
+                    <a href="http://webcast.planteng.cn/">在线研讨会</a>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <a href="/tech/plantdesign">工厂设计</a> <a href="/tech/electrical">电气工程</a> <a href="/tech/mechanical">
+                        机械工程</a> <a href="/tech/automation">工厂自动化</a>
+                </td>
+                <td valign="top">
+                    <a href="/news/list?catid=13">企业新闻</a> <a href="/news/list?catid=14">新品发布</a>
+                </td>
+                <td valign="top">
+                    <a href="/resouce/whitepaper">白皮书</a> <a href="/resouce/application">应用案例</a> <a
+                        href="/Subscribe">eNewsletters</a>
+                </td>
+                <td>
+                    <a href="http://bbs.planteng.cn/">论坛</a> <a href="/blog">博客</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    @RenderBody()
+    <div class="clear">
+    </div>
+    <!--============下面底部====================-->
+    @Html.Partial("~/Views/Shared/_FooterModule.cshtml")
+</div>
+@section footer{@RenderSection("footer", false)}

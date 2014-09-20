@@ -1,0 +1,110 @@
+﻿@model PlantEng.Models.Advertisment.AdInfo
+@{
+    ViewBag.Title = "新建广告物料";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+    <div class="adm-nav">
+        <ul>
+            <li><a href="/adm/slot/list">广告位</a></li>
+            <li><a href="/adm/delivery/list">广告</a></li>
+            <li><a href="/adm/material/list">广告物料库</a></li>
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <fieldset>
+        <legend>新广告物料</legend>
+        @Html.ValidationSummary()
+        @if (ViewBag.Msg != null)
+        {
+            <div class="success">@Html.Raw(ViewBag.Msg)<a href="list" class="back">返回</a></div>
+        }
+        <form method="post">
+        <table>
+            <tr>
+                <th align="right">
+                    广告物料名称：
+                </th>
+                <td>@Html.TextBoxFor(m => m.Name, new { @class = "ui-text" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    类型：
+                </th>
+                <td>@(Html.RadioButtonFor(m => m.Type, PlantEng.Models.Advertisment.AdType.Text))文字@(Html.RadioButtonFor(m => m.Type, PlantEng.Models.Advertisment.AdType.Image))图片
+                </td>
+            </tr>
+            <tr id="materialEditText">
+                <th align="right" valign="top">
+                    文字内容：
+                </th>
+                <td>@Html.TextAreaFor(m => m.Words)
+                </td>
+            </tr>
+            <tr id="materialEditImage">
+                <th align="right" valign="top">
+                    图片文件：
+                </th>
+                <td valign="top">
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                @(Html.RadioButton("materialTypeImg",1))上传@(Html.RadioButton("materialTypeImg",1))远程
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>尺寸：</th>
+                            <td>宽@(Html.TextBoxFor(m=>m.Width))*高@(Html.TextBoxFor(m=>m.Height))</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    点击链接：
+                </th>
+                <td>@Html.TextBoxFor(m => m.ClickUrl, new { @class = "ui-text" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    目标窗口：
+                </th>
+                <td>@(Html.RadioButtonFor(m => m.TargetWindow, 1))新窗口@(Html.RadioButtonFor(m => m.TargetWindow, 0))原窗口
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <input type="submit" value="完成" /><a href="list" class="back">返回</a>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </fieldset>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(function () {
+            _chanageMaterialEdit($('input[name="Type"]:checked').val());
+            $('input[name="Type"]').click(function () {
+                _chanageMaterialEdit(this.value);
+            });
+        });
+        function _chanageMaterialEdit(type) {
+            var textContainer = $('#materialEditText');
+            var imageContainer = $('#materialEditImage');
+            textContainer.hide();
+            imageContainer.hide();
+            if (type.toLowerCase() === "text") {
+                textContainer.show();
+            }
+            if (type.toLowerCase() === "image") {
+                imageContainer.show();
+            }
+        }
+    </script>
+}

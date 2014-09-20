@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "~/Views/Shared/_SpaceLayout.cshtml";
+    var currentInfo = PlantEng.Core.PlantEngContext.Current;
+
+    var spaceInfo = ViewBag.SpaceInfo;
+    var visitorList = PlantEng.Services.Visitor.VisitorService.ListWithoutPage(spaceInfo.Id, 10);
+    ViewBag.Title = string.Format("{0}", spaceInfo.NickName == spaceInfo.UserName ? spaceInfo.NickName + "的空间" : spaceInfo.NickName);
+}
+<!--目前所在位置-->
+@Html.Partial("_NavPosition", new ViewDataDictionary { { "SpaceInfo", spaceInfo }, { "FirstText", "首页" } })
+<!--/目前所在位置-->
+<!--col_main_feed star-->
+<div class="col_main_feed">
+    <!--博客内容开始-->
+    <div>
+        <ul class="l_title01">
+            <li><strong>博客</strong></li>
+            <li class="r"><a href="/space/@(currentInfo.ClientSpaceId)/blog">更多</a></li></ul>
+        @foreach (var item in ViewBag.BlogPostList)
+        {
+            <div class="a_blog">
+                <h1>
+                    <a href="@(item.Url)" title="@(item.Title)">@(item.Title)</a><span>@(item.CreateDateTime.ToString("yyyy-MM-dd"))</span></h1>
+            </div>
+        }
+    </div>
+    <!--博客内容结束-->
+</div>
+<!--col_main_feed end-->
+<div class="col_main_sidebar">
+    @*<ul class="l_title">
+        <li><span class="sidebar_box">好友</span><a href="#">（已有3个好友）</a></li>
+        <li class="r"><a href="friend.html">更多</a></li>
+    </ul>
+    <ul class="l_vcontent">
+        <li><a href="/100536/">
+            <img src="http://www.cechina.cn/Upload/Avatars/158/100536.png" width="50" height="50"
+                alt="aunua111的空间" /></a>
+            <h1>
+                <a href="/100536/">aunua111 </a>
+            </h1>
+            <h2>
+                2011-12-21
+            </h2>
+        </li>
+        <li><a href="/121940/">
+            <img src="http://www.cechina.cn/Upload/Avatars/158/121940.png" width="50" height="50"
+                alt="haojun448的空间" /></a>
+            <h1>
+                <a href="/121940/">haojun448 </a>
+            </h1>
+            <h2>
+                2011-04-13
+            </h2>
+        </li>
+        <li><a href="/121940/">
+            <img src="http://www.cechina.cn/Upload/Avatars/158/121940.png" width="50" height="50"
+                alt="haojun448的空间" /></a>
+            <h1>
+                <a href="/121940/">haojun448 </a>
+            </h1>
+            <h2>
+                2011-04-13
+            </h2>
+        </li>
+    </ul>*@
+    
+    <ul class="l_title">
+        <li><span class="sidebar_box">最近访客</span></li>
+    </ul>
+    <span class="l_xian"></span>
+    <ul class="l_vcontent">
+        @foreach (var visitorItem in visitorList)
+        { 
+            <text>
+                <li><a href="/space/@(visitorItem.FromUserId)">
+                    <img width="50px" height="50px" src="/avatar?userid=@(visitorItem.FromUserId)" alt="@(visitorItem.FromUserName)"/></a>
+                    <h1>
+                        <a href="/space/@(visitorItem.FromUserId)" title="@(visitorItem.FromUserName)" target="_blank">@(visitorItem.FromUserName)</a>
+                    </h1>
+                    <h2>@(visitorItem.VisitDateTimeToString)
+                    </h2>
+                </li>
+            </text>
+        }
+    </ul>
+</div>

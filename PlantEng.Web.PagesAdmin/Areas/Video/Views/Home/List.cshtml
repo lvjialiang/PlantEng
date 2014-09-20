@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "视频列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int catId = Controleng.Common.CECRequest.GetQueryInt("catid", 0);
+}
+@section footer{
+    <script type="text/javascript">
+        var catId = '@(catId)';
+        function search() {
+            var selectValue = $('#select_column').val();
+            window.location.href = '?catid=' + selectValue;
+        }
+        $('#select_column option').each(function () {
+            if (this.value === catId) {
+                $(this).attr("selected", "selected");
+            }
+        });
+    </script>
+}
+<div class="page-content">
+    <fieldset>
+        <legend>视频列表</legend>
+        <table>
+            <tr>
+                <th>
+                    所属分类：
+                </th>
+                <td>
+                    <select id="select_column" name="select_column">
+                        <option value="0">==请选择==</option>
+                        @foreach (var item in ViewBag.CatList)
+                        {                         
+                            <option value="@(item.Id)">@item.Name</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input type="button" value="查询" onclick="search();" />
+                </td>
+                <td><a href="add">添加新视频</a></td>
+            </tr>
+        </table>
+        <table class="tblist">
+            <tr>
+                <th width="5%">
+                    Id
+                </th>
+                <th>
+                    标题
+                </th>
+                <th width="10%">
+                    发布时间
+                </th>
+                <th width="5%">
+                    置顶
+                </th>
+                <th width="5%">
+                    删除
+                </th>
+                <th width="5%">
+                    浏览次数
+                </th>
+                <th width="5%">
+                    播放次数
+                </th>
+                <th width="5%">
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in ViewBag.List)
+            {
+                <tr>
+                    <td>@item.Id
+                    </td>
+                    <td class="left">@item.Title
+                    </td>
+                    <td>@item.PublishDateTime.ToString("yyyy-MM-dd")
+                    </td>
+                    <td>@Html.Raw(item.IsTop ? "<font color=\"red\">是</font>" : "否")
+                    </td>
+                    <td>@Html.Raw(item.IsDeleted ? "<font color=\"red\">是</font>" : "否")
+                    </td>
+                    <td>@item.ViewCount
+                    </td>
+                    <td>@item.PlayCount
+                    </td>
+                    <td>
+                        <a href="add?id=@item.Id">编辑</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.List.PageIndex, ViewBag.List.PageSize, ViewBag.List.TotalItemCount, new { @class = "pagerbar" }))
+    </fieldset>
+</div>

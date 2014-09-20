@@ -1,0 +1,123 @@
+﻿1，Discuz.Config GeneralConfigInfo.cs 添加 3个字段
+        public string CommonLoginUrl { get; set; }
+        public string CommonRegisterUrl { get; set; }
+        public string CommonLogoutUrl { get; set; }
+2，Discuz.Web /Config/general.config 添加
+    <CommonLoginUrl>http://www.planteng.cn.3721.com/login?returnUrl=</CommonLoginUrl>
+    <CommonLogoutUrl>http://www.planteng.cn.3721.com/login?returnUrl=</CommonLogoutUrl>
+    <CommonRegisterUrl>http://www.planteng.cn.3721.com/login?returnUrl=</CommonRegisterUrl>
+3，Discuz.Data.SqlServer UserManage.cs
+  追加 DbHelper.MakeInParam("@uid",(DbType)SqlDbType.Int,8,userInfo.Uid)
+4，更改存储过程 dnt_createusers 把uid自增字段的属性去掉
+5，Discuz.Forum PageBase.cs
+  构造函数加如下代码
+  #region == 联合登录 ==
+            
+            PlantEng.Login.ILoginAdapter la = new PlantEng.Login.LoginAdapter();
+            if (la.IsClientLogin())
+            {
+                PlantEng.Login.LoginUserInfo loginUserInfo = la.GetLoginedUserInfo();
+                int _loginUserId = loginUserInfo.UserId;
+                var _shortInfo = Users.GetShortUserInfo(_loginUserId);
+                if(_shortInfo != null){
+                    userid = _shortInfo.Uid;
+                }
+                //ShowMessage(string.Format("{0}",userid),0);
+                //return;
+                if(userid <= 0){
+                    //论坛中不存在此用户
+                    //插入用户表
+                    UserInfo newUserInfo = new UserInfo();
+                    newUserInfo.Uid = loginUserInfo.UserId;
+                    newUserInfo.Username = loginUserInfo.UserName;
+                    newUserInfo.Nickname = loginUserInfo.UserName;
+                    newUserInfo.Password = Utils.MD5("123123");
+                    newUserInfo.Secques = string.Empty;
+                    newUserInfo.Gender = 0;
+                    newUserInfo.Adminid = 0;
+                    newUserInfo.Groupexpiry = 0;
+                    newUserInfo.Extgroupids = "";
+                    newUserInfo.Regip = DNTRequest.GetIP();
+                    newUserInfo.Joindate = Utils.GetDateTime();
+                    newUserInfo.Lastip = DNTRequest.GetIP();
+                    newUserInfo.Lastvisit = Utils.GetDateTime();
+                    newUserInfo.Lastactivity = Utils.GetDateTime();
+                    newUserInfo.Lastpost = Utils.GetDateTime();
+                    newUserInfo.Lastpostid = 0;
+                    newUserInfo.Lastposttitle = "";
+                    newUserInfo.Posts = 0;
+                    newUserInfo.Digestposts = 0;
+                    newUserInfo.Oltime = 0;
+                    newUserInfo.Pageviews = 0;
+                    newUserInfo.Credits = 0;
+                    newUserInfo.Extcredits1 = Scoresets.GetScoreSet(1).Init;
+                    newUserInfo.Extcredits2 = Scoresets.GetScoreSet(2).Init;
+                    newUserInfo.Extcredits3 = Scoresets.GetScoreSet(3).Init;
+                    newUserInfo.Extcredits4 = Scoresets.GetScoreSet(4).Init;
+                    newUserInfo.Extcredits5 = Scoresets.GetScoreSet(5).Init;
+                    newUserInfo.Extcredits6 = Scoresets.GetScoreSet(6).Init;
+                    newUserInfo.Extcredits7 = Scoresets.GetScoreSet(7).Init;
+                    newUserInfo.Extcredits8 = Scoresets.GetScoreSet(8).Init;
+                    newUserInfo.Email = loginUserInfo.Email;
+                    newUserInfo.Bday = string.Empty;
+                    newUserInfo.Sigstatus = 0;
+
+                    newUserInfo.Tpp = 0;
+                    newUserInfo.Ppp = 0;
+                    newUserInfo.Templateid = 0;
+                    newUserInfo.Pmsound = 0;
+                    newUserInfo.Showemail = 0;
+                    newUserInfo.Salt = "0";
+                    newUserInfo.Invisible = 0;
+                    newUserInfo.Newpm = 0;
+                    newUserInfo.Medals = "";
+                    newUserInfo.Accessmasks = 0;
+                    newUserInfo.Website = string.Empty;
+                    newUserInfo.Icq = string.Empty;
+                    newUserInfo.Qq = string.Empty;
+                    newUserInfo.Yahoo = string.Empty;
+                    newUserInfo.Msn = string.Empty;
+                    newUserInfo.Skype = string.Empty;
+                    newUserInfo.Location = string.Empty;
+                    newUserInfo.Customstatus = string.Empty;
+                    newUserInfo.Bio = string.Empty;
+                    newUserInfo.Signature = string.Empty;
+                    newUserInfo.Sightml = string.Empty;
+                    newUserInfo.Authtime = Utils.GetDateTime();
+                    newUserInfo.Authstr = "";
+                    newUserInfo.Authflag = 0;
+                    newUserInfo.Groupid = UserCredits.GetCreditsUserGroupId(0).Groupid;
+                    newUserInfo.Realname = string.Empty;
+                    newUserInfo.Idcard = string.Empty;
+                    newUserInfo.Mobile = string.Empty;
+                    newUserInfo.Phone = string.Empty;
+
+                    
+                   userid = Discuz.Forum.Users.CreateUser(newUserInfo);
+                    
+                }
+                //ShowMessage(string.Format("{0}|{1}", userid,useradminid), 0);
+                //return;
+                ShortUserInfo userInfo = Users.GetShortUserInfo(userid);
+                usergroupinfo = UserGroups.GetUserGroupInfo(userInfo.Groupid);
+                useradminid = usergroupinfo.Radminid; // 根据用户组得到相关联的管理组id
+
+
+                //更新论坛信息
+                Users.UpdateTrendStat(TrendType.Login);
+                OnlineUsers.UpdateAction(olid, UserAction.Login.ActionID, 0);
+                LoginLogs.DeleteLoginLog(DNTRequest.GetIP());
+                Users.UpdateUserCreditsAndVisit(userInfo.Uid, DNTRequest.GetIP());
+
+                //写Cookie信息
+                ForumUtils.WriteUserCookie(userid, 30, config.Passwordkey, 0, -1);
+                ForumUtils.WriteUserCreditsCookie(userInfo, usergroupinfo.Grouptitle);
+
+            }
+            #endregion
+6，Discuz.Web web.config 添加以下代码
+<appSettings>
+        <add key="DESKey" value="4D324DF0"/>
+        <!--用户登录Cookie-->
+        <add key="LoginCookieKey" value="usr"/>
+    </appSettings>

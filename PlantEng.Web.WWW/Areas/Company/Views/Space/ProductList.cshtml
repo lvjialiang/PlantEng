@@ -1,0 +1,25 @@
+﻿@{
+    var companyInfo = ViewBag.CompanyInfo;
+    ViewBag.Title = string.Format("最新产品 - {0}", companyInfo.CompanyName);
+    Layout = "~/Views/Shared/_CompanySpaceLayout.cshtml"; 
+}
+<div class="tab_title">
+<h4>
+    最新产品</h4>
+</div>
+<div class="clear">
+</div>
+<div class="product_list">
+    @foreach (var item in ViewBag.ProductList)
+    {
+        <div class="product_list_item">
+            <img src="@(item.ImageUrl)" alt="@(item.Title)" width="105" height="80" />
+            <h2>
+                <a href="@(item.Url)" title="@(item.Title)">@(item.Title)</a></h2>
+            <p>@(item.Remark)</p>
+            <div class="clear">
+            </div>
+        </div>
+    }
+    @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.ProductList.PageIndex, ViewBag.ProductList.PageSize, ViewBag.ProductList.TotalItemCount, new { @class = "pagerbar" }))
+</div>

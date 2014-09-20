@@ -1,0 +1,100 @@
+﻿@model PlantEng.Models.CompanyInfo
+@{
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+    ViewBag.Title = "企业信息";
+}
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", ViewBag.Title } })
+    <div class="mode_menu_tag2">
+        <ul>
+            <li class="nowtag"><a title="企业新闻">企业信息</a></li>
+        </ul>
+    </div>
+    <div class="admin_dongt">
+        <form method="post" enctype="multipart/form-data">
+        @Html.HiddenFor(m => m.CompanyId)
+        @Html.HiddenFor(m => m.UserId)
+        @Html.ValidationSummary()
+        @if (ViewBag.Msg != null)
+        {
+            <div class="success">@Html.Raw(ViewBag.Msg)</div>
+        }
+        <table>
+            <tr>
+                <th align="right">
+                    名称：
+                </th>
+                <td>@Html.TextBoxFor(m => m.CompanyName, new { @class = "text" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                    公司产品：
+                </th>
+                <td><table>
+                        <tr>
+                            @{int index = 0;}
+                            @foreach (var item in ViewBag.CatList)
+                            {
+                                if (index > 0 && index % 5 == 0)
+                                {<text>@Html.Raw("</tr><tr>")</text>}                        
+                                <text><td>
+                                    <input type="checkbox" name="cbCat" @(Model.Categories.Contains(item.Id) ? "checked" : "") value="@(item.Id)" />@(item.Name)
+                                </td></text>
+                                                                                         index++;
+                            }
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="cbCat" class="error" style="display: none">
+                                    请选择【公司产品】</label>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th valign="top" align="right">
+                    LOGO：
+                </th>
+                <td>
+                    <input type="file" name="logofile" id="logofile" style="width: 300px" /><br />
+                    @Html.HiddenFor(m => m.CompanyLogo)
+                    <img src="@Model.CompanyLogo" alt="@Model.CompanyName" />
+                </td>
+            </tr>
+            <tr>
+                <th valign="top" align="right">
+                    Banner：
+                </th>
+                <td>
+                    <input type="file" name="bannerfile" id="bannerfile" style="width: 300px" /><br />
+                    @Html.HiddenFor(m => m.CompanyBanner)
+                    <img src="@Model.CompanyBanner" alt="@Model.CompanyName" />
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    网址：
+                </th>
+                <td>@Html.TextBoxFor(m => m.CompanySite, new { @class = "text" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                    介绍：
+                </th>
+                <td>@Html.TextAreaFor(m => m.CompanyIntroduction, new { @cols = "60", @rows = "10" })
+                </td>
+            </tr>
+            <tr>
+                <th>
+                </th>
+                <td>
+                    <input type="submit" value="保存" />
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>

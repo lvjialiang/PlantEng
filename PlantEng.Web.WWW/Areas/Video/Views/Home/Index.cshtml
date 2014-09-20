@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "视频列表";
+    Layout = "~/Views/Shared/_VideoLayout.cshtml";
+}
+
+<div class="middle_content">
+    <div class="normal_header">
+        视频列表</div>
+    @foreach (var item in ViewBag.List)
+    {
+        <div class="viedoL_page">
+            <h1>
+                <a href="/video/watch?id=@(item.Id)" title="@(item.Title)">
+                    <img height="90" width="120" src="@(item.ImageUrl)" alt="@(item.Title)" /></a><a href="/video/watch?id=@(item.Id)" title="@(item.Title)">@item.Title</a></h1>
+            <p title="@(item.Title)" class="video-remark">@(Goodspeed.Common.CharHelper.Truncate(item.Remark,150))</p>
+            <p class="video-viewcount">人气：@(item.ViewCount)</p>
+        </div>        
+    }
+</div>
+

@@ -1,0 +1,5 @@
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\bin\Discuz.Web.Admin.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\bin\Discuz.Web.Admin.pdb
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\admin\obj\Release\ResolveAssemblyReference.cache
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\admin\obj\Release\Discuz.Web.Admin.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\admin\obj\Release\Discuz.Web.Admin.pdb

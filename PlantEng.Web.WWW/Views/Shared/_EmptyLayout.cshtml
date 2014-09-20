@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@(ViewBag.Title) - PLANT ENGINEERING China（工厂工程网）- 关注工厂全生命周期的效率、能源和安全</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <meta name="keywords" content="工厂工程,工厂维护,工厂管理,数字化工厂,先进工厂,,能源管理,工厂安全,工厂效率,设备管理,工厂信息化,工厂设计,电气工程,安全安防,工厂自动化,自动化与控制,压缩空气,电机与驱动,环境与健康,流体处理,暖通空调,照明,养护产品,维修工具与设备,物料搬运,物仓储物流,电力,软件,安全产品" />
+    <link href="/images/x-icon/pe_logo.ico" rel="icon" type="image/x-icon" />
+    <link href="@Url.Content("~/styles/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/scripts/common.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/scripts/webcastpopad.js")" type="text/javascript"></script>
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var PE = {
+            login: function () {
+                window.parent.location.href = '/login?returnurl=' + window.parent.location.href;
+            },
+            logout: function () {
+                window.parent.location.href = '/logout?returnurl=' + window.parent.location.href;
+            },
+            register: function () {
+                window.parent.location.href = '/register';
+            },
+            search: function (obj) {
+                var kObj = $("#" + obj);
+                if ($.trim(kObj.val()) === '') {
+                    kObj.focus();
+                    return;
+                }
+                window.location.href = '/search?key='+encodeURIComponent(kObj.val());
+            }
+        };
+    </script>
+    @RenderSection("header",false)
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32172970-1']);
+        _gaq.push(['_setDomainName', 'planteng.cn']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+</script>
+</head>
+<body>
+    @RenderBody()
+    @RenderSection("footer",false)
+    <script type="text/javascript">
+        LoadWebCastPop();
+    </script>
+</body>
+</html>

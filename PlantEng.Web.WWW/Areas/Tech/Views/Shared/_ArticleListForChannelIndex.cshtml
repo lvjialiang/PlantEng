@@ -1,0 +1,22 @@
+﻿@{
+    var moreLink = string.Format("/tech/{0}/list?catid={1}", ViewBag.TechInfo.Alias, ViewBag.CatId); 
+ }
+<div class="news_list_format">
+    <div class="csc-header">
+        <a href="@(moreLink)">@(ViewBag.Title)</a></div>
+    <div class="news-list-container">
+        <div class="news-list-item">
+            @foreach (var item in ViewBag.ArticleList)
+            {
+                <text>·<a href="@(item.Url)" title="@(item.Title)">@if (!string.IsNullOrEmpty(item.ImageUrl))
+                                                                   {
+                                <img src="@(item.ImageUrl)" alt="@(item.Title)" align="right"/>
+                                                                   }
+                         <span class="list_news_title">@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</span></a><p style="line-height:20px;">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 85))</p></text>
+            }
+        </div>
+    </div>
+    <div class="more blue">
+        <a href="@(moreLink)">更多>></a></div>
+    <div class="clear"></div>
+</div>

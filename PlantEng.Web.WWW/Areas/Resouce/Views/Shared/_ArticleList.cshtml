@@ -1,0 +1,13 @@
+﻿<div class="news-list-item">
+    @foreach (var item in ViewBag.ArticleList)
+    { 
+        <a href="@(item.Url)" title="@(item.Title)">
+            @if (!string.IsNullOrEmpty(item.ImageUrl))
+            {
+                <img src="@(item.ImageUrl)" alt="@(item.Title)" align="right"/>
+            } <span class="list_news_title">@(item.Title)</span></a><p style="line-height: 20px;">@(item.Remark)</p>
+            <div class="clear"></div>
+    }
+    
+    @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.ArticleList.PageIndex, ViewBag.ArticleList.PageSize, ViewBag.ArticleList.TotalItemCount, new { @class = "pagerbar" }))
+</div>

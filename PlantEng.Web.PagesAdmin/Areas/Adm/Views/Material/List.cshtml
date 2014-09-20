@@ -1,0 +1,51 @@
+﻿@{
+    var deliveryId = Controleng.Common.CECRequest.GetQueryInt("deliveryId",0);
+    var deliveryName = Controleng.Common.CECRequest.GetQueryString("deliveryName");
+    ViewBag.Title = "广告物料库";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+    <div class="adm-nav">
+        <ul>
+            <li><a href="/adm/slot/list">广告位</a></li>
+            <li><a href="/adm/delivery/list">广告</a></li>
+            <li><a href="/adm/material/list">广告物料库</a></li>
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <fieldset>
+        <legend>广告物料库</legend>
+        <a href="/adm/material/create" class="btn-add">新建广告物料</a>
+        <table class="tblist">
+            <tr>
+                <th>
+                    广告物料名称
+                </th>
+                <th width="10%">
+                    尺寸
+                </th>
+                <th width="10%">
+                    类型
+                </th>
+                <th width="10%">
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in ViewBag.List)
+            {
+                <tr>
+                    <td style="text-align: left">@(item.Name)
+                    </td>
+                    <td align="center">@(item.Width)*@(item.Height)</td>
+                    <td align="center">@switch ((int)item.Type) { case 1:<text>文字</text>break; case 2:<text>图片</text>break; }</td>
+                    <td align="center">
+                        <a href="modify?id=@(item.Id)">修改</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.List.PageIndex, ViewBag.List.PageSize, ViewBag.List.TotalItemCount, new { @class = "pagerbar" }))
+    </fieldset>
+</div>
+

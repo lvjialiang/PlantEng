@@ -1,0 +1,52 @@
+﻿@{
+    var techInfo = ViewBag.TechInfo;
+    ViewBag.Title = techInfo.Name;
+    Layout = "~/Views/Shared/_TechLayout.cshtml";
+
+    
+}
+<html xmlns:wb="http://open.weibo.com/wb">
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<div class="middle_content">
+    <div class="normal_header"><span>当前位置：</span><span><a href="/">首页</a></span>&nbsp;>&nbsp;<span><a href="/tech">技术频道</a></span>&nbsp;>&nbsp;<span>@(techInfo.Name)</span>
+    </div>
+    <div class="dept_top_content">
+        <span class="dept_tu">
+            <img src="/images/fuhao.jpg" align="absmiddle" /></span><div class="dept_top">
+                <a href="/tech/@(techInfo.Alias)/list?catid=5">产业趋势</a></div>
+        <span class="dept_tu">
+            <img src="/images/fuhao.jpg" align="absmiddle" /></span><div class="dept_top">
+                <a href="/tech/@(techInfo.Alias)/list?catid=14">新品发布</a></div>
+        <span class="dept_tu">
+            <img src="/images/fuhao.jpg" align="absmiddle" /></span><div class="dept_top">
+                <a href="/tech/@(techInfo.Alias)/list?catid=37">技术前沿</a></div>
+        <span class="dept_tu">
+            <img src="/images/fuhao.jpg" align="absmiddle" /></span><div class="dept_top">
+                <a href="/tech/@(techInfo.Alias)/list?catid=39">应用案例</a></div>
+        <span class="dept_tu">
+            <img src="/images/fuhao.jpg" align="absmiddle" /></span><div class="dept_top">
+                <a href="/tech/@(techInfo.Alias)/list?catid=38">技术之源</a></div>
+        <span class="dept_tu">
+            <img src="/images/fuhao.jpg" align="absmiddle" /></span><div class="dept_top">
+                <a href="/tech/@(techInfo.Alias)/list?catid=17">资料下载</a></div>
+        <span class="dept_tu">
+            <img src="/images/fuhao.jpg" align="absmiddle" /></span><div class="dept_top">
+                <a href="/tech/@(techInfo.Alias)/list?catid=13">企业新闻</a></div>
+    </div>
+    <!--============当中栏左边开始====================-->
+    <div class="middle_content_left">
+        @Html.Action("_ArticleListForChannelIndex", "Home", new { title = "产业趋势", catId = 5, techInfo = techInfo })
+        @Html.Action("_ArticleListForChannelIndex", "Home", new { title = "新品发布", catId = 14, techInfo = techInfo })
+        @Html.Action("_ArticleListForChannelIndex", "Home", new { title = "企业新闻", catId = 13, techInfo = techInfo })        
+    </div>
+    <!--============当中栏左边结束====================-->
+    <!--============当中栏右边开始====================-->
+    <div class="middle_content_right">
+        @Html.Action("_ArticleListForChannelIndex", "Home", new { title = "技术前沿", catId = 37, techInfo = techInfo })
+        @Html.Action("_ArticleListForChannelIndex", "Home", new { title = "应用案例", catId = 39, techInfo = techInfo })
+        @Html.Action("_ArticleListForChannelIndex", "Home", new { title = "技术之源", catId = 38, techInfo = techInfo })
+        @Html.Action("_ArticleListForChannelIndex", "Home", new { title = "资料下载", catId = 17, techInfo = techInfo })
+        
+    </div>
+    <!--============当中栏右边结束====================-->
+</div>

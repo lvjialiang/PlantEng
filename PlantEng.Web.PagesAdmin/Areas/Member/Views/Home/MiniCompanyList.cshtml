@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "厂商列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var nameObj = Controleng.Common.CECRequest.GetQueryString("nameObj");
+    var idObj = Controleng.Common.CECRequest.GetQueryString("idObj");
+}
+<div class="page-content">
+    <table>
+        <tr>
+            <th>公司名：</th>
+            <td><input type="text" id="txtCompanyName"  value="@(Request.QueryString["companyname"])" /></td>
+            <td><input type="button" value="搜索" id="btnGo" /></td>
+        </tr>
+    </table>
+    <table class="tblist">
+    <tr>
+        <th width="15%">CompanyId</th>
+        <th>公司名称</th>
+    </tr>
+    @foreach (var item in ViewBag.CompanyList)
+    { 
+        <tr>
+            <td>@item.CompanyId</td>
+            <td class="left"><a href="javascript:void(0);" onclick="setParentValue(@item.CompanyId,'@(item.CompanyName)');">@item.CompanyName</a></td>
+        </tr>
+    }
+</table>
+@Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.CompanyList.PageIndex, ViewBag.CompanyList.PageSize, ViewBag.CompanyList.TotalItemCount, new { @class = "pagerbar" }))
+</div>
+@section footer{
+    <script type="text/javascript">
+        var nameObj = '@(nameObj)';
+        var idObj = '@(idObj)';
+        function setParentValue(id,name) {
+            opener && opener.document.getElementById(nameObj) && (opener.document.getElementById(nameObj).value = name);
+            opener && opener.document.getElementById(idObj) && (opener.document.getElementById(idObj).value = id);
+            opener = null;
+            window.close();
+        }
+        $(function(){
+            $('#btnGo').bind('click',function(){
+                var v = $.trim($('#txtCompanyName').val());
+                window.location.href = '?nameObj=' + nameObj + '&idObj=' + idObj + '&companyname=' + v;
+            });
+        });
+    </script>
+}
+
+

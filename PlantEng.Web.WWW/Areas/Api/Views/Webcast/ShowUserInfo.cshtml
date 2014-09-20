@@ -1,0 +1,25 @@
+﻿@model PlantEng.Models.MemberInfo
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@(Model.RealName)用户详细信息</title>
+</head>
+<body>
+    <div style="margin: 30px 0 0 50px; text-align: left; font-family: Arial, Helvetica, sans-serif;">
+        <ul>
+            <li style="padding: 5px;"><strong>用户名：</strong>@(Model.UserName)</li>
+            <li style="padding: 5px;"><strong>姓名：</strong>@(Model.RealName)</li>
+            <li style="padding: 5px;"><strong>职位：</strong>@(Model.Position)</li>
+            <li style="padding: 5px;"><strong>单位名称(中文)：</strong>@(Model.Company)</li>
+            <li style="padding: 5px;"><strong>省/市/自治区：</strong>@(Model.Province)@(Model.City)</li>
+            <li style="padding: 5px;"><strong>地址：</strong>@(Model.Address)</li>
+            <li style="padding: 5px;"><strong>电子邮箱：</strong>@(Model.Email)</li>
+            <li style="padding: 5px;"><strong>电话：</strong>@(Model.Phone)</li>
+            <li style="padding: 5px;"><strong>手机：</strong>@(Model.Mobile)</li>
+        </ul>
+    </div>
+</body>
+</html>

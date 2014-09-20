@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>上传附件</title>
+    <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+    <script src="swfupload/swfupload.js" type="text/javascript"></script>
+    <script src="swfupload/handlers.js" type="text/javascript"></script>
+</head>
+<body id="image">
+    <fieldset>
+        <legend>上传附件</legend>
+        <table>
+            <tr>
+                <td>
+                    链接：<input type="text" id="txtUrl" size="50" />
+                </td>
+            </tr>
+            <tr>
+                <td>标题：<input type="text" id="txtTitle" size="50" /></td>
+            </tr>
+            <tr>
+                <td><span class="swfuploadWrapper"><span id="swfuploadPlaceholder"></span></span><span id="tempFileName"></span><span style="margin-left:20px"><input type="button" value="开始上传" onclick="customerUpload();" id="btnStartUpload" />&nbsp;&nbsp;<input type="button" id="btnUploadCancle" value="取消上传" onclick="swfu.cancelQueue();" disabled="disabled" /></span><span id="processbar"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <hr />
+                <span style="font-size:14px;">
+                第一步：<font color="red">请选择“选择本地文件”按钮</font><br />
+                第二步：<font color="red">点击“开始上传”</font></span></td>
+            </tr>
+            <tr>
+                <td><hr />
+                    <span style="color: Red; font-size: 14px;">附件的大小不超过4M,只允许pdf,zip,rar,doc,docx文件</span>
+                </td>
+            </tr>
+        </table>
+        <div class="mceActionPanel">
+            <input type="submit" id="insert" name="insert" value="{#insert}" onclick="insertImage();"/>
+            <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+        </div>
+    </fieldset>
+    <script type="text/javascript">
+        var ed,swfu;
+        function init() {
+            ed = tinyMCEPopup.editor;
+            swfu = new SWFUpload({
+                // Backend settings
+                upload_url: ed.settings.upload_attachment_url,
+                file_post_name: "attachFile",
+
+                // Flash file settings
+                file_size_limit: "50 MB",
+                file_types: "*.pdf;*.rar;*.zip;*.docx;*.doc", 		// or you could use something like: "*.doc;*.wpd;*.pdf",
+                file_types_description: "All Files",
+                file_upload_limit: 0,
+                file_queue_limit: 1,
+
+                custom_settings: {
+                    cancelButtonId: "btnUploadCancle",
+                    startButtionId: "btnStartUpload"
+                },
+                swfupload_preload_handler: preLoad,
+                swfupload_load_failed_handler: loadFailed,
+                file_dialog_complete_handler: fileDialogComplete,
+                file_queued_handler: fileQueued,
+                upload_start_handler: uploadStart,
+                upload_progress_handler: uploadProgress,
+                upload_error_handler: uploadError,
+                upload_success_handler: uploadSuccess,
+                upload_complete_handler: uploadComplete,
+
+                // Button Settings
+                button_text: '<span class="redText">选择本地文件</span>',
+                button_text_style: ".redText { color: #FF0000;width:300px; }",
+                button_placeholder_id: "swfuploadPlaceholder",
+                button_width: 90,
+                button_height: 20,
+                button_text_left_padding: 2,
+                button_cursor: SWFUpload.CURSOR.HAND,
+
+                // Flash Settings
+                flash_url: "swfupload/swfupload.swf",
+                flash9_url: "swfupload/swfupload_fp9.swf",
+
+                // Debug settings
+                debug: false
+            });
+            
+        }
+        tinyMCEPopup.onInit.add(init);
+        function customerUpload() {
+            if (swfu.getStats().files_queued === 0) {
+                alert("请先选择本地文件");
+                return false;
+            }
+            document.getElementById('btnStartUpload').disabled = true;
+            document.getElementById('btnUploadCancle').disabled = false;
+            swfu.startUpload();
+        }
+        function insertImage() {
+            var link = document.getElementById('txtUrl').value;
+            var alt = document.getElementById('txtTitle').value;
+            if (link === '') {
+                alert('链接为空，请先上传文件。');
+                return;
+            }
+            if (alt === '') {
+                alt = link;
+            }
+
+            ed.execCommand('mceInsertContent', false, '<a href="'+link+'" target="_blank">'+alt+'</a>', { skip_undo: 1 });
+            ed.undoManager.add();
+            tinyMCEPopup.editor.execCommand('mceRepaint');
+            tinyMCEPopup.editor.focus();
+            tinyMCEPopup.close();
+        }
+    </script>
+</body>
+</html>

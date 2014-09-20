@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+    if(Model.Id == 0){
+        return;
+    }
+    ViewBag.Title = Model.Title;
+}
+@section header{
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=" type="text/javascript" charset="utf-8"></script>
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+    <meta name="tags" content="@(Model.Tags)" />
+    <meta name="id" content="@(Model.Id)" />
+}
+<div class="middle_content">
+    <div class="normal_header">
+        <span>当前位置：</span><span><a href="/">首页</a></span>&nbsp;>&nbsp;<span><a href="/news/list?catid=@(ViewBag.CategoryInfo.Id)">@(ViewBag.CategoryInfo.Name)</a></span>&nbsp;>&nbsp;<span>正文</span></div>
+    <div class="news-list-item">
+        <div class="item_list">
+            <div align="center">
+                <strong>@Model.Title</strong></div>
+                <div class="sub_title">
+                <strong>@Model.SubTitle</strong></div>
+        </div>
+        <div align="center" style="font-size: 12px;margin-top:20px;">
+            发布时间：@(Model.PublishDateTime.ToString("yyyy-MM-dd"))&nbsp;&nbsp;&nbsp;&nbsp; @(string.IsNullOrEmpty(Model.Author)?"":"作者："+Model.Author)<div style="left:250px;height:30px;top:-18px;position: relative;"><wb:share-button count="n" type="button" size="middle" relateuid="2765274587" align="absbottom" ></wb:share-button></div></div>
+        <div class="channel">
+            @if(!string.IsNullOrEmpty(Model.Remark)){
+                <div class="news-remark"><b>摘要：</b>@(Model.Remark)</div>
+            }
+            <div class="channel_js">
+                @Html.Raw(Model.Content)
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Copyright)) { 
+                <text>
+                    <div class="news-copyright">
+                        版权所有：@Html.Raw(Model.Copyright)
+                    </div>
+                </text>
+            }            
+        </div>
+        <div class="related">
+            <h2>相关文章</h2>
+            <ul>
+                @foreach (var item in ViewBag.RelatedArticleList) { 
+                    <li><a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title,26))</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

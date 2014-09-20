@@ -1,0 +1,18 @@
+﻿@{
+    /*技术与案例*/
+    ViewBag.Title = "技术与案例";
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+}
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", "技术与案例" } })
+    <div class="mode_menu_tag2">
+        <ul>
+            <li class="nowtag"><a title="技术与案例">技术与案例</a></li>
+            <li><a href="/accounts/company/applicationedit" title="发布发布技术与案例">发布技术与案例</a></li>
+        </ul>
+    </div>
+    <div class="admin_dongt">
+        @Html.Partial("_CompanyNewsList", new ViewDataDictionary { { "NewsList", ViewBag.NewsList }, { "Type", "application" } })
+    </div>
+</div>
+

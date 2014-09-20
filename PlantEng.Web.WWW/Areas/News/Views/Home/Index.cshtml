@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_NewsLayout.cshtml";
+    ViewBag.Title = "新闻中心";
+}
+<html xmlns:wb="http://open.weibo.com/wb">
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<div class="middle_content">
+    <div class="normal_header">
+        <span>当前位置：</span><span><a href="/">首页</a></span>&nbsp;>&nbsp;<span>新闻中心</span></div>
+    <div class="news-list-item">
+        <div class="bt"><a href="/news/list?catid=5">产业趋势</a></div>
+        @Html.Action("_ArticleListForIndex","Home", new { catIds = 5 })
+        <div class="csc-default"></div>
+        <div class="bt"><a href="/news/list?catid=13">企业新闻</a></div>
+        @Html.Action("_ArticleListForIndex", "Home", new { catIds = 13 })
+        <div class="csc-default"></div>
+        <div class="bt"><a href="/news/list?catid=14">新品发布</a></div>
+        @Html.Action("_ArticleListForIndex", "Home", new { catIds = 14 })
+        <div class="csc-default"></div>
+        <div class="bt"><a href="/news/list?catid=15">特别报道</a></div>
+        @Html.Action("_ArticleListForIndex", "Home", new { catIds = 15 })
+    </div>
+</div>

@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "PlangEng管理后台";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        body
+        {
+            background-color: #e0f5fa;
+        }
+    </style>
+    <link href="/Content/jquery.treeview.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/jquery.treeview.js" type="text/javascript"></script>
+}
+
+<div id="header-top">
+    <h2 id="header-top-logo">
+        PlangEng管理后台</h2>
+</div>
+<div id="main-body">
+    <div id="nav-side-bar">
+         <ul id="treeview">
+            <li><a>文章管理</a>
+                <ul>
+                    <li><a href="/article/add" target="iframeMain">添加文章</a></li>
+                    <li><a href="/article/list" target="iframeMain">文章列表</a></li>
+                </ul>
+            </li>
+            <li><a>分类管理</a>
+                <ul>
+                    <li><a href="/category/column/list" target="iframeMain">栏目分类</a></li>
+                    <li><a href="/category/tech/list" target="iframeMain">技术分类</a></li>
+                    <li><a href="/category/industry/list" target="iframeMain">行业分类</a></li>                    
+                </ul>
+            </li>
+            <li><a>用户管理</a>
+                <ul>
+                    <li><a href="/member/list" target="iframeMain">普通用户管理</a></li>
+                    <li><a href="/member/companylist" target="iframeMain">企业用户管理</a></li>
+                    <li><a href="/member/download" target="iframeMain">用户信息下载</a></li>
+                    <li><a href="/eletter/" target="iframeMain">Eletter下载</a></li>
+                    
+                </ul>
+            </li>
+            <li><a>视频管理</a>
+                <ul>
+                    <li><a href="/video/add" target="iframeMain">添加视频</a></li>
+                    <li><a href="/video/list" target="iframeMain">视频列表</a></li>
+                    <li><a href="/category/videocat/list" target="iframeMain">视频分类</a></li>
+                </ul>
+            </li>
+            <li><a href="/frame/logout">退出</a></li>
+        </ul>
+    </div>
+    <div id="main-content">
+        <p id="main-content-nav-wrapper">
+            <span id="m-c-n-img"></span><span id="m-c-n-current">当前位置：</span> <span id="m-c-n-text">
+                系统首页</span>
+        </p>
+        <iframe id="iframeMain" name="iframeMain" width="100%" scrolling="yes" frameborder="0"
+            src="/Article/List" style="overflow-x: hidden;"></iframe>
+    </div>
+</div>
+@*<div id="footer">
+    技术支持：兴百放(13466332458)&nbsp;&nbsp;Email:xbf321@gmail.com</div>*@
+@section footer{
+    <script type="text/javascript">
+        var autoSize = function () {
+            var height = document.documentElement.clientHeight;
+            var width = document.documentElement.clientWidth;
+            //side-bar
+            $('#nav-side-bar').height(height - 85);
+            $('#nav-fold').height(height - 180);
+
+            //main-content
+            $('#main-content').height(height - 85);
+            $('#main-content').width(width - 210);
+
+            //iframe
+            $('#iframeMain').height(height - 120);
+            $('#iframeMain').width(width - 215);
+        }
+        $(document).ready(function () {
+            $(window).resize(autoSize);
+/*
+            //绑定一级导航Click
+            $('.nav-side-bar-one > li').each(function () {
+                var liObj = $(this);
+                liObj.children('a').click(function () {
+                    liObj.siblings().find('ul').slideUp();
+                    $(this).next().slideToggle();
+                });
+            });
+            //绑定二级导航
+            $('.nav-side-bar-two > li > a').each(function () {
+                $(this).click(function () {
+                    $('#m-c-n-text').html($(this).html());
+                    $(this).parent().addClass('on').siblings().removeClass('on');
+                    return;
+                });
+            });
+            */
+            $("#treeview").treeview({
+                collapsed: false,
+                animated: "medium",
+                control: "#sidetreecontrol",
+                persist: "location"
+            });
+        });
+        autoSize();
+    </script>
+}

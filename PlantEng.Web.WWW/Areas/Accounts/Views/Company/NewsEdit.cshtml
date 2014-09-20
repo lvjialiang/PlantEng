@@ -1,0 +1,30 @@
+﻿@model PlantEng.Models.Company.CompanyNewsInfo
+@{
+    
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+    int id = Controleng.Common.CECRequest.GetQueryInt("id", 0);
+    ViewBag.Title = string.Format("{0}企业新闻", id > 0 ? "编辑" : "发布");
+}
+@section header{
+    <!-- Load TinyMCE -->
+    <script type="text/javascript" src="/editor/tinymce/tiny_mce.js"></script>
+    <!-- /TinyMCE -->
+}
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", ViewBag.Title } })
+    <div class="mode_menu_tag2">
+        <ul>
+            <li><a href="/accounts/company/newslist" title="企业新闻">企业新闻</a></li>
+            <li class="nowtag"><a title="@(ViewBag.Title)">@(ViewBag.Title)</a></li>
+        </ul>
+    </div>
+    <div class="admin_dongt">
+        @Html.ValidationSummary()
+        @if (ViewBag.Msg != null)
+        {
+            <div class="success">@Html.Raw(ViewBag.Msg)<a href="?" class="ml10">继续添加</a><span class="ml10">或</span><a href="/accounts/company/newslist"
+            class="goback">返回</a></div>
+        }
+        @Html.Partial("_CompanyNewsInfo", Model, new ViewDataDictionary { { "Type", "news" } })
+    </div>
+</div>

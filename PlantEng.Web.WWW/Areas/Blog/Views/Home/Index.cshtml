@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "博客首页";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+    int systemCategoryId = Controleng.Common.CECRequest.GetQueryInt("scatId", 0);
+    string systemCategoryName = PlantEng.Services.Category.TechService.GetById(systemCategoryId).Name;
+}
+@section header{
+    <style type="text/css">
+    .blog{margin:10px 0 0 0;}
+    .blog_list{margin: 0 0 10px;}
+    dl, dt, dd,span{ margin: 0;padding: 0;}
+    .blog_list h1{ background: none repeat scroll 0 0 transparent;font-size: 14px;margin: 0;overflow: hidden;}
+    .blog_list a{color: #2F649A;}
+    .blog_list dl{float: left;margin:8px;}
+    .blog_list dd{color: #666666;float: left;line-height: 20px;padding-bottom: 5px;margin-left: 12px;width: 540px;}
+    .blog_list dt{float: left;padding-left: 5px;}
+    .blog_list dt img{float: left;border: 1px solid #CCCCCC;height: 50px;padding: 1px;width: 50px;}
+    .about_info{background: none repeat scroll 0 0 #EFF6FB;clear: both;height: 22px;line-height: 22px; padding: 3px 6px;width: 630px;}
+    .blog_list .about_info span, .blog_list .about_info a{display: inline-block;height: 25px;line-height: 25px;float:left;}
+	.time {color: #888888;margin: 0 10px;}
+</style>
+}
+<div class="middle_content">
+    <div class="normal_header">
+        博客频道
+        @if(!string.IsNullOrEmpty(systemCategoryName)){
+           <text>@(systemCategoryName)&nbsp;<a href="/blog">全部</a></text>
+        }   
+     </div>
+    <div class="blog">
+        @foreach (var item in ViewBag.List)
+        {
+            <div class="blog_list">
+                <h1>
+                    <a href="?scatId=@(item.SystemCategoryId)">[@(item.SystemCategoryName)]</a><a href="@(item.Url)" title="@item.Title">@item.Title</a>
+                </h1>
+                <dl>
+                    <dt><a href="/space/@(item.UserId)" title="@(item.UserName)">
+                        <img src="/avatar?userid=@(item.UserId)" width="50" height="50" alt="@(item.UserName)" /></a></dt>
+                    <dd>@Html.Raw(Controleng.Common.Utils.CutString(Controleng.Common.Utils.RemoveHtml(item.Content), 0, 100))</dd>
+                </dl>
+                <div class="about_info">
+                    <span class="fl"><a href="/space/@(item.UserId)">@(item.UserName)</a> <span class="time">@(item.CreateDateTime.ToString("yyyy-MM-dd"))</span>阅读（@(item.ViewCount)）</span>
+                </div>
+            </div>
+	
+        }
+    </div>
+    @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.List.PageIndex, ViewBag.List.PageSize, ViewBag.List.TotalItemCount, new { @class = "pagerbar" }))
+</div>

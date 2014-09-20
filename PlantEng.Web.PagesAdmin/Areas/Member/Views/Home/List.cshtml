@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "用户列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .tblist{}
+    .tblist td{padding:0;}
+</style>
+<div class="page-content">
+    <fieldset>
+        <legend>用户基本信息</legend>
+        <form method="post">
+        <table>
+        <tr>
+            <td>用户名：</td>
+            <td><input type="text" id="txtSearchUserName" value="@(Request["username"])" /></td>
+            <td><input type="button" value="搜索" id="btnSearch" /></td>
+        </tr>
+        </table>
+        <table class="tblist" width="100%">
+            <tr>
+                <th width="4%"><input type="checkbox" onchange="check(this);" /></th>
+                <th width="5%">ID</th>
+                <th>用户名</th>
+                <th width="20%">Email</th>
+                <th>真实姓名</th>
+                <th>电话</th>
+                <th>手机</th>
+                <th>省份</th>
+                <th>行业</th>
+                <th>类型</th>
+                <th width="8%">注册时间</th>
+            </tr>
+            @foreach(var item in ViewBag.MemberList){
+                <tr>
+                    <td><input type="checkbox" id="cb_@(item.Id)" name="ids" value="@(item.Id)" /></td>
+                    <td>@item.Id</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                    <td>@item.RealName</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Mobile</td>
+                    <td>@item.Province &nbsp;@item.City</td>
+                    <td>@item.Industry</td>
+                    <td>@(item.Type == PlantEng.Models.MemberType.Common ? "普通" : "企业")</td>
+                    <td>@item.CreateDateTime.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+        </table>
+        
+        @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.MemberList.PageIndex, ViewBag.MemberList.PageSize, ViewBag.MemberList.TotalItemCount, new { @class = "pagerbar" }))
+        <table>
+            <tr>
+                <td><input type="submit" value="下载" /></td>
+            </tr>
+        </table>
+        </form>
+    </fieldset>    
+</div>
+@section footer{
+    <script type="text/javascript">
+        function check(obj) {
+            var cbObj = document.getElementsByTagName('input');
+            for (var i = 0, l = cbObj.length; i < l; i++) {
+                var cb = cbObj[i];
+                if (cb.type === 'checkbox') {
+                    cb.checked = obj.checked;
+                }
+            }
+        }
+        $(function () {
+            $('#btnSearch').click(function () {
+                var v = $('#txtSearchUserName').val();
+                window.location.href = '?username=' + encodeURIComponent(v);
+            });
+        });
+    </script>
+}
+

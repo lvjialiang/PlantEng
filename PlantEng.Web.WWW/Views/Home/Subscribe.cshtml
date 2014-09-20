@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "enewsletter订阅";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+<div class="middle_content">
+    <div class="normal_header">
+        eNewsletters</div>
+    <div class="wb">
+        <table width="640" height="177" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr width="156">
+                <td width="605" colspan="2">
+                    &nbsp;&nbsp;&nbsp;&nbsp;不用您在网络到处寻信息了，我们第一时间将您关注的资讯通过邮件发给您！<br />
+                    请选择以下您关注的主题：
+                </td>
+            </tr>
+            <tr>
+                <td height="51">
+                    <table border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="20" align="right">
+                                <input name="eletter_es_subject" type="checkbox" value="网站每月精华" />
+                            </td>
+                            <td width="151" align="left">
+                                网站每月精华
+                            </td>
+                            <td width="22" align="left">
+                                <input name="eletter_es_subject" type="checkbox" value="工厂能源管理" />
+                            </td>
+                            <td width="155" align="left">
+                                工厂能源管理
+                            </td>
+                            <td width="22" align="left">
+                                <input name="eletter_es_subject" type="checkbox" value="工厂维护与管理" />
+                            </td>
+                            <td width="170" align="left">
+                                工厂维护与管理
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <input name="eletter_es_subject" type="checkbox" value="工厂安全安防" />
+                            </td>
+                            <td align="left">
+                                工厂安全安防
+                            </td>
+                            <td align="left">
+                                <input name="eletter_es_subject" type="checkbox" value="新品速递" />
+                            </td>
+                            <td align="left">
+                                新品速递
+                            </td>
+                            <td align="left">
+                                <input name="eletter_es_subject" type="checkbox" value="技术白皮书" />
+                            </td>
+                            <td align="left">
+                                技术白皮书
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <table width="144" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <input type="text" id="eletter_es_email" maxlength="50" size="12" value="请输入email地址"
+                                    onfocus="if(value=='请输入email地址') {value=''}" onblur="if (value=='') {value='请输入email地址'}">
+                            </td>
+                            <td>
+                                <input type="button" value="订阅" onclick="subscribe();" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="eNews_title">
+        过往eNewsletters</div>
+    <div class="ad_lpublic_left">
+        <dl class="ad_lpbulic_Llist">
+            @foreach (var item in ViewBag.List)
+            {
+                <dt><a class="link_green12" href="?catId=@(item.CategoryId)">[@(item.CategoryName)]</a><a href="@(item.Url)" title="@(item.Title)" target="_blank">@(item.Title)</a></dt>
+                <dd>
+                    发送日期：@(item.PublishDateTime.ToString("yyyy-MM-dd"))</dd> 
+            }
+        </dl>
+    </div>
+    @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.List.PageIndex, ViewBag.List.PageSize, ViewBag.List.TotalItemCount, new { @class = "pagerbar" }))
+</div>
+@section footer{
+    <script type="text/javascript">
+        function subscribe() {
+            eletterSubscribe({
+                subjectName: 'eletter_es_subject',
+                emailId: 'eletter_es_email'
+            });
+        }
+    </script>
+}

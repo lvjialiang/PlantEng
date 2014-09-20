@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "用户登录";
+    Layout = "~/Views/Shared/_PassportLayout.cshtml";
+}
+<div id="box" class="w">
+    <div class="mt">
+        <h2>
+            用户登录</h2>
+    </div>
+    <div id="login" class="mc">
+        <form method="post" id="loginForm">
+        @Html.ValidationSummary()
+        <div class="form">
+            <div class="item">
+                <span class="label">用户名：</span>
+                <div class="fl">
+                    @Html.TextBox("txtUserName", Request["txtUserName"], new { @class = "text" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label">密码：</span>
+                <div class="fl">
+                    @Html.Password("txtPassword","",new { @class = "text" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label">&nbsp;</span>
+                <input id="loginsubmit" class="btn-img btn-entry" type="submit" value="登录" />&nbsp;<a href="/passport/forgotpassword">忘记密码</a>
+            </div>
+        </div>
+        <!--[if !ie]>form end<![endif]-->
+        <div id="guide">
+            <h5>
+                还不是工厂工程网用户？</h5>
+            <div class="content">
+                现在免费注册成为工厂工程网用户，便能立刻享受发布博客、帖子、在线反馈、上传个人/企业信息等免费服务。</div>
+            <a href="/register" class="btn-link btn-personal"> 注册新用户	 </a>
+            <div class="btns">
+                <a href="/register">个人用户注册</a><a href="/registercompany">企业用户注册</a></div>
+        </div>
+        <!--[if !ie]>guide end<![endif]-->
+        <span class="clr"></span>
+        <!--[if !ie]>mc end<![endif]-->
+        </form>
+        <div class="clear"></div>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $('#loginForm').validate({
+            rules: {
+                txtUserName: {
+                    required: true
+                },
+                txtPassword: {
+                    required: true
+                }
+            },
+            messages: {
+                txtUserName: {
+                    required: '请输入用户名'
+                },
+                txtPassword: {
+                    required: '请输入密码'
+                }
+            }
+        });
+    </script>
+}

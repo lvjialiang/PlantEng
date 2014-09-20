@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "公司列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+    <fieldset>
+        <legend>公司列表</legend>
+        <table class="tblist" width="100%">
+            <tr>
+                <th width="5%">公司ID</th>
+                <th width="5%">用户ID</th>
+                <th width="50%">公司名</th>
+                <th width="10%">查看</th>
+                <th width="5%">状态</th>
+                <th width="10%">操作</th>
+            </tr>
+            @foreach (var item in ViewBag.CompanyList)
+            {
+                <tr>
+                    <td>@item.CompanyId</td>
+                    <td>@item.UserId</td>
+                    <td class="left">@item.CompanyName
+                    </td>
+                    <td><a href="javascript:void(0);" onclick="showDetail(@(item.CompanyId));">详细信息</a></td>
+                    <td>@switch ((PlantEng.Models.CompanyStatus)item.CompanyStatus) { 
+                            case PlantEng.Models.CompanyStatus.Applying:
+                                <text><font color="blue">申请中</font></text>
+                                break;
+                                case PlantEng.Models.CompanyStatus.NoPass:
+                                <text><font color="red">未通过</font></text>
+                                break;
+                                case PlantEng.Models.CompanyStatus.Pass:
+                                <text>已通过</text>
+                                break;
+                        }</td>
+                    <td>
+                        @switch ((PlantEng.Models.CompanyStatus)item.CompanyStatus)
+                        {
+                            case PlantEng.Models.CompanyStatus.Applying:
+                                <text><a href="?action=dopass&companyid=@(item.CompanyId)&userid=@(item.UserId)" onclick="return window.confirm('确定？')">通过</a>&nbsp;|&nbsp;<a href="?action=nopass&&companyid=@(item.CompanyId)&userid=@(item.UserId)" onclick="return window.confirm('确定？')">不通过</a></text>
+                                break;
+                            case PlantEng.Models.CompanyStatus.NoPass:
+                                <text><a href="?action=dopass&companyid=@(item.CompanyId)&userid=@(item.UserId)" onclick="return window.confirm('确定？')">通过</a></text>
+                                break;
+                            case PlantEng.Models.CompanyStatus.Pass:
+                                <text><a href="?action=nopass&&companyid=@(item.CompanyId)&userid=@(item.UserId)" onclick="return window.confirm('确定？')">不通过</a></text>
+                                break;
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+        @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.CompanyList.PageIndex, ViewBag.CompanyList.PageSize, ViewBag.CompanyList.TotalItemCount, new { @class = "pagerbar" }))
+    </fieldset>
+</div>
+@section footer{
+    <script type="text/javascript">
+        function showDetail(companyId) {
+            showIframeDialog({
+                width:600,
+                height:400,
+                title: '详细信息',
+                url : 'CompanyDetail?companyId='+companyId
+            });
+        }
+    </script>
+}

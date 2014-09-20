@@ -1,0 +1,16 @@
+﻿@{
+    var spaceInfo = ViewBag.SpaceInfo;
+    var spaceUrl = string.Format("/space/{0}",spaceInfo.Id);
+    var firstText = (string)ViewBag.FirstText;
+    var firstLink = ViewBag.FirstLink ?? string.Empty;
+    var secondText = (string)ViewBag.SecondText;
+}
+<div class="position">
+    <strong>您的位置：</strong><a href="@(spaceUrl)">@(spaceInfo.UserName)的个人空间</a>
+    @if(!string.IsNullOrEmpty(firstText)){
+        <text>&nbsp;>>&nbsp;<a href="@(spaceUrl)@(firstLink)">@(firstText)</a></text>
+    }
+    @if(!string.IsNullOrEmpty(secondText)){
+        <text>&nbsp;>>&nbsp@(secondText)</text>
+    }
+</div>

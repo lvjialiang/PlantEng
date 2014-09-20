@@ -1,0 +1,5 @@
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\bin\Discuz.Data.SqlServer.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Web\bin\Discuz.Data.SqlServer.pdb
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Data.SqlServer\obj\Release\ResolveAssemblyReference.cache
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Data.SqlServer\obj\Release\Discuz.Data.SqlServer.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Data.SqlServer\obj\Release\Discuz.Data.SqlServer.pdb

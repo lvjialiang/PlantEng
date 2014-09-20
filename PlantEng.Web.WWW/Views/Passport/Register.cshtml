@@ -1,0 +1,332 @@
+﻿@model PlantEng.Models.MemberInfo
+@{
+    ViewBag.Title = "注册 - 个人用户";
+    Layout = "~/Views/Shared/_PassportLayout.cshtml";
+}
+@section header{
+}
+<div id="box" class="w">
+    <div class="mt">
+        <h2>
+            用户注册</h2>
+        <b></b><span>我已经注册，现在就<a href="login">登录</a></span></div>
+    <div id="regist" class="mc">
+        <ul class="tab">
+            <li class="curr"><a href="/register">个人用户</a></li>
+            <li class="line"><a href="/registercompany">企业用户</a></li>
+        </ul>
+        <form method="post" id="registerForm">
+        @Html.ValidationSummary()
+        <div class="form">
+            <h3>
+                本站通行唯一身份</h3>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>用户名：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "text required", maxlength = "20" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>E-mail：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "text required email", maxlength = "50" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>密&nbsp;&nbsp;&nbsp;&nbsp;码：</span>
+                <div class="fl">
+                    @Html.PasswordFor(m => m.Password, new { @class = "text required", maxlength = "20" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>确认密码：</span>
+                <div class="fl">
+                    <input type="password" name="confirmpassword" id="confirmpassword" class="text required"
+                        maxlength="20" />
+                </div>
+            </div>
+            <div class="item">
+                <span class="label">申请赠阅杂志：</span>
+                <div class="fl">
+                <table>
+                    <tr>
+                        <td><input type="checkbox" name="MagType" value="elec" />电子版</td>
+                        <td><input type="checkbox" name="MagType" value="print" />印刷版</td>
+                        <td><span style="color:Red">（申请印刷版杂志，请务必正确完整填写以下信息）</span></td>
+                    </tr>
+                </table>               
+
+                    
+                </div>
+            </div>
+            <h3>
+                <strong>个人信息</strong><span style="font-size: 12px; color: #999999;">（本站将严格遵守国家互联网个人隐私保密规定，未经您认可不透露给任何第三方）</span></h3>
+            
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>真实姓名：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.RealName, new { @class = "text required", maxlength = "5" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>电&nbsp;&nbsp;&nbsp;&nbsp;话：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "text", maxlength = "20" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label">手&nbsp;&nbsp;&nbsp;&nbsp;机：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.Mobile, new { @class = "text", maxlength = "20" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>单位名称：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.Company, new { @class = "text", maxlength = "50" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>所在省份：</span>
+                <div class="fl">
+                    <select name="Province" id="Province" title="请选择省">
+                        <option value="">==请选择==</option>
+                    </select>
+                    <select name="City" id="City" title="请选择市">
+                        <option value="">==请选择==</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>邮编：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "text", maxlength = "6" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label">通信地址：</span>
+                <div class="fl">
+                    @Html.TextBoxFor(m => m.Address, new { @class = "text", maxlength = "50" })
+                </div>
+            </div>
+            <div class="item">
+                <span class="label"><b class="ftx04">*</b>工作职务：</span>
+                <div class="fl">
+                    <select name="Position" id="Position" title="请选择工作职务">
+                        <option value="">请选择</option>
+                        <option value="工厂管理">工厂管理</option>
+                        <option value="工厂设计与技术研发">工厂设计与技术研发</option>
+                        <option value="生产管理及制造工艺">生产管理及制造工艺</option>
+                        <option value="生产领班及操作员">生产领班及操作员</option>
+                        <option value="品质管理与测试">品质管理与测试</option>
+                        <option value="安装维护与工程服务">安装维护与工程服务</option>
+                        <option value="设备资产与备件管理">设备资产与备件管理</option>
+                        <option value="工厂安保与电力">工厂安保与电力</option>
+                        <option value="市场销售与采购">市场销售与采购</option>
+                        <option value="工程咨询与科研院所">工程咨询与科研院所</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+            @{
+                string[] purchaseProducts = { "自动化与控制", "压缩空气", "电机与驱动", "环境与健康", "流体处理", "暖通空调", "照明", "养护产品", "维修工具与设备", "物料搬运", "仓储物流", "电力", "软件", "安全产品" };
+                }
+            <div class="item">
+                <span class="label">参与，推荐，批准，采购的产品：</span>
+                <div class="fl">
+                <ul>
+                   @foreach(var item in purchaseProducts){
+                       <text><li>@Html.CheckBox("PurchaseProducts",false)<label>@(item)</label></li></text>
+                   }
+                   </ul>
+                </div>
+            </div>
+            <div class="item" style="height: 60px;">
+                <span class="label"><b class="ftx04">*</b>所属行业：</span>
+                <div class="fl">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td>
+                                <input name="Industry" type="radio" value="汽车制造" />
+                            </td>
+                            <td>
+                                汽车制造
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="机械制造" />
+                            </td>
+                            <td>
+                                机械制造
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="电子制造" />
+                            </td>
+                            <td>
+                                电子制造
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="化工" />
+                            </td>
+                            <td>
+                                化工
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="航空航天" />
+                            </td>
+                            <td>
+                                航空航天
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="造纸" />
+                            </td>
+                            <td>
+                                造纸
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="食品饮料" />
+                            </td>
+                            <td>
+                                食品饮料
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="Industry" type="radio" value="新能源" />
+                            </td>
+                            <td>
+                                新能源
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="石油" />
+                            </td>
+                            <td>
+                                石油
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="冶金" />
+                            </td>
+                            <td>
+                                冶金
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="水处理" />
+                            </td>
+                            <td>
+                                水处理
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="电力" />
+                            </td>
+                            <td>
+                                电力
+                            </td>
+                            <td>
+                                <input name="Industry" type="radio" value="其他" />
+                            </td>
+                            <td>
+                                其他
+                            </td>
+							<td></td><td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <label for="Industry" class="error" style="display: none">
+                                    请选择【所属行业】</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="item">
+                <table width="300" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="center" valign="middle">
+                            <input type="submit" value="填写完毕，提交" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //初始化省市
+            initArea({ p: { id: 'Province' }, c: { id: 'City'} });
+            $.validator.addMethod("isUserName", function (value, element) {
+                return this.optional(element) || /^[a-zA-Z][A-Za-z0-9_]+$/i.test(value);
+            }, "4-20位字符，可由英文、数字及“_”组成，首字母必须英文");
+            $.validator.addMethod("isChinese", function (value, element) {
+                return this.optional(element) || /^[\u4e00-\u9fa5]+$/i.test(value);
+            }, "请输入汉字");
+            $.validator.addMethod("isZipCode", function (value, element) {
+                return this.optional(element) || /^[0-9]{6}$/i.test(value);
+            }, "请输入6位数字");
+            $("#registerForm").validate({
+                rules: {
+                    UserName: {
+                        minlength: 4,
+                        maxlength: 20,
+                        isUserName: true,
+                        remote: "/passport/_ajax/usercheck?action=username"
+                    },
+                    Password: {
+                        minlength: 5,
+                        maxlength: 20
+                    },
+                    Email: {
+                        remote: "/passport/_ajax/usercheck?action=email"
+                    },
+                    confirmpassword: {
+                        equalTo: "#Password"
+                    },
+                    RealName: {
+                        isChinese: true
+                    },
+                    Industry: {
+                        required: true
+                    },
+                    Position: {
+                        required: true
+                    },
+                    Province: { required: true },
+                    City: { required: true },
+                    Phone: { required: true },
+                    Company: { required: true },
+                    ZipCode: { isZipCode:true,required: true }
+                },
+                messages: {
+                    UserName: {
+                        required: '用户名不能为空',
+                        minlength: '用户名最少4位字符',
+                        maxlength: '用户名最长15字符',
+                        remote: '用户名已存在，请选择其他用户名'
+                    },
+                    Email: {
+                        required: 'Email不能为空',
+                        remote: 'Email已存在，请选择其他Email'
+                    },
+                    Password: {
+                        required: '密码不能为空',
+                        minlength: '密码最少5位'
+                    },
+                    confirmpassword: {
+                        required: '确认密码不能为空',
+                        equalTo: "两次密码不一致"
+                    },
+                    RealName: {
+                        required: '真实姓名不能为空'
+                    },
+                    Industry: {
+                        required: '请选择所属行业'
+                    },
+                    Phone: { required: '电话不能为空' },
+                    Company: { required: '单位名称不能为空' },
+                    ZipCode: { required: '邮编不能为空' }
+                }
+            });
+        });
+    </script>
+}

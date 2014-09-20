@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4E450659-E24E-4EEF-B81A-AF3B0BC9F550}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlantEng</RootNamespace>
+    <AssemblyName>PlantEng.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Controleng.Common">
+      <HintPath>..\Assemblies\Controleng.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Goodspeed.Library">
+      <HintPath>..\PlantEng.Web.WWW\bin\Goodspeed.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CacheHelper.cs" />
+    <Compile Include="Common\FastPaging.cs" />
+    <Compile Include="Common\FileUpload.cs" />
+    <Compile Include="Common\PagerBarHelper.cs" />
+    <Compile Include="Data\Advertisment\AdDeliveryManage.cs" />
+    <Compile Include="Data\Advertisment\AdManage.cs" />
+    <Compile Include="Data\Advertisment\AdPositionManage.cs" />
+    <Compile Include="Data\Visitor\VisitorManage.cs" />
+    <Compile Include="Models\Advertisment\AdDeliveryInfo.cs" />
+    <Compile Include="Models\Advertisment\AdInfo.cs" />
+    <Compile Include="Models\Advertisment\AdPositionInfo.cs" />
+    <Compile Include="Models\Advertisment\AdStatus.cs" />
+    <Compile Include="Models\Advertisment\AdType.cs" />
+    <Compile Include="Data\Article\ArticleManage.cs" />
+    <Compile Include="Data\Blog\BlogPostManage.cs" />
+    <Compile Include="Data\Company\CompanyFeedbackManage.cs" />
+    <Compile Include="Data\Company\CompanyNewsManage.cs" />
+    <Compile Include="Data\Company\CompanyProductCategoryManage.cs" />
+    <Compile Include="Data\Company\CompanyProductManage.cs" />
+    <Compile Include="Data\EletterSubscribeManage.cs" />
+    <Compile Include="Data\MemberManage.cs" />
+    <Compile Include="Data\Category\CategoryManage.cs" />
+    <Compile Include="Data\Video\VideoManage.cs" />
+    <Compile Include="Models\Article\ArticleInfo.cs" />
+    <Compile Include="Models\Article\ArticleTagInfo.cs" />
+    <Compile Include="Models\Blog\BlogPostInfo.cs" />
+    <Compile Include="Models\Blog\BlogSystemCategory.cs" />
+    <Compile Include="Models\Category\BaseInfo.cs" />
+    <Compile Include="Models\Category\CatType.cs" />
+    <Compile Include="Models\Category\ColumnInfo.cs" />
+    <Compile Include="Models\Category\IndustryInfo.cs" />
+    <Compile Include="Models\Category\TechInfo.cs" />
+    <Compile Include="Models\Category\VideoCatInfo.cs" />
+    <Compile Include="Models\Company\CompanyFeedbackInfo.cs" />
+    <Compile Include="Models\Company\CompanyNewsInfo.cs" />
+    <Compile Include="Models\Company\CompanyProductCategoryInfo.cs" />
+    <Compile Include="Models\Company\CompanyProductInfo.cs" />
+    <Compile Include="Models\EletterSubscribeInfo.cs" />
+    <Compile Include="Models\IPageOfList.cs" />
+    <Compile Include="Models\MemberInfo.cs" />
+    <Compile Include="Models\PageOfList.cs" />
+    <Compile Include="Models\SearchSetting.cs" />
+    <Compile Include="Models\Video\VideoInfo.cs" />
+    <Compile Include="Models\Visitor\VisitorInfo.cs" />
+    <Compile Include="Models\WebcastRssItem.cs" />
+    <Compile Include="Mvc\Filters\CompanySpaceLayoutAttribute.cs" />
+    <Compile Include="Mvc\Filters\PECAuthAttribute.cs" />
+    <Compile Include="PlantEngSites.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Advertisment\AdDeliveryService.cs" />
+    <Compile Include="Services\Advertisment\AdPositionService.cs" />
+    <Compile Include="Services\Advertisment\AdService.cs" />
+    <Compile Include="Services\Article\ArticleService.cs" />
+    <Compile Include="Services\Blog\BlogPostService.cs" />
+    <Compile Include="Services\Category\ColumnService.cs" />
+    <Compile Include="Services\Category\IndustryService.cs" />
+    <Compile Include="Services\Category\TechService.cs" />
+    <Compile Include="Services\Category\VideoCatService.cs" />
+    <Compile Include="Services\Company\CompanyFeedbackService.cs" />
+    <Compile Include="Services\Company\CompanyNewsService.cs" />
+    <Compile Include="Services\Company\CompanyProductCategoryService.cs" />
+    <Compile Include="Services\Company\CompanyProductService.cs" />
+    <Compile Include="Services\EletterSubscribeService.cs" />
+    <Compile Include="Services\MemberService.cs" />
+    <Compile Include="PlantEngContext.cs" />
+    <Compile Include="Services\Video\VideoService.cs" />
+    <Compile Include="Services\Visitor\VisitorService.cs" />
+    <Compile Include="Services\WebcastRssService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlantEng.Login\PlantEng.Login.csproj">
+      <Project>{3811FEE0-33E9-431F-886E-46134C2A9563}</Project>
+      <Name>PlantEng.Login</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

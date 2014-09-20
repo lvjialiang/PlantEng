@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "应用案例";
+    Layout = "~/Views/Shared/_ResouceLayout.cshtml";
+}
+<div class="middle_content">
+    <div class="normal_header">
+        应用案例</div>
+    @Html.Action("_ArticleList", "Resouce", new { catIds = new int[] { 21 } })
+</div>

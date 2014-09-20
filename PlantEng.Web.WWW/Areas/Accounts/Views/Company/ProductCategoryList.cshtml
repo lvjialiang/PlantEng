@@ -1,0 +1,67 @@
+﻿@model PlantEng.Models.Company.CompanyProductCategoryInfo
+@{
+    ViewBag.Title = "自定义分类";
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+}
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", "自定义分类" } })
+    <div class="mode_menu_tag2">
+        <ul>
+            <li><a href="/accounts/company/productlist" title="企业产品">企业产品</a></li>
+            <li><a href="/accounts/company/productedit" title="发布企业新闻">发布企业产品</a></li>
+            <li class="nowtag"><a title="自定义分类">自定义分类</a></li>
+        </ul>
+    </div>
+    <div class="admin_dongt">
+        <form method="post">
+        @Html.ValidationSummary()
+        @if (ViewBag.Msg != null)
+        {
+            <div class="success">@Html.Raw(ViewBag.Msg)<a href="?" class="ml10">继续添加</a><span class="ml10">或</span><a href="/accounts/company/productedit" class="goback">返回</a></div>
+        }
+        <table>
+            <tr>
+                <th>
+                    名称：
+                </th>
+                <td>@Html.TextBoxFor(m => m.Name, new { @class = "text" })
+                </td>
+            </tr>
+            <tr>
+                <th>
+                </th>
+                <td>
+                    <input type="submit" value="保存" />
+                </td>
+            </tr>
+        </table>
+        </form>
+        <table>
+            <tr>
+                <th align="left">名称</th>
+                <th>产品数</th>
+                <th>操作</th>
+            </tr>
+            @foreach(var item in ViewBag.CategoryList){
+                <tr>
+                    <td align="left">@(item.Name)</td>
+                    <td align="center">@(item.ProductCount)</td>
+                    <td align="center"><a href="?id=@(item.Id)">编辑</a>&nbsp;|&nbsp;<a href="javascript:void(0);" onclick="del(@(item.Id),@(item.ProductCount));">删除</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        function del(id, count) {
+            if (count > 0) {
+                alert('此分类中还有产品，禁止删除！如果确实想删除，请先删除产品，或把产品移到另外的分类中。');
+                return;
+            }
+            if (window.confirm('确定？一旦删除，不能恢复。')) {
+                window.location.href = '?action=delete&id='+id;
+            }
+        }
+    </script>
+}

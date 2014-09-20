@@ -1,0 +1,38 @@
+﻿<table width="100%">
+    <tr>
+        <th align="left">
+            标题
+        </th>
+        <th align="center" width="10%">
+            发布时间
+        </th>
+        <th align="center" width="10%">
+            操作
+        </th>
+    </tr>
+    @foreach (var item in ViewBag.NewsList)
+    {
+        <tr>
+            <td>@item.Title
+            </td>
+            <td align="center">@(item.PublishDateTime.ToString("yyyy-MM-dd"))
+            </td>
+            <td align="center">
+                <a href="@(ViewBag.Type)edit?id=@(item.Id)">编辑</a>&nbsp;|&nbsp;<a href="javascript:void(0);"
+                    onclick="del(@(item.Id));">删除</a>
+            </td>
+        </tr>
+    }
+</table>
+@if (ViewBag.NewsList.Count == 0)
+{ 
+    <div><a href="/accounts/company/@(ViewBag.Type)edit">您还没有发表@(ViewBag.Type == "news" ? "企业新闻" : "技术与案例")，现在马上发表吧！</a></div>
+}
+@Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.NewsList.PageIndex, ViewBag.NewsList.PageSize, ViewBag.NewsList.TotalItemCount, new { @class = "pagerbar" }))
+<script type="text/javascript">
+    function del(id) {
+        if (window.confirm('确定？ \r\n\r\n一旦删除，不能还原。')) {
+            window.location.href = "?action=delete&id=" + id;
+        }
+    }
+</script>

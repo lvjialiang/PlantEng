@@ -1,0 +1,275 @@
+﻿@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+    <meta name="keywords" content="工厂工程,工厂维护,工厂管理,数字化工厂,先进工厂,,能源管理,工厂安全,工厂效率,设备管理,工厂信息化,工厂设计,电气工程,安全安防,工厂自动化,自动化与控制,压缩空气,电机与驱动,环境与健康,流体处理,暖通空调,照明,养护产品,维修工具与设备,物料搬运,物仓储物流,电力,软件,安全产品
+" />
+<html xmlns:wb="http://open.weibo.com/wb">
+
+@section header{
+    <link href="/styles/jquery.jslidenews.css" rel="stylesheet" type="text/css" />
+    <script src="/scripts/jquery.easing.js" type="text/javascript"></script>
+    <script src="/scripts/jquery.jslidernews.js" type="text/javascript"></script>	
+}
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var buttons = { previous: $('#focus .button-previous'),
+                next: $('#focus .button-next')
+            };
+            $('#focus').lofJSidernews({ interval: 5000,
+                easing: 'easeInOutQuad',
+                duration: 1200,
+                auto: true,
+                mainWidth: 633,
+                mainHeight: 421,
+                navigatorHeight: 70,
+                navigatorWidth: 100,
+                maxItemDisplay: 3,
+                buttons: buttons
+            });
+        });
+    </script>
+}
+<div class="top_content">
+    <!-- 焦点图 -->
+    <div id="focus" class="lof-slidecontent" style="width: 630px;">
+        <div class="preload">
+            <div>
+            </div>
+        </div>
+        <div class="button-previous">
+            Previous</div>
+        <!-- MAIN CONTENT -->
+        <div class="main-slider-content" style="width: 630px; height: 415px;">
+            <ul class="sliders-wrap-inner">
+                @foreach (var item in ViewBag.FocusImages)
+                {
+                    <li>
+                        <img src="@(item.ImageUrl)" border="0" alt="@(item.Title)">
+                        <div class="slider-description">
+                            <div class="slider-meta">
+                                <a href="@(item.Url)" title="@(item.Title)">@(item.Title)</a></div>
+                            <p>
+                                @(Goodspeed.Common.CharHelper.Truncate(item.Remark, 100))
+                            </p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <!-- END MAIN CONTENT -->
+        <!-- NAVIGATOR -->
+        <div class="navigator-content">
+            <div class="navigator-wrapper">
+                <ul class="navigator-wrap-inner">
+                    @foreach (var item in ViewBag.FocusImages)
+                    { 
+                        <li>
+                            <div>
+                                <img src="@(item.ImageUrl)" alt="(@item.Title)" border="0"></div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <!----------------- END OF NAVIGATOR --------------------->
+        <div class="button-next">
+            Next</div>
+    </div>
+    <!-- /焦点图 -->
+</div>
+<div class="middle_content">
+    <!--============当中栏左边开始====================-->
+    <div class="middle_content_left">
+        <div class="news_list_format">
+            <div class="csc-header">
+                技术头条</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    @foreach (var item in ViewBag.TechHeadLines)
+                    { 
+                        <text>·<a href="@(item.Url)" title="@(item.Title)">@if (!string.IsNullOrEmpty(item.ImageUrl))
+                                                                           {
+                            <img src="@(item.ImageUrl)" alt="@(item.Title)" align="right"/>
+                                                                           }
+                            <span class="list_news_title">@(Goodspeed.Common.CharHelper.Truncate(item.Title,23))</span></a><p style="line-height: 20px;">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 85))</p></text>
+                    }
+                </div>
+            </div>
+            <div class="more blue">
+                <a href="/tech/">更多>></a></div>
+            <div class="clear">
+            </div>
+        </div>
+        <div style="float: left; border:1px solid #000;">		
+		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="300" height="205">
+  <param name="movie" value="http://www.planteng.cn/Images/guangao.swf" />
+  <param name="quality" value="high" />
+  <embed src="http://www.planteng.cn/Images/guangao.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="300" height="205"></embed>
+</object>
+</div>
+        <div class="clear">
+        </div>
+        <div class="news_list_format">
+            <div class="csc-header">
+                在线研讨会</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    @foreach (var item in ViewBag.WebcastRss)
+                    { 
+                        <div class="list_bt">
+                            ·<a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</a>
+                        </div>
+                        <div class="list-img">
+                        <div class="list-pic">
+                                <img src="@(item.ImageUrl)" alt="@(item.Title)" /></div>
+                        <div class="list-ms">@(Goodspeed.Common.CharHelper.Truncate(item.Description, 60))</div></div>
+                    }
+
+                </div>
+            </div>
+            <div class="more blue">
+                <a href="http://webcast.planteng.cn">更多>></a></div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="news_list_format">
+            <div class="csc-header">
+                产品库</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    @foreach (var item in ViewBag.Products)
+                    {
+                        <div class="list_bt">
+                            ·<a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</a></div>
+                        <div class="list-img">
+                            <div class="list-pic">
+                                <img src="@(item.ImageUrl)" alt="@(item.Title)" /></div>
+                            <div class="list-wb">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 60))</div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="more blue">
+                <a href="/product">更多>></a></div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <!--============当中栏左边结束====================-->
+    <!--============当中栏右边开始====================-->
+    <div class="middle_content_right">
+        <div class="news_list_format">
+            <div class="csc-header">
+                产业趋势</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    <div class="list_lb">
+                        <ul>
+                            @foreach (var item in ViewBag.ChanYeQuShi)
+                            {
+                                <li><a href="@(item.Url)" title="@(item.Title)">·@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="csc-header">
+                企业新闻</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    <div class="list_lb">
+                        <ul>
+                            @foreach (var item in ViewBag.EnterpriseNews)
+                            {
+                                <li><a href="@(item.Url)" title="@(item.Title)">·@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="csc-header">
+                新品速递</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    <div class="list_lb">
+                        <ul>
+                            @foreach (var item in ViewBag.NewProducts)
+                            {
+                                <li><a href="@(item.Url)" title="@(item.Title)">·@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="more blue">
+                <a href="/news/">更多>></a></div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="news_list_format">
+            <div class="csc-header">
+                应用案例</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    @foreach (var item in ViewBag.Case)
+                    {
+                        <div class="list_bt">
+                            <a href="@(item.Url)" title="@(item.Title)">·@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</a>
+                        </div>
+                        <div class="list-img">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 60))</div>
+                    }
+                </div>
+            </div>
+            <div class="more blue">
+                <a href="/tech/">更多>></a></div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="news_list_format">
+            <div class="csc-header">
+                白皮书</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    @foreach (var item in ViewBag.WhitePagers)
+                    { 
+                        <div class="list-img">
+                            <div class="list-shu">
+                                <a href="@item.Url" title="@item.Title">
+                                    <img src="@item.ImageUrl" alt="@item.Title" /></a></div>
+                            <div class="list-ms">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 60))</div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="more blue">
+                <a href="/resouce/whitepaper">更多>></a></div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="news_list_format">
+            <div class="csc-header">
+                视频</div>
+            <div class="news-list-container">
+                <div class="news-list-item">
+                    @foreach (var item in ViewBag.Videos)
+                    {
+                        <div class="list_bt">
+                            ·<a href="/video/watch?id=@(item.Id)">@(Goodspeed.Common.CharHelper.Truncate(item.Title,25))</a></div>
+                        <div class="list-img">
+                            <div class="list-tp">
+                                <img src="@(item.ImageUrl)" width="74px" height="49px" /></div>
+                            <div class="list-wz">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 120))</div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="more blue">
+                <a href="/video">更多>></a></div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <!--============当中栏右边结束====================-->
+</div>

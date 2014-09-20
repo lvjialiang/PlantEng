@@ -1,0 +1,151 @@
+﻿@model PlantEng.Models.Advertisment.AdDeliveryInfo
+@{
+    var slotId = Controleng.Common.CECRequest.GetQueryInt("slotId", 0);
+    var slotName = Controleng.Common.CECRequest.GetQueryString("slotName");
+    var id = Controleng.Common.CECRequest.GetQueryInt("id",0);
+    ViewBag.Title = "新建广告";
+
+    var adPositionModel = ViewBag.AdPositionModel;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <link href="/Content/jquery.pager.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/jquery.pager.js" type="text/javascript"></script>
+    <style type="text/css">
+        #slot-ajax-container{ display:none;}
+        #slot-ajax-container h2{font-size:12px; font-weight:bold;padding:5px;}
+        #slot-size{ margin:0 10px 0 10px;}
+        #slot-ajax-list{padding-left:10px;}
+        #slot-ajax-list li{ line-height:20px;}
+    </style>
+}
+
+<div class="page-content">
+    <div class="adm-nav">
+        <ul>
+            <li><a href="/adm/slot/list">广告位</a></li>
+            <li><a href="/adm/delivery/list">广告</a></li>
+            <li><a href="/adm/material/list">广告物料库</a></li>
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <fieldset>
+        <legend>@(id > 0 ? "修改广告" : "新建广告")</legend>
+        @Html.ValidationSummary()
+        @if (ViewBag.Msg != null)
+        {
+            <div class="success">@Html.Raw(ViewBag.Msg)</div>
+        }
+        <fieldset>
+            <legend>广告位</legend>
+            <table>
+                <tr>
+                    <th>目标广告位：</th>
+                    <td><span id="slot-name">@(adPositionModel.Id > 0?adPositionModel.Name:"")</span><span id="slot-size">@(adPositionModel.Id>0?string.Format("{0}*{1}",adPositionModel.Width,adPositionModel.Height):"")</span>
+                        <a href="javascript:void(0);" id="btn-modify">修改</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div id="slot-ajax-container">
+                            <h2>请选择广告位：</h2>
+                            <ul id="slot-ajax-list"></ul>
+                            <div id="slot-ajax-pager"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>            
+        </fieldset>
+        <fieldset>
+            <legend>广告</legend>
+            <form method="post">
+            @Html.HiddenFor(m=>m.AdPositionId)
+            <table>
+                <tr>
+                    <th>
+                        广告名称：
+                    </th>
+                    <td>@Html.TextBoxFor(m => m.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" value="完成" /><a href="list" class="back">返回</a>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </fieldset>
+    </fieldset>
+</div>
+@section footer{
+    <script type="text/javascript">
+        var slotAjaxContainerOjb = $('#slot-ajax-container'), slotAjaxListObj = $('#slot-ajax-list'), btnModifyObj = $('#btn-modify');
+        function showSlotList(obj) {
+            var isHidden = slotAjaxContainerOjb.is(":hidden");
+            if (isHidden) {
+                //请求填充
+                _ajaxLoadSlotList(1);
+                _changeBtnModifyText(0);
+            } else {
+                slotAjaxContainerOjb.hide();
+                _changeBtnModifyText(1);
+            }
+        }
+        function _changeBtnModifyText(flag) {
+            if (flag) {
+                btnModifyObj.html('修改');
+            } else {
+                btnModifyObj.html('取消');
+            }
+        }
+        function _ajaxLoadSlotList(pageIndex) {            
+            $.ajax({
+                url: "/adm/ajax/adpositionlist?page=" + pageIndex,
+                success: function (data) {
+                    slotAjaxListObj.html('');
+                    var pageNumber = data.pageIndex;
+                    var pageCount = data.totalPageCount;
+                    var result = data.result, htmlArr = [];
+                    if (result.length > 0) {
+                        for (var i in result) {
+                            var name = result[i].name, id = result[i].adPositionId, size = result[i].size, aLink = '';
+                            htmlArr.push('<li>');
+                            aLink = '<a href="javascript:void(0);" class="slot-ajax-item-link" adPositionId="'+id+'" name="'+name+'" size="'+size+'">' + name + '</a>';
+                            htmlArr.push(aLink);
+                            htmlArr.push("</li>");
+                        }
+                    }
+                    slotAjaxListObj.html(htmlArr.join(''));
+                    $("#slot-ajax-pager").pager({ pagenumber: pageIndex, pagecount: pageCount, buttonClickCallback: PageClick });
+                    slotAjaxContainerOjb.show();
+                }
+            });
+        }
+        function _slotItemClick(adPositionId, name, size) {
+            $('#slot-name').html(name);
+            $('#slot-size').html(size);
+            $('#AdPositionId').val(adPositionId);
+            slotAjaxContainerOjb.hide();
+            _changeBtnModifyText(1);
+        }
+        PageClick = function (pageclickednumber) {
+            _ajaxLoadSlotList(pageclickednumber);
+        }
+        $(function () {
+            $('.slot-ajax-item-link').live('click', function () {
+                var adPositionId = $(this).attr('adPositionId');
+                var name = $(this).attr('name');
+                var size = $(this).attr('size');
+                _slotItemClick(adPositionId, name, size);
+            });
+            btnModifyObj.click(function () {
+                showSlotList();
+            });
+        })
+    </script>
+}

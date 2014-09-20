@@ -1,0 +1,30 @@
+﻿@{
+    var companyInfo = ViewBag.CompanyInfo;
+    ViewBag.Title = string.Format("新闻动态 - {0}", companyInfo.CompanyName);
+    Layout = "~/Views/Shared/_CompanySpaceLayout.cshtml"; 
+}
+<div class="tab_title">
+    <h4>
+        企业新闻</h4>
+</div>
+<div class="clear"></div>
+<div class="news_list">
+    @foreach (var item in ViewBag.NewsList)
+    {
+        <div class="news-list-item">
+            <div class="news-list-item-title">
+                <a href="@(item.Url)" title="@(item.Title)">@(item.Title)</a><span>@(item.PublishDateTime.ToString("yyyy-MM-dd"))</span></div>
+            <div class="clear">
+            </div>
+            @if (!string.IsNullOrEmpty(item.ImageUrl))
+            {
+                <div class="news-list-item-img">
+                    <img src="@(item.ImageUrl)" alt="@(item.Title)" /></div>
+            }
+            <div class="news-list-item-remark">@(item.Remark)</div>
+            <div class="clear">
+            </div>
+        </div>        
+    }
+    @Html.Raw(PlantEng.Common.PagerBarHelper.Render(ViewBag.NewsList.PageIndex, ViewBag.NewsList.PageSize, ViewBag.NewsList.TotalItemCount, new { @class = "pagerbar" }))
+</div>

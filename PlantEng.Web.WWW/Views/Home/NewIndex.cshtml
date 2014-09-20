@@ -1,0 +1,486 @@
+﻿@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+@section header{
+    <meta name="keywords" content="工厂工程,工厂维护,工厂管理,数字化工厂,先进工厂,,能源管理,工厂安全,工厂效率,设备管理,工厂信息化,工厂设计,电气工程,安全安防,工厂自动化,自动化与控制,压缩空气,电机与驱动,环境与健康,流体处理,暖通空调,照明,养护产品,维修工具与设备,物料搬运,物仓储物流,电力,软件,安全产品
+" />
+    <link href="/styles/jquery.jslidenews.css" rel="stylesheet" type="text/css" />
+    <link href="/styles/homepage.css" rel="stylesheet" type="text/css" />
+    <script src="/scripts/jquery.easing.js" type="text/javascript"></script>
+    <script src="/scripts/jquery.jslidernews.js" type="text/javascript"></script>
+}
+@section footer{
+    <script type="text/javascript">
+        jQuery.fn.extend({
+            switchTab: function () {
+                var self = this;
+                $(".switch_nav", self).children("span").mouseover(function () {
+                    var index = $(this).index();
+                    $(this).siblings().attr("class", "");
+                    $(this).attr("class", "initial");
+                    changeContent(index);
+                });
+                function changeContent(index) {
+                    var list = $(".switch_con", self).children("div");
+                    list.hide().eq(index).show();
+                }
+            }
+        });
+        $(document).ready(function () {
+            var buttons = { previous: $('#focus .button-previous'),
+                next: $('#focus .button-next')
+            };
+            $('#focus').lofJSidernews({ interval: 5000,
+                easing: 'easeInOutQuad',
+                duration: 1200,
+                auto: true,
+                mainWidth: 633,
+                mainHeight: 421,
+                navigatorHeight: 70,
+                navigatorWidth: 100,
+                maxItemDisplay: 3,
+                buttons: buttons
+            });
+            $("#switch_1").switchTab();
+            $("#switch_2").switchTab();
+            $("#switch_3").switchTab();
+            $("#switch_4").switchTab();
+            $("#switch_5").switchTab();
+
+        });
+        
+
+        
+    </script>
+}
+<!-- 焦点图 -->
+<div class="top_content">
+<div id="focus" class="lof-slidecontent" style="width: 630px;">
+    <div class="preload">
+        <div>
+        </div>
+    </div>
+    <div class="button-previous">
+        Previous</div>
+    <!-- MAIN CONTENT -->
+    <div class="main-slider-content" style="width: 630px; height: 415px;">
+        <ul class="sliders-wrap-inner">
+            @foreach (var item in ViewBag.FocusImages)
+            {
+                <li>
+                    <img src="@(item.ImageUrl)" border="0" alt="@(item.Title)">
+                    <div class="slider-description">
+                        <div class="slider-meta">
+                            <a href="@(item.Url)" title="@(item.Title)">@(item.Title)</a></div>
+                        <p>
+                            @(Goodspeed.Common.CharHelper.Truncate(item.Remark, 100))
+                        </p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <!-- END MAIN CONTENT -->
+    <!-- NAVIGATOR -->
+    <div class="navigator-content">
+        <div class="navigator-wrapper">
+            <ul class="navigator-wrap-inner">
+                @foreach (var item in ViewBag.FocusImages)
+                { 
+                    <li>
+                        <div>
+                            <img src="@(item.ImageUrl)" alt="(@item.Title)" border="0"></div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <!----------------- END OF NAVIGATOR --------------------->
+    <div class="button-next">
+        Next</div>
+</div>
+</div>
+<!-- /焦点图 -->
+<div class="layout">
+    <div class="layout_left">
+        <div class="layout_left_one" id="switch_1">
+            <div class="layout_left_one_head switch_nav">
+                <span class="initial">独家</span><span>产业趋势</span>
+            </div>
+            <div class="layout_left_one_con switch_con">
+                <div>
+                    @{
+                        var dujiaList = ViewBag.DuJia as List<PlantEng.Models.Article.ArticleInfo>;
+                        var dujiaTopOne = new PlantEng.Models.Article.ArticleInfo();
+                        if (dujiaList.Count > 0)
+                        {
+                            dujiaTopOne = dujiaList[0];
+                            dujiaList.RemoveAt(0);
+                        }
+                    }
+                    @if (dujiaTopOne.Id > 0)
+                    {
+                        <text><div class="layout_left_one_con_top">
+                            <ul>
+                                <li class="layout_left_one_con_top_pic"><a href="@(dujiaTopOne.Url)" title="@(dujiaTopOne.Title)">
+                                    <img src="@(dujiaTopOne.ImageUrl)" alt="@(dujiaTopOne.Title)"/></a></li>
+                                <li class="layout_left_one_con_top_txt">
+                                    <p class="list-txt-title">
+                                        <a href="@(dujiaTopOne.Url)" title="@(dujiaTopOne.Title)">@(dujiaTopOne.Title)</a></p>
+                                    <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(dujiaTopOne.Remark, 50))</p>
+                                </li>
+                            </ul>
+                        </div></text>
+                    }
+                    <div class="layout_left_one_con_list">
+                        @foreach (var item in dujiaList)
+                        {
+                            <text>
+                            <p>
+                                <span class="news-list-wenzi"><a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 24))</a></span><span
+                                    class="news-list-data">@(item.PublishDateTime.ToString("MM/dd"))</span></p>
+                            </text>
+                        }</div>
+                    <div class="than">
+                        <a href="/news/list?catid=15">更多>></a>
+                    </div>
+                </div>
+                <div class="hidden">
+                    @{
+                        var chanyequshiList = ViewBag.ChanYeQuShi as List<PlantEng.Models.Article.ArticleInfo>;
+                        var chanyequshiOne = new PlantEng.Models.Article.ArticleInfo();
+                        if (chanyequshiList.Count > 0)
+                        {
+                            chanyequshiOne = chanyequshiList[0];
+                            chanyequshiList.RemoveAt(0);
+                        }
+                    }
+                    @if (chanyequshiOne.Id > 0)
+                    {
+                        <text><div class="layout_left_one_con_top">
+                            <ul>
+                                <li class="layout_left_one_con_top_pic"><a href="@(chanyequshiOne.Url)" title="@(chanyequshiOne.Title)">
+                                    <img src="@(chanyequshiOne.ImageUrl)" alt="@(chanyequshiOne.Title)"/></a></li>
+                                <li class="layout_left_one_con_top_txt">
+                                    <p class="list-txt-title">
+                                        <a href="@(chanyequshiOne.Url)" title="@(chanyequshiOne.Title)">@(chanyequshiOne.Title)</a></p>
+                                    <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(chanyequshiOne.Remark, 50))</p>
+                                </li>
+                            </ul>
+                        </div></text>
+                    }
+                    <div class="layout_left_one_con_list">
+                        @foreach (var item in chanyequshiList)
+                        {
+                            <text>
+                            <p>
+                                <span class="news-list-wenzi"><a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 24))</a></span><span
+                                    class="news-list-data">@(item.PublishDateTime.ToString("MM/dd"))</span></p>
+                            </text>
+                        }</div>
+                    <div class="than">
+                        <a href="/news/list?catid=5">更多>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="float: left;border:1px solid #000;" class="video">
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0"
+                width="300" height="205">
+                <param name="movie" value="http://www.planteng.cn/Images/guangao.swf" />
+                <param name="quality" value="high" />
+                <embed src="http://www.planteng.cn/Images/guangao.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer"
+                    type="application/x-shockwave-flash" width="300" height="205"></embed>
+            </object>
+        </div>
+        <div class="layout_left_two">
+            <div class="layout_left_two_head">
+                <span class="initial">应用案例</span>
+            </div>
+            @foreach (var item in ViewBag.Case)
+            { 
+                <div class="layout_left_two_con" style=" padding:2px 0;">
+                    <div class="layout_left_two_con_top" >
+                        <ul>
+                            <li class="layout_left_two_con_top_pic"><a href="@(item.Url)">
+                                <img src="@(item.ImageUrl)" /></a></li>
+                            <li class="layout_left_two_con_top_txt">
+                                <p class="list-txt-title">
+                                    <a href="@(item.Url)">@(item.Title)</a></p>
+                                <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 50))</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+            <div class="than" style=" border:0;">
+                <a href="/news/list?catid=39">更多>></a>
+            </div>
+        </div>
+        <div class="layout_left_three" id="switch_3">
+            <div class="layout_left_one_head switch_nav">
+                <span class="initial">产品库</span><span>企业库</span>
+            </div>
+            <div class="layout_left_three_list switch_con">
+                <div>
+                    @foreach (var item in ViewBag.Products)
+                    {
+                        <p>
+                            <a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 25))</a></p>
+                    }
+                    <div class="than">
+                        <a href="/product/">更多>></a>
+                    </div>
+                </div>
+                <div class="hidden">
+                    @foreach (var item in ViewBag.Companys)
+                    {
+                        <p>
+                            <a href="/company/@(item.CompanyId).html" title="@(item.CompanyName)">@(Goodspeed.Common.CharHelper.Truncate(item.CompanyName, 25))</a></p>
+                    }
+                    <div class="than">
+                        <a href="/company/">更多>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layout_right">
+        <div class="layout_left_one" id="switch_2">
+            <div class="layout_left_one_head switch_nav">
+                <span class="initial">企业新闻</span><span>新品速递</span>
+            </div>
+            <div class="layout_left_one_con switch_con">
+                <div>
+                    @{
+                        var qiyexinwenList = ViewBag.QiYeXinWen as List<PlantEng.Models.Article.ArticleInfo>;
+                        var qiyexinwenTopOne = new PlantEng.Models.Article.ArticleInfo();
+                        if (qiyexinwenList.Count > 0)
+                        {
+                            qiyexinwenTopOne = qiyexinwenList[0];
+                            qiyexinwenList.RemoveAt(0);
+                        }
+                    }
+                    @if (qiyexinwenTopOne.Id > 0)
+                    {
+                        <text><div class="layout_left_one_con_top">
+                            <ul>
+                                <li class="layout_left_one_con_top_pic"><a href="@(qiyexinwenTopOne.Url)" title="@(qiyexinwenTopOne.Title)">
+                                    <img src="@(qiyexinwenTopOne.ImageUrl)" alt="@(qiyexinwenTopOne.Title)"/></a></li>
+                                <li class="layout_left_one_con_top_txt">
+                                    <p class="list-txt-title">
+                                        <a href="@(qiyexinwenTopOne.Url)" title="@(qiyexinwenTopOne.Title)">@(qiyexinwenTopOne.Title)</a></p>
+                                    <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(qiyexinwenTopOne.Remark, 50))</p>
+                                </li>
+                            </ul>
+                        </div></text>
+                    }
+                    <div class="layout_left_one_con_list">
+                        @foreach (var item in qiyexinwenList)
+                        {
+                            <text>
+                            <p>
+                                <span class="news-list-wenzi"><a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 24))</a></span><span
+                                    class="news-list-data">@(item.PublishDateTime.ToString("MM/dd"))</span></p>
+                            </text>
+                        }</div>
+                    <div class="than">
+                        <a href="/news/list?catid=13">更多>></a>
+                    </div>
+                </div>
+                <div class="hidden">
+                    @{
+                        var xinpinsudiList = ViewBag.XinPinSuDi as List<PlantEng.Models.Article.ArticleInfo>;
+                        var xinpinsudiTopOne = new PlantEng.Models.Article.ArticleInfo();
+                        if (xinpinsudiList.Count > 0)
+                        {
+                            xinpinsudiTopOne = xinpinsudiList[0];
+                            xinpinsudiList.RemoveAt(0);
+                        }
+                    }
+                    @if (xinpinsudiTopOne.Id > 0)
+                    {
+                        <text><div class="layout_left_one_con_top">
+                            <ul>
+                                <li class="layout_left_one_con_top_pic"><a href="@(xinpinsudiTopOne.Url)" title="@(xinpinsudiTopOne.Title)">
+                                    <img src="@(xinpinsudiTopOne.ImageUrl)" alt="@(xinpinsudiTopOne.Title)"/></a></li>
+                                <li class="layout_left_one_con_top_txt">
+                                    <p class="list-txt-title">
+                                        <a href="@(xinpinsudiTopOne.Url)" title="@(xinpinsudiTopOne.Title)">@(xinpinsudiTopOne.Title)</a></p>
+                                    <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(xinpinsudiTopOne.Remark, 50))</p>
+                                </li>
+                            </ul>
+                        </div></text>
+                    }
+                    <div class="layout_left_one_con_list">
+                        @foreach (var item in xinpinsudiList)
+                        {
+                            <text>
+                            <p>
+                                <span class="news-list-wenzi"><a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 24))</a></span><span
+                                    class="news-list-data">@(item.PublishDateTime.ToString("MM/dd"))</span></p>
+                            </text>
+                        }</div>
+                    <div class="than">
+                        <a href="/news/list?catid=14">更多>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout_right_two">
+            <div class="layout_left_two_head">
+                <span class="initial"><a>对话</a></span>
+            </div>
+            @foreach (var item in ViewBag.DuiHua)
+            { 
+                <h4>
+                    <a href="@(item.Url)">@(item.Title)</a></h4>
+                <div class="layout_right_two_con">
+                    <div class="layout_left_two_con_top">
+                        <ul>
+                            <li class="layout_left_two_con_top_pic"><a href="@(item.Url)">
+                                <img src="@(item.ImageUrl)" /></a></li>
+                            <li class="layout_left_two_con_top_txt">
+                                <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 50))</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+            <div class="than" style=" border:0;">
+                <a href="/news/list?catid=76">更多>></a>
+            </div>
+        </div>
+        <div class="layout_left_one" id="switch_4" style=" height:380px;">
+            <div class="layout_left_one_head switch_nav">
+                <span class="initial">技术前沿</span><span>技术之源</span>
+            </div>
+            <div class="layout_left_one_con switch_con" style=" height:325px;">
+                <div>
+                    @{
+                        var jishuqianyanList = ViewBag.JiShuQianYan as List<PlantEng.Models.Article.ArticleInfo>;
+                        var jishuqianyanTopOne = new PlantEng.Models.Article.ArticleInfo();
+                        if (jishuqianyanList.Count > 0)
+                        {
+                            jishuqianyanTopOne = jishuqianyanList[0];
+                            jishuqianyanList.RemoveAt(0);
+                        }
+                    }
+                    @if (jishuqianyanTopOne.Id > 0)
+                    {
+                        <text><div class="layout_left_one_con_top">
+                            <ul>
+                                <li class="layout_left_one_con_top_pic"><a href="@(jishuqianyanTopOne.Url)" title="@(jishuqianyanTopOne.Title)">
+                                    <img src="@(jishuqianyanTopOne.ImageUrl)" alt="@(jishuqianyanTopOne.Title)"/></a></li>
+                                <li class="layout_left_one_con_top_txt">
+                                    <p class="list-txt-title">
+                                        <a href="@(jishuqianyanTopOne.Url)" title="@(jishuqianyanTopOne.Title)">@(jishuqianyanTopOne.Title)</a></p>
+                                    <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(jishuqianyanTopOne.Remark, 50))</p>
+                                </li>
+                            </ul>
+                        </div></text>
+                    }
+                    <div class="layout_left_one_con_list">
+                        @foreach (var item in jishuqianyanList)
+                        {
+                            <text>
+                            <p>
+                                <span class="news-list-wenzi"><a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 24))</a></span><span
+                                    class="news-list-data">@(item.PublishDateTime.ToString("MM/dd"))</span></p>
+                            </text>
+                        }</div>
+                    <div class="than">
+                        <a href="/news/list?catid=37">更多>></a>
+                    </div>
+                </div>
+                <div class="hidden" style=" height:380px;">
+                    @{
+                        var jishuzhiyuanList = ViewBag.JiShuZhiYuna as List<PlantEng.Models.Article.ArticleInfo>;
+                        var jishuzhiyuanTopOne = new PlantEng.Models.Article.ArticleInfo();
+                        if (xinpinsudiList.Count > 0)
+                        {
+                            jishuzhiyuanTopOne = jishuzhiyuanList[0];
+                            jishuzhiyuanList.RemoveAt(0);
+                        }
+                    }
+                    @if (jishuzhiyuanTopOne.Id > 0)
+                    {
+                        <text><div class="layout_left_one_con_top">
+                            <ul>
+                                <li class="layout_left_one_con_top_pic"><a href="@(jishuzhiyuanTopOne.Url)" title="@(jishuzhiyuanTopOne.Title)">
+                                    <img src="@(jishuzhiyuanTopOne.ImageUrl)" alt="@(jishuzhiyuanTopOne.Title)"/></a></li>
+                                <li class="layout_left_one_con_top_txt">
+                                    <p class="list-txt-title">
+                                        <a href="@(jishuzhiyuanTopOne.Url)" title="@(jishuzhiyuanTopOne.Title)">@(jishuzhiyuanTopOne.Title)</a></p>
+                                    <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(jishuzhiyuanTopOne.Remark, 50))</p>
+                                </li>
+                            </ul>
+                        </div></text>
+                    }
+                    <div class="layout_left_one_con_list">
+                        @foreach (var item in jishuzhiyuanList)
+                        {
+                            <text>
+                            <p>
+                                <span class="news-list-wenzi"><a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 24))</a></span><span
+                                    class="news-list-data">@(item.PublishDateTime.ToString("MM/dd"))</span></p>
+                            </text>
+                        }</div>
+                    <div class="than">
+                        <a href="/news/list?catid=38">更多>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout_left_two" id="switch_5" style=" height:350px;">
+            <div class="layout_left_two_head switch_nav">
+                <span class="initial">在线研讨会</span><span>视频</span>
+            </div>
+            <div class="switch_con">
+                <div>
+                    @foreach (var item in ViewBag.WebcastRss)
+                    { 
+                        <div class="layout_left_two_con ">
+                            <div class="layout_left_two_con_top">
+                                <ul>
+                                    <li class="layout_left_two_con_top_pic"><a href="@(item.Url)" title="@(item.Title)">
+                                        <img src="@(item.ImageUrl)" width="100" height="74" /></a></li>
+                                    <li class="layout_left_two_con_top_txt">
+                                        <p class="list-txt-title">
+                                            <a href="@(item.Url)" title="@(item.Title)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 25))</a></p>
+                                        <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(item.Description, 56))</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    <div class="than" style=" border:0;">
+                        <a href="http://webcast.planteng.cn">更多>></a>
+                    </div>
+                </div>
+                <div class="hidden" style=" height:350px;">
+                    @foreach (var item in ViewBag.Videos)
+                    { 
+                        <div class="layout_left_two_con ">
+                            <div class="layout_left_two_con_top">
+                                <ul>
+                                    <li class="layout_left_two_con_top_pic"><a href="/video/watch?id=@(item.Id)">
+                                        <img src="@(item.ImageUrl)" width="100" height="74"/></a></li>
+                                    <li class="layout_left_two_con_top_txt">
+                                        <p class="list-txt-title">
+                                            <a href="/video/watch?id=@(item.Id)">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 25))</a></p>
+                                        <p class="list-txt-con">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 56))</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    <div class="than" style="border:0;">
+                        <a href="/video/">更多>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

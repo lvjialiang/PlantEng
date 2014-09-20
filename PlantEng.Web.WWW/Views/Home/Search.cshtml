@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+
+    string keyword = Server.UrlDecode(Controleng.Common.CECRequest.GetQueryString("key"));
+
+    ViewBag.Title = string.Format("{0} - 搜索",keyword);
+}
+@section header{
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+}
+<div class="middle_content">
+    <div class="normal_header">
+        查询结果</div>
+    <div class="clear">
+    </div>
+    @if (string.IsNullOrEmpty(keyword))
+    {
+        <text>请输入关键词！</text>
+    }
+    else
+    {
+        <text>
+    <div id="cse" style="width: 100%;">
+        正在载入。。。</div>
+    <script type="text/javascript">
+        google.load('search', '1', { language: 'zh-CN', style: google.loader.themes.V2_DEFAULT });
+        google.setOnLoadCallback(function () {
+            var customSearchOptions = {};
+            customSearchOptions['adoptions'] = { 'layout': 'noTop' };
+            customSearchOptions[google.search.Search.RESTRICT_EXTENDED_ARGS] = {
+                'lr': 'lang_zh-CN'
+            };
+            var customSearchControl = new google.search.CustomSearchControl(
+      '010879423997412859211:kcm_pxiu2ly', customSearchOptions);
+            var drawOptions = new google.search.DrawOptions();
+            drawOptions.enableSearchResultsOnly();
+            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+            customSearchControl.draw('cse', drawOptions);
+            customSearchControl.setNoResultsString('没有搜索到您想查询的信息。您可以尝试：<br/> 一、看看输入的文字是否有错；<br/> 二、去掉不必要的词，如“的”、“吧”等；');
+            customSearchControl.execute('@(keyword)');
+        }, true);
+    </script></text>
+    }
+</div>

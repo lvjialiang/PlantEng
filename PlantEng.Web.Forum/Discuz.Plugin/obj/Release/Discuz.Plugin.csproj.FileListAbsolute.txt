@@ -1,0 +1,12 @@
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Plugin.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Plugin.pdb
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Common.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Config.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Entity.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Newtonsoft.Json.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Config.pdb
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Common.pdb
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\bin\Release\Discuz.Entity.pdb
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\obj\Release\ResolveAssemblyReference.cache
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\obj\Release\Discuz.Plugin.dll
+E:\Project\planteng\PlantEng.Web.Forum\Discuz.Plugin\obj\Release\Discuz.Plugin.pdb

@@ -1,0 +1,13 @@
+﻿@foreach (var item in ViewBag.ArticleList)
+{
+    <div class="bt_list">
+        <a href="@item.Url" title="@item.Title">·@item.Title</a></div>
+    <div class="channel">
+        <div class="channel_wb">
+            @(Goodspeed.Common.CharHelper.Truncate(item.Remark, 125))</div>
+        @if (!string.IsNullOrEmpty(item.ImageUrl))
+        {
+            <img src="@(item.ImageUrl)" alt="@(item.Title)" /> 
+        }
+    </div>
+} 

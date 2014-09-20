@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "_HeaderAndFooterLayout.cshtml";
+}
+@section header{
+    @RenderSection("header", false)
+}
+<!--============下面三栏开始====================-->
+<div class="main_content">
+    <div class="left_ads">
+        <div class="left_ad_top">
+            <a href="http://www.flir.com/cs/apac/cn/view/?id=41392" target="_blank"><img src="/images/flir_155x400.gif" /></a>
+        </div>
+        <div class="left_ad_center">
+			<a href="http://www.planteng.cn/Special/ProductPrize/pec_report.html" target="_blank"><img src="http://www.planteng.cn/Images/ProductPrize.jpg" /><bR>
+			<a href="http://zh-cn.ptc.com/" target="_blank"><img src="http://www.planteng.cn/Images/guanggao6.gif" /><BR>
+			<a href="http://www.abb.com.cn/" target="_blank"><img src="http://www.planteng.cn/Images/guanggao7.gif" /><BR>
+			<a href="http://www.atlascopco.com.cn/cnzh/" target="_blank"><img src="http://www.planteng.cn/Images/guanggao8.gif" />
+        </div>
+		 <div class="left_ad_center">
+            </a>
+        </div>
+    </div>
+    <div class="content_body">
+        @RenderBody()
+        <!--============当中栏结束====================-->
+    </div>
+    <!--============右栏开始====================-->
+    <div class="right_ads">
+        <div class="left_ad_top" align="center">
+            <a href="http://www.planteng.cn/company/48716.html" target="_blank"> <img src="/images/ad_banner_155x180.jpg" /></a>
+        </div>
+		<div class="left_ad_top" align="center">
+            <a href="http://www.planteng.cn/company/48635.html" target="_blank"> <img src="/images/sap1.jpg" /></a>
+        </div>
+		<div class="left_ad_top" align="center">
+           <a href="http://www.planteng.cn/company/5.html" target="_blank">
+                <img src="http://www.planteng.cn/Images/PE_banner_fluck.jpg" />
+            </a>
+        </div>
+		
+        <div class="right_ad_center">
+            <div class="pic">
+                <img src="/images/bj.jpg" /></div>
+            <div class="wb">
+                <table width="156" height="233" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr width="156">
+                        <td colspan="2">
+                            &nbsp;&nbsp;&nbsp;&nbsp;不用您在网络到处寻信息了，我们第一时间将您关注的资讯通过邮件发给您！<br />
+                            请选择以下您关注的主题：
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="20" align="right">
+                                        <input name="es_subject" type="checkbox" value="网站每月精华" />
+                                    </td>
+                                    <td width="127" align="left">
+                                        网站每月精华
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <input name="es_subject" type="checkbox" value="工厂能源管理" />
+                                    </td>
+                                    <td align="left">
+                                        工厂能源管理
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <input name="es_subject" type="checkbox" value="工厂维护与管理" />
+                                    </td>
+                                    <td align="left">
+                                        工厂维护与管理
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <input name="es_subject" type="checkbox" value="工厂安全安防" />
+                                    </td>
+                                    <td align="left">
+                                        工厂安全安防
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <input name="es_subject" type="checkbox" value="新品速递" />
+                                    </td>
+                                    <td align="left">
+                                        新品速递
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <input name="es_subject" type="checkbox" value="技术白皮书" />
+                                    </td>
+                                    <td align="left">
+                                        技术白皮书
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <table width="144" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td>
+                                        <input type="text" id="es_email" maxlength="50" size="12" value="请输入email地址" onfocus="if(value=='请输入email地址') {value=''}"
+                                            onblur="if (value=='') {value='请输入email地址'}">
+                                    </td>
+                                    <td>
+                                        <input type="button" value="订阅" onclick="baseEletterSubscribe();" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--============下面三栏结尾====================-->
+</div>
+<!--============下面三栏结束====================-->
+@section footer{
+    <script type="text/javascript">
+        function baseEletterSubscribe() {
+            eletterSubscribe({
+                subjectName: 'es_subject',
+                emailId: 'es_email'
+            });
+        }
+    </script>
+    @RenderSection("footer", false)
+}

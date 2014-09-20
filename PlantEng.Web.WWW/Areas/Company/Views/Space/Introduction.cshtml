@@ -1,0 +1,16 @@
+﻿@{
+    var companyInfo = ViewBag.CompanyInfo;
+    ViewBag.Title = string.Format("公司简介 - {0}", companyInfo.CompanyName);
+    Layout = "~/Views/Shared/_CompanySpaceLayout.cshtml"; 
+}
+
+<div class="tab_title">
+<h4>
+    公司简介</h4>
+</div>
+<div class="clear">
+</div>
+<div class="introduction">
+    @Html.Raw(companyInfo.CompanyIntroduction)
+</div>
+

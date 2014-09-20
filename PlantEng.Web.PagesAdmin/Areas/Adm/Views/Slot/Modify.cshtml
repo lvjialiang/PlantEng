@@ -1,0 +1,55 @@
+﻿@model PlantEng.Models.Advertisment.AdPositionInfo
+@{
+    ViewBag.Title = "修改广告位";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-content">
+<div class="adm-nav">
+        <ul>
+            <li><a href="/adm/slot/list">广告位</a></li>
+            <li><a href="/adm/delivery/list">广告</a></li>
+            <li><a href="/adm/material/list">广告物料库</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <fieldset>
+        <legend>修改广告位</legend>
+        @Html.ValidationSummary()
+        @if (ViewBag.Msg != null)
+        {
+            <div class="success">@Html.Raw(ViewBag.Msg)</div>
+        }
+        <form method="post">
+        <table>
+            <tr>
+                <th>
+                    名称：
+                </th>
+                <td>@Html.TextBoxFor(m => m.Name)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    尺寸：
+                </th>
+                <td>@(Html.TextBoxFor(m => m.Width))*@(Html.TextBoxFor(m => m.Height))(px)
+                </td>
+            </tr>
+            <tr>
+                <th valign="top">
+                    说明：
+                </th>
+                <td>@Html.TextAreaFor(m => m.Remark)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <input type="submit" value="完成" /><a href="/adm/slot/list" class="back">返回</a>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </fieldset>
+</div>

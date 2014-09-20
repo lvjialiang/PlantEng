@@ -1,0 +1,213 @@
+﻿@{
+    /*用户后台模板*/
+    Layout = "_EmptyLayout.cshtml";   
+    
+    var userInfo = PlantEng.Services.MemberService.Get(PlantEng.Core.PlantEngContext.Current.UserName);
+    //是否是企业用户
+    bool isCompany = false;
+    //企业用户是否审核通过
+    bool isPassForCompany = false;
+    
+    //判断用户角色
+    if(userInfo.Type == PlantEng.Models.MemberType.Enterprise){
+        //企业用户
+        isCompany = true;
+        //判断用户是否审核通过
+        var companyInfo = PlantEng.Services.MemberService.GetCompanyInfoByUserId(userInfo.Id);
+        if(companyInfo.CompanyStatus == PlantEng.Models.CompanyStatus.Pass){
+            isPassForCompany = true;
+        }
+    }
+    
+    //用户头像
+    var userAvatar = string.Format("{0}/avatar/{1}?t={2}", PlantEng.Core.PlantEngSites.Current.Image, userInfo.Avatar, DateTime.Now.Ticks);
+}
+@section header{
+    <link href="/styles/account.css" rel="stylesheet" type="text/css" />
+    <link href="/styles/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .red{color:Red;}
+        .field-validation-valid,.validation-summary-valid{display:none;}
+        .success{font-size:14px;font-weight:700;color:#404040;border:1px solid #ddd;line-height:22px;background-color:#f0ffe5;border-color:#4dbf00;padding:17px 10px 17px 56px;margin:10px;}
+        .field-validation-error{color:red;}
+        .input-validation-error{border:1px solid red;background-color:#fee;}
+        .validation-summary-errors{display:block;border:1px red dotted;padding:10px;margin:10px;}
+        .validation-summary-errors ul li{font-weight:700;color:red;}
+        label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+        input.text{width:240px;height:16px;padding:4px 3px;border:1px solid #bbb;font-size:14px;font-family:arial,"宋体";}
+        input.error{border:1px solid red;line-height:22px;*line-height:20px;}
+    </style>
+    <script src="/scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/scripts/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Ajax 上传图片 -->
+    <script src="/Scripts/jquery.ajaxfileupload.js" type="text/javascript"></script>
+    <!-- /Ajax 上传图片 -->
+    <script type="text/javascript">
+        /*
+        上传图片
+        obj         :   赋值文本框对象
+        isResize    :   是否自动裁剪图片
+        width       :   裁剪宽度
+        height      :   裁剪高度
+        */
+        function uploadImageForInput(obj, isResize, width, height) {
+            var inputObj = $('#' + obj);
+            isResize = isResize || !1;
+            width = width || 0;
+            height = height || 0;
+            function closeDialog(obj) {
+                $(obj).empty().remove();
+                $(obj).dialog('destroy');
+            }
+            $('<div id="uploadimagedialog"><table><tr><td><form><input type="file" name="img0" id="img0" /><input type="button" class="upload-btnupload" value="上传" /><br /><span> 图片的大小不超过3M,只允许jpg,jpeg,gif,bmp,png</span><br /><div id="upload-loading" class="upload-loading" style="display:none;"></div></form></td></tr></table></div>').dialog({
+                height: 150,
+                width: 400,
+                title: '上传图片',
+                modal: true,
+                open: function () {
+                    var loadingObj = $(this).find('.upload-loading');
+                    var that = this;
+                    $(this).find('.upload-btnupload').click(function () {
+                        $.ajaxFileUpload({
+                            url: '/ajax/UploadImageForInput?' + jQuery.param({ isResize: isResize, width: width, height: height }),
+                            secureuri: false,
+                            fileElementId: 'img0',
+                            dataType: 'redir',
+                            allowType: 'jpg|png|bmp|gif|jpeg',
+                            beforeSend: function () {
+                                loadingObj.show();
+                                loadingObj.html('正在上传照片,请不要刷新或者离开此页面...');
+                            },
+                            complete: function () {
+                                loadingObj.hide();
+                            },
+                            success: function (data, status) {
+                                if (status == 'success') {
+                                    if (data == '0') {
+                                        alert('需要选择图片上传');
+                                    } else if (data == '1') {
+                                        alert('照片格式有误(仅支持JPG, JPEG, GIF, PNG或BMP)');
+                                    }
+                                    else if (data == '2') {
+                                        alert('图片大小不能超过3兆');
+                                    }
+                                    else {
+                                        if (data != "") {
+                                            inputObj.val(data);
+                                            alert('上传成功');
+                                            closeDialog(that);
+                                        }
+                                    }
+                                }
+                                else {
+                                    alert("添加图片出错");
+                                }
+                            },
+                            error: function (data, status, e) {
+                                alert(e);
+                            }
+                        });
+                        return false;
+                    });
+                },
+                close: function () {
+                    $(this).find('.upload-btnupload').unbind('click');
+                }
+            });
+        }
+    </script>
+    @RenderSection("header", false)
+}
+<div class="gb_toolbar">
+    <div class="wrap clearfix">
+        <ul class="reglogin_info">
+            <li><a href="/">
+                <img src="/images/space_logo.jpg" border="0" /></a></li>
+        </ul>
+        <p class="moz_shoucang">
+            <a href="/" class="rede4">网站首页</a><a href="/accounts/myspace" class="rede4" target="_blank">我的空间</a></p>
+    </div>
+</div>
+<!--pageContent star-->
+<div class="pageContent">
+    <!--pageContent左边 star-->
+    <div class="col_menu">
+        <div class="col_center">
+            <h1 class="collet_box">
+                个人档案</h1>
+            <div class="collet_profile">
+                <div class="collet_pic">
+                    <a href="/accounts/editavatar" title="更新头像">
+                        <img src="@(userAvatar)" /></a>
+                    <ul class="l_content">
+                        <li>用 户 名：@(PlantEng.Core.PlantEngContext.Current.UserName)</li>
+                        <li>会员类型：@if(isCompany){<text>企业会员</text>if (!isPassForCompany) { <text>（<span class="red">审核中</span>）</text>}} else { <text>一般会员</text>}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--空间管理首页导航开始-->
+            <div style="clear: both">
+            </div>
+            <div class="collet_box">
+                <div class="box_bd">
+                    <ul class="product-list">
+                        <li class="p-list"><a href="/accounts/"><s>
+                            <img src="/images/accounts/img_01.jpg" border="0" alt="中心首页" /></s><strong>中心首页</strong></a></li>
+                        <li class="p-list"><a href="/accounts/edit"><s>
+                            <img src="/images/accounts/img_03.png" border="0" alt="我的资料" /></s><strong>我的资料</strong></a></li>
+                    </ul>
+                    <div class="l_search">
+                    </div>
+                    @if (isCompany)
+                    {
+                        <ul class="product-list">
+                        <li class="p-list"><a href="/accounts/company/profile"><s>
+                                <img src="/images/accounts/img_05.png" border="0" alt="企业信息" /></s><strong>企业信息</strong></a></li>
+                            <li class="p-list"><a href="/accounts/company/newslist"><s>
+                                <img src="/images/accounts/img_05.png" border="0" alt="企业新闻" /></s><strong>企业新闻</strong></a></li>
+                            <li class="p-list"><a href="/accounts/company/applicationlist"><s>
+                                <img src="/images/accounts/img_05.png" border="0" alt="技术与案例" /></s><strong>技术与案例</strong></a></li>
+                            <li class="p-list"><a href="/accounts/company/productlist"><s>
+                                <img src="/images/accounts/img_05.png" border="0" alt="企业产品" /></s><strong>企业产品</strong></a></li>
+                        </ul>
+                        <div class="l_search">
+                        </div>
+                    }
+                    else { 
+                        <ul class="product-list">
+                            <li class="p-list"><a href="/accounts/blog"><s>
+                                <img src="/images/accounts/img_05.png" border="0" alt="我的博客" /></s><strong>我的博客</strong></a></li>
+                        </ul>
+                        <div class="l_search">
+                        </div>
+                    }
+                    <ul class="product-list">
+                        <li class="p-list"><a href="/logout"><s>
+                            <img src="/images/accounts/img_12.png" border="0" alt="退出" /></s><strong>退出</strong></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <!--pageContent左边 end-->
+    <!--pageContent右边 star-->
+    <div class="col_main">
+        <!--col_main_center star-->
+        @RenderBody()
+    </div>
+    <!--pageContent右边 end-->
+    <div class="clear">
+    </div>
+</div>
+<!--pageContent end-->
+<!--底部版权开始-->
+<div class="foot" style="text-align: center;">
+    <a href="http://www.planteng.cn/about/about.aspx">关于我们</a> | <a href="http://www.planteng.cn/about/sitemap.htm">
+        网站地图</a> | <a href="http://www.planteng.cn/about/contact.aspx">联系我们</a> | <a href="http://www.planteng.cn/about/Friendship.aspx">
+            友情链接</a><br />
+    &copy; 2003-2012
+</div>
+@section footer{@RenderSection("footer", false)}

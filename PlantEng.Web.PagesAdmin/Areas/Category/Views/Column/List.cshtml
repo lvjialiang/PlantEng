@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "栏目分类管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .page-content h2{padding:0;margin:0;border-bottom:1px solid #DEEAF7; margin-top:10px; background:none repeat scroll 0 0 #EAF2FA;padding-left:10px;font-size:14px; height:25px; line-height:25px;}
+        .column-list li{padding-left:10px;line-height:25px;}
+    </style>
+}
+<div class="page-content">
+    <fieldset>
+        <legend>栏目分类管理</legend>
+        @Html.ValidationSummary()
+        @if(ViewBag.Msg != null){
+            <div class="success">@Html.Raw(ViewBag.Msg)</div>
+        }
+        <h2>快捷操作</h2>
+        <table>
+            <tr>
+                <td>添加根栏目：</td>
+                <td><form method="post">
+                    @Html.Hidden("action","addparent")
+                    @Html.TextBox("txtParentName")<span class="ml10"><input type="submit" value="提交" /></span>
+                </form></td>
+            </tr>
+            <tr>
+                <td>添加子栏目：</td>
+                <td>
+                    <form method="post">
+                        @Html.Hidden("action","addchild")
+                        @Html.TextBox("txtChildName")<span class="ml10">请选择父栏目：<select id="select_column" name="select_column">
+                            @foreach(var item in ViewBag.DropDownList){
+                                if (item.ParentId != 0) { continue; }
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select></span><span class="ml10"><input type="submit" value="提交" /></span><span style="color:Red;margin-left:10px;">（暂不支持三级分类）</span>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <h2>栏目列表</h2>
+        <div class="column-list">
+            @Html.Raw(ViewBag.ColumnListHtml)
+        </div>
+    </fieldset>
+</div>
+

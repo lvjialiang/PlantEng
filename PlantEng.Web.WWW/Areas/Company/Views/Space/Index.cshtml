@@ -1,0 +1,132 @@
+﻿@{
+    var companyInfo = ViewBag.CompanyInfo;
+    ViewBag.Title = companyInfo.CompanyName;
+    Layout = "~/Views/Shared/_CompanySpaceLayout.cshtml";
+    
+}
+<div class="tab_title">
+    <h4>
+        企业新闻</h4>
+    <span><a href="/company/@(companyInfo.CompanyId)/newslist.html">MORE>></a></span>
+</div>
+<div class="clear">
+</div>
+<div class="news_list">
+    <ul>
+        @foreach(var item in ViewBag.NewsList){
+            <li><a href="@(item.Url)" title="@(item.Title)">@(item.Title)</a></li>
+        }
+    </ul>
+</div>
+<div class="tab_title">
+    <h4>
+        企业产品</h4>
+    <span><a href="/company/@(companyInfo.CompanyId)/productlist.html">MORE>></a></span>
+</div>
+<div class="clear">
+</div>
+<div class="product_list">
+    @foreach (var item in ViewBag.ProductList)
+    {
+        <div class="product_list_item">
+            <img src="@(item.ImageUrl)" alt="@(item.Title)" width="105" height="80" />
+            <h2>
+                <a href="@(item.Url)" title="@(item.Title)">@(item.Title)</a></h2>
+            <p>@(item.Remark)</p>
+            <div class="clear">
+            </div>
+        </div>
+    }
+</div>
+<div class="clear">
+</div>
+<div class="tab_title">
+    <h4>
+        在线反馈</h4>
+    <span><a href="/company/@(companyInfo.CompanyId)/feedback.html">MORE>></a></span>
+</div>
+<div class="clear"></div>
+<div class="feeback_content">
+
+    <form method="post" action="/company/@(companyInfo.CompanyId)/feedback.html">
+    <table border="0" cellspacing="6" cellpadding="0">
+        <tr>
+            <td width="115" align="right">
+                <strong>我有以下需求：</strong>
+            </td>
+            <td>
+                <input name="cbType" type="checkbox" value="想得到产品详细资料" />想得到产品详细资料
+                <input name="cbType" type="checkbox" value="得到产品价格信息" />得到产品价格信息
+                <input name="cbType" type="checkbox" value="想销售人员联系我" />想销售人员联系我
+                <input name="cbType" type="checkbox" value="想技术人员联系我" />想技术人员联系我
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" align="right">
+                <strong>详细的需求：</strong>
+            </td>
+            <td>
+                <textarea cols="60" rows="4" name="txtNeed">@Request["txtNeed"]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                姓名:
+                <input name="txtRealName" id="txtRealName" type="text" value="@(Request["txtRealName"])" />
+                &nbsp;&nbsp;公司:
+                <input name="txtCompanyName" id="txtCompanyName" type="text" value="@(Request["txtCompanyName"])" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                电话:
+                <input name="txtPhone" id="txtPhone" type="text" value="@(Request["txtPhone"])" />
+                &nbsp;&nbsp;邮件:
+                <input name="txtEmail" id="txtEmail" type="text" value="@(Request["txtEmail"])" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" value="提交" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@foreach (var item in ViewBag.FrontFeedbackList)
+{
+    <div class="message">
+        <div class="message-left">
+            <ul>
+                <li>
+                    <img src="@(string.Format("{0}/avatar/{1}", PlantEng.Core.PlantEngSites.Current.Image, item.Avatar))" alt="@(item.UserName)" width="50" height="50" /></li>
+                <li>
+                    @if (item.UserId > 0)
+                    { <text><a href="/space/@(item.UserId)">@(item.UserName)</a></text>}
+                    else
+                    {<text>@(item.UserName)</text>}</li>
+            </ul>
+        </div>
+        <div class="message-right">
+            <div class="message-top">
+                <ul>
+                    <li><strong><a>@(item.RealName)</a></strong>&nbsp;&nbsp;在&nbsp;&nbsp;@(item.CreateDateTime)&nbsp;&nbsp;对<a href="/company/@(item.ForCompanyId).html" target="_blank" title="@(item.ForCompanyName)">@(item.ForCompanyName)</a>
+                        留言</li>
+                </ul>
+            </div>
+            <div class="message-center">
+                <div class="text">
+                    留言类型：@(item.Type)<br />
+                    详细留言：@(item.Content)</div>
+            </div>
+            <div class="message-last">
+            </div>
+        </div>
+    </div>
+}

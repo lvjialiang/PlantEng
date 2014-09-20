@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>下载</title>
+    <style type="text/css">
+        .tip{border:1px solid red;padding:10px;font-size:14px;color:Red;}
+    </style>
+</head>
+<body>
+@if (ViewBag.Msg != null) { 
+    <div class="tip">@(ViewBag.Msg)</div>
+}
+    <form method="post">
+    <input type="hidden" value="0" name="status" />
+    <input type="submit" value="会议相关人员信息下载" />
+    </form>
+    <form method="post">
+    <input type="hidden" value="1" name="status" />
+    <input type="submit" value="会前调查下载信息下载" />
+    </form>
+    <form method="post">
+    <input type="hidden" value="2" name="status" />
+    <input type="submit" value="会后调查下载信息下载" />
+    </form>
+    <form method="post">
+    <input type="hidden" value="3" name="status" />
+    <input type="submit" value="QA相关信息下载" />
+    </form>
+</body>
+</html>

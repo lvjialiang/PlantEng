@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "用户中心";
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+    var userInfo = PlantEng.Services.MemberService.Get(PlantEng.Core.PlantEngContext.Current.UserName);
+    //查看是否是企业用户
+    bool isCompany = false;
+    //判断企业用户是否审核通过
+    bool isPassForCompany = false;
+    if (userInfo.Type == PlantEng.Models.MemberType.Enterprise)
+    {
+        isCompany = true;
+
+        var companyInfo = PlantEng.Services.MemberService.GetCompanyInfoByUserId(userInfo.Id);
+        if(companyInfo.CompanyStatus == PlantEng.Models.CompanyStatus.Pass){
+            isPassForCompany = true;
+        }
+    }
+}
+<div style="padding:30px;">
+@if (isCompany)
+{
+    <text>企业用户</text>
+    if(!isPassForCompany){
+        @*<text><span class="red">正在审核中，在未审核之前不能发表任何信息，请等待。。</span></text>*@
+    }
+}
+else
+{ 
+    <text>个人用户</text>
+}
+
+</div>

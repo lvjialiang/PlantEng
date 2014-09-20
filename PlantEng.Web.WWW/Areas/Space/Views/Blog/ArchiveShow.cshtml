@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/Views/Shared/_SpaceLayout.cshtml";
+    var spaceInfo = ViewBag.SpaceInfo;
+    ViewBag.Title = string.Format("{0} - {1}", Model.Title, spaceInfo.NickName == spaceInfo.UserName ? spaceInfo.NickName + "的空间" : spaceInfo.NickName);
+}
+<!--目前所在位置-->
+@Html.Partial("_NavPosition",new ViewDataDictionary{ {"SpaceInfo",spaceInfo},{"FirstText","博客"},{"FirstLink","/blog"},{"SecondText","博文"}})
+<!--/目前所在位置-->
+<div class="title_biaoti" align="center">
+    <h1>@(Model.Title)</h1>
+</div>
+<div class="title_fubiaoti">
+    <div align="center">
+        <h3>
+            浏览数：@(Model.ViewCount)</h3>
+    </div>
+    @Html.Raw(Model.Content)
+</div>

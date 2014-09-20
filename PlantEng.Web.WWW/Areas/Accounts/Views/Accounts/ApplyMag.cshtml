@@ -1,0 +1,21 @@
+﻿@model PlantEng.Models.MemberInfo
+@{
+    ViewBag.Title = "申请赠阅杂志";
+    Layout = "~/Views/Shared/_AccountsLayout.cshtml";
+
+    var model = Model;
+}
+<form method="post" id="postForm">
+<div class="bm_top">
+    @Html.Partial("_NavForPerson", null, new ViewDataDictionary { { "FirstText", "申请赠阅杂志" } })
+    <div class="admin_dongt">
+        <table>
+            <tr>
+                <td>
+                    申请类型：
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</form>
