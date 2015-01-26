@@ -28,6 +28,8 @@ namespace PlantEng.Web.WWW.Controllers
         public ActionResult Index_V1()
         {
 
+            
+
             //读取焦点图
             ViewBag.FocusImages = ArticleService.ListWithoutPage(5,new int[]{41});
 
@@ -59,6 +61,8 @@ namespace PlantEng.Web.WWW.Controllers
         }
         [ActionName("Index")]
         public ActionResult NewIndex() {
+
+            ViewBag.NewsCenter = ArticleService.ListWithoutPage(7, new int[] { 5, 14, 15 });
 
             //读取焦点图
             ViewBag.FocusImages = ArticleService.ListWithoutPage(5, new int[] { 41 });

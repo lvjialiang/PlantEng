@@ -5,16 +5,14 @@
 <html xmlns:wb="http://open.weibo.com/wb">
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 <div class="middle_content" >
-    <div class="normal_header">
+    <div class="normal_header" style=" padding-left:15px;">
        <span>当前位置：</span><span><a href="/">首页</a>&nbsp;>&nbsp;<span><a href="/news">新闻中心</a></span>&nbsp;>&nbsp;<span>@(ViewBag.CategoryInfo.Name)</span> </div>
-    <div class="news-list-item"  >
+    <div class="news-list-item" style=" padding-left:25px;">
         @foreach (var item in ViewBag.ArticleList)
         { 
-            <a href="@(item.Url)" title="@(item.Title)">
-                @if (!string.IsNullOrEmpty(item.ImageUrl))
-                {
-                    <img src="@(item.ImageUrl)" alt="@(item.Title)" align="right"/>
-                } <span class="list_news_title">@(item.Title)</span></a><p style="line-height: 20px;">@(item.Remark)</p>
+            <a href="@(item.Url)" title="@(item.Title)" style="background: url(/../images/dot.jpg) no-repeat left center;line-height:32px;"><span class="list_news_title" style=" padding-left:10px; font-weight:normal; font-size:14px; line-height:normal; padding-top:0;">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 40))</span>
+					<span style=" color:#666; display:block; float:right; font-size:12px; padding-right:20px;">@(item.PublishDateTime.ToString("yyyy-MM-dd"))</span>
+				</a>
             <div class="clear"></div>
         }
         

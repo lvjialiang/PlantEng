@@ -1,11 +1,11 @@
-﻿<div class="news-list-item">
+﻿<div class="news-list-item" >
     @foreach (var item in ViewBag.ArticleList)
     { 
         <a href="@(item.Url)" title="@(item.Title)">
             @if (!string.IsNullOrEmpty(item.ImageUrl))
             {
-                <img src="@(item.ImageUrl)" alt="@(item.Title)" align="right"/>
-            } <span class="list_news_title">@(item.Title)</span></a><p style="line-height: 20px;">@(item.Remark)</p>
+                <img src="@(item.ImageUrl)" alt="@(item.Title)" align="right" width="60"/>
+            } <span class="list_news_title" style=" font-size:14px; line-height:30px;">@(item.Title)</span></a><p style="border-bottom:1px dashed #ccc; padding-bottom:8px; max-height:30px; line-height:20px; overflow:hidden;  margin-bottom:13px; padding-bottom:12px;">@(Goodspeed.Common.CharHelper.Truncate(item.Remark, 120))</p>
             <div class="clear"></div>
     }
     
