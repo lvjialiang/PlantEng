@@ -311,7 +311,7 @@ namespace PlantEng.Data.Article
         /// <returns></returns>
         public static IPageOfList<ArticleInfo> List(ArticleSearchSetting searchSetting) {
             FastPaging fp = new FastPaging();
-            fp.OverOrderBy = " A.IsTop DESC ,A.PublishDateTime DESC";
+            fp.OverOrderBy = " A.PublishDateTime DESC";
             fp.PageIndex = searchSetting.PageIndex;
             fp.PageSize = searchSetting.PageSize;
             fp.QueryFields = "*";
