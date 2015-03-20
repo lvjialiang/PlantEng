@@ -62,7 +62,7 @@ namespace PlantEng.Web.WWW.Controllers
         [ActionName("Index")]
         public ActionResult NewIndex() {
 
-            ViewBag.NewsCenter = ArticleService.ListWithoutPage(7, new int[] { 5, 14, 15 });
+            ViewBag.NewsCenter = ArticleService.ListWithoutPageByCondition(GetArticleSQLForNewIndex(7, new int[] { 5, 14, 15 }));
 
             //读取焦点图
             ViewBag.FocusImages = ArticleService.ListWithoutPage(5, new int[] { 41 });
@@ -104,6 +104,21 @@ namespace PlantEng.Web.WWW.Controllers
             });
 
             return View("NewIndex");
+        }
+        private string GetArticleSQLForNewIndex(int topCount,int[] catIds) {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(@"SELECT * FROM (
+	                            SELECT TOP(1)* FROM dbo.Articles WITH(NOLOCK)
+	                            WHERE IsDeleted = 0 AND ({1})
+	                            ORDER BY  IsTop DESC, PublishDateTime DESC 
+                            ) AS A 
+                            UNION ALL
+                            SELECT * FROM (
+	                            SELECT TOP({0})* FROM dbo.Articles WITH(NOLOCK)
+	                            WHERE IsDeleted = 0 AND ({1})
+	                            ORDER BY PublishDateTime DESC 
+                            ) AS B", topCount - 1, Enumerable.Range(0, catIds.Length).Select(i => { return string.Format(" CategoryId = {0} ", catIds[i]); }).Aggregate((a, b) => a + " OR " + b));
+            return sb.ToString();
         }
         private string GetArticleSQLAndTopOneWithImageForNewIndex(int topCount,int catId)
         {
