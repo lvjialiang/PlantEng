@@ -85,6 +85,8 @@
     <Compile Include="Areas\Company\Controllers\SpaceController.cs" />
     <Compile Include="Areas\Magazine\Controllers\HomeController.cs" />
     <Compile Include="Areas\Magazine\MagazineAreaRegistration.cs" />
+    <Compile Include="Areas\Mag\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Mag\MagAreaRegistration.cs" />
     <Compile Include="Areas\News\Controllers\HomeController.cs" />
     <Compile Include="Areas\News\NewsAreaRegistration.cs" />
     <Compile Include="Areas\Product\Controllers\HomeController.cs" />
@@ -494,6 +496,7 @@
   <ItemGroup>
     <Folder Include="Areas\Magazine\Models\" />
     <Folder Include="Areas\Magazine\Views\Shared\" />
+    <Folder Include="Areas\Mag\Views\Shared\" />
     <Folder Include="Areas\Product\Views\Shared\" />
     <Folder Include="Areas\Special\Views\Shared\" />
     <Folder Include="Areas\Video\Views\Shared\" />
@@ -816,6 +819,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Special\Views\ProductPrize2014\voting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mag\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mag\Views\Home\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
